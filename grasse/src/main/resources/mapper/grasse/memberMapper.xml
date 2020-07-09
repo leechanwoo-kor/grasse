@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- 회원가입 -->
+
+	<insert parameterType="hashmap" id="insertMember" keyProperty="MEMBER_NO" useGeneratedKeys="true">
+
+		<selectKey resultType="java.lang.Integer" keyProperty="MEMZBER_NO" order="BEFORE">
+			SELECT MEMBER_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	
+		<![CDATA[
+			INSERT INTO MEMBER
+				(MEMBER_NO,
+				MEMBER_ID,
+			  	PASSWD,
+			 	NAME, 
+			 	BIRTH, 
+			 	ZIPCODE, 
+			 	ADDR1, 
+			 	ADDR2, 
+			 	PHONE, 
+			 	EMAIL, 
+			 	REGDATE)
+			VALUES
+				(#{MEMBER_NO}, 
+				#{MEMBER_ID}, 
+				#{PASSWD}, 
+				#{NAME}, 
+				#{BIRTH}, 
+				#{ZIPCODE}, 
+				#{ADDR1}, 
+				#{ADDR2}, 
+				#{PHONE}, 
+				#{EMAIL}, 
+				SYSDATE)
+			]]>
+	</insert>
+
+</mapper>
