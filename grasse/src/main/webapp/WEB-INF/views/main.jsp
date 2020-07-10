@@ -3,31 +3,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>GRASSE</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/header.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/content.css" type="text/css" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/footer.css" type="text/css" />
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 </head>
 <body>
+<form id="frm">
 	<div id="header">
 		<div class="gnb">
 			<ul>
-				<li><a href="#">GRASSE</a></li>
-				<li><a href="#">NOTICE</a></li>
-				<li><a href="#">FAQ</a></li>
-				<li><a href="#">Q&A</a></li>
-				<li><a href="#">LOGIN</a></li>
-				<li><a href="#">JOIN</a></li>
-				<li><a href="#">MYPAGE</a></li>
-				<li><a href="#">SHOPPING CART</a></li>
-				<li><a href="#">ORDER</a></li>
-				<li><a href="#">WISH LIST</a></li>
+				<li id="home"><a href="#this" name="main">GRASSE</a></li>
+				<li id="left"><a href="#">NOTICE</a></li>
+				<li id="left"><a href="#">FAQ</a></li>
+				<li id="left"><a href="#">Q&A</a></li>
+
+				<li id="right"><a href="#">WISH LIST</a></li>
+				<li id="right"><a href="#">ORDER</a></li>
+				<li id="right"><a href="#">SHOPPING CART</a></li>
+				<li id="right"><a href="#">MYPAGE</a></li>
+				<li id="right"><a href="#">JOIN</a></li>
+				<li id="right"><a href="#">LOGIN</a></li>
 			</ul>
 		</div>
-		<div class="logo">GRASSE</div>
 
-<!-- 
+
+		<div class="logo">
+			<h4 id="logo">GRASSE</h4>
+		</div>
+
+		<!-- 
 		<div class="hit_menu">
 			<ul>
 				<li><a href="#">hit4</a></li>
@@ -81,5 +84,27 @@
 		<div>shopping_info</div>
 		<div>copyright</div>
 	</div>
+
+</form>
+
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$("a[name='main']").on("click", function(e){ //메인 클릭
+				e.preventDefault();
+				fn_main();
+			}).trigger("create");	
+		});
+
+	function fn_main(){
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/main.do' />");
+		comSubmit.submit();
+	}
+
+	</script>
+
+
 </body>
 </html>
