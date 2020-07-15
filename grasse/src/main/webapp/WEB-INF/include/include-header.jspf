@@ -7,10 +7,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<link rel="stylesheet" href="./css/header.css" type="text/css" />
-<link rel="stylesheet" href="./css/content.css" type="text/css" />
-<link rel="stylesheet" href="./css/footer.css" type="text/css" />
+<link rel="stylesheet" href="/grasse/resources/css/header.css"
+	type="text/css" />
+<link rel="stylesheet" href="/grasse/resources/css/content.css"
+	type="text/css" />
+<link rel="stylesheet" href="/grasse/resources/css/footer.css"
+	type="text/css" />
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="<c:url value='./js/common.js'/>" charset="utf-8"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="<c:url value='/resources/js/common.js'/>" charset="utf-8"></script>
+
+<!-- 스타일시트 참조  -->
+<link rel="stylesheet" href="/grasse/resources/css/bootstrap.min.css">
+
+<!-- 애니매이션 담당 JQUERY -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<!-- 부트스트랩 JS  -->
+<script src="<c:url value='/resources/js/bootstrap.js'/>" charset="uft-8"></script>

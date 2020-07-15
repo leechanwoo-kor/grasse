@@ -30,6 +30,13 @@ public class JoinController {
 	@Resource(name="joinService")
 	private JoinService joinService;
 	
+	@RequestMapping(value="/join/joinForm.do")
+	public ModelAndView joinForm() {
+		ModelAndView mv = new ModelAndView("/join/joinForm");
+		
+		return mv;
+	}
+	
 	@RequestMapping(value="/joinStep1")
 	public ModelAndView joinStep1(){
 		ModelAndView mv = new ModelAndView();

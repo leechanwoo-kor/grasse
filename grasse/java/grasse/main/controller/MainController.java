@@ -12,10 +12,8 @@ public class MainController {
 	Logger log = Logger.getLogger(this.getClass());
 
 	@RequestMapping(value="/main.do")
-    public ModelAndView main(CommandMap commandMap) throws Exception{
+    public ModelAndView mainPage() {
     	ModelAndView mv = new ModelAndView("/main");
-    	
-    	log.debug("인터셉트 테스트");
     	
     	return mv;
     }

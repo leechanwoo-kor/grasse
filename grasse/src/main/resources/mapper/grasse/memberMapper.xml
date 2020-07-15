@@ -8,9 +8,11 @@
 
 	<!-- 회원가입 -->
 
-	<insert parameterType="hashmap" id="insertMember" keyProperty="MEMBER_NO" useGeneratedKeys="true">
+	<insert parameterType="hashmap" id="insertMember"
+		keyProperty="MEMBER_NO" useGeneratedKeys="true">
 
-		<selectKey resultType="java.lang.Integer" keyProperty="MEMZBER_NO" order="BEFORE">
+		<selectKey resultType="java.lang.Integer"
+			keyProperty="MEMZBER_NO" order="BEFORE">
 			SELECT MEMBER_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 	
@@ -41,5 +43,30 @@
 				SYSDATE)
 			]]>
 	</insert>
+
+	<!-- 로그인 -->
+
+	<select id="memberInfo" parameterType="hashMap"
+		resultType="hashMap">
+		<![CDATA[
+				SELECT
+					MEMBER_NO,
+					MEMBER_ID,
+					PASSWD,
+					NAME,
+					BIRTH,
+					PHONE,
+					EMAIL,
+					ZIPCODE,
+					ADDR1,
+					ADDR2,
+					REGDATE,
+					POINT
+				FROM
+					MEMBER
+				WHERE
+					MEMBER_ID = #{MEMBER_ID}
+		]]>
+	</select>
 
 </mapper>
