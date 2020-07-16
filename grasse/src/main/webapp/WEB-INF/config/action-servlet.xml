@@ -35,16 +35,38 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 
-	<bean
-		class="org.springframework.web.servlet.view.BeanNameViewResolver"
-		p:order="0" />
 	<bean id="jsonView"
 		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 
+
+	<!-- Tiles View Resolver -->
+	<bean id="tielsViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<property name="order" value="0" />
+	</bean>
+
+	<!-- Tiles Configurer -->
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- URL Based View Resolver -->
 	<bean
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-		p:order="1"
 		p:viewClass="org.springframework.web.servlet.view.JstlView"
-		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp">
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="1">
 	</bean>
+
+	<!-- Bean Name View Resolver -->
+	<bean
+		class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="2" />
+
 </beans>

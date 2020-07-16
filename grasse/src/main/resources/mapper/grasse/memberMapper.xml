@@ -69,4 +69,29 @@
 		]]>
 	</select>
 
+	<!-- 아이디 찾기 -->
+
+	<select resultType="hashmap" parameterType="hashmap"
+		id="findIdWithEmail">
+	<![CDATA[
+		SELECT 
+			MEMBER_ID
+		FROM 
+			MEMBER 
+		WHERE 
+			EMAIL = #{EMAIL} AND NAME=#{NAME}
+	]]>
+	</select>
+
+	<!-- 비밀번호 변경 -->
+	<update id="changePw" parameterType="hashMap">
+	<![CDATA[
+	UPDATE MEMBER
+	SET
+	PASSWD=${PASSWD}
+	WHERE
+	NAME=#{NAME} AND EMAIL=#{EMAIL} AND MEMBER_ID=#{MEMBER_ID}
+	]]>
+	</update>
+
 </mapper>

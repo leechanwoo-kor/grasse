@@ -1,6 +1,7 @@
 package grasse.member.login;
 
 import java.security.Key;
+import java.util.List;
 import java.util.Map;
 
 public interface LoginService {
@@ -9,10 +10,10 @@ public interface LoginService {
 	Map<String, Object> login(Map<String, Object> map) throws Exception;
 
 	// 아이디찾기
-	String findId(Map<String, Object> map) throws Exception;
-
+	List<Map<String, Object>> findIdWithEmail(Map<String, Object> map) throws Exception;
+	
 	// 비밀번호 찾기
-	void findPasswd(Map<String, Object> map, Key privateKey) throws Exception;
+	void changePw(Map<String, Object> map, Key privateKey) throws Exception;
 
 	// 자동로그인 체크한 경우에 사용자 테이블에 세션과 유효시간을 저장하기 위한 메서드
 	void keepLogin(Map<String, Object> map) throws Exception;

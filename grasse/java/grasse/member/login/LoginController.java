@@ -2,6 +2,7 @@ package grasse.member.login;
 
 import java.security.Key;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ public class LoginController {
 	/* 로그인 폼 */
 	@RequestMapping(value = "/login/loginForm.do")
 	public @ResponseBody ModelAndView loginForm(HttpSession session, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("/login/loginForm");
+		ModelAndView mv = new ModelAndView(".tiles/login/loginForm");
 
 		return mv;
 	}
@@ -84,13 +85,13 @@ public class LoginController {
 	}
 
 	/* 비밀번호 찾기 폼에서 정보가 맞으면 새로운 비밀번호 작성하기 */
-	@RequestMapping(value = "/login/changePw.do", method=RequestMethod.POST)
+	@RequestMapping(value = "/login/changePw.do", method = RequestMethod.POST)
 	public ModelAndView changePw(HttpServletRequest request, CommandMap commandMap, HttpSession session)
 			throws Exception {
 		ModelAndView mv = new ModelAndView("/login/changePw");
-		
+
 		RSAKeySet keySet = new RSAKeySet();
-		
+
 		String Name = request.getParameter("Name");
 		String MEMBER_ID = request.getParameter("MEMBER_ID");
 		String EMAIL = request.getParameter("EMAIL");
@@ -116,14 +117,14 @@ public class LoginController {
 	@RequestMapping(value = "/login/changePwComplete.do", method = RequestMethod.POST)
 	public ModelAndView joinComplete(CommandMap commandMap, HttpServletRequest request, HttpSession session)
 			throws Exception {
-		ModelAndView mv = new ModelAndView("/login/loginForm");
+		ModelAndView mv = new ModelAndView("/main");
 
 		/* System.out.println("맵!!" + commandMap.getMap()); */
 
 		commandMap.put("MEMBER_ID", session.getAttribute("MEMBER_ID"));
 
 		if (session.getAttribute("RSA_private") != null) {
-			loginService.findPasswd(commandMap.getMap(), (Key) session.getAttribute("RSA_private"));
+			loginService.changePw(commandMap.getMap(), (Key) session.getAttribute("RSA_private"));
 			// if(memberService.regist(member, (Key)session.getAttribute("RSA_private")) >
 			// 0)
 			mv.addObject("Modulus", commandMap.get("modulus"));
@@ -132,6 +133,29 @@ public class LoginController {
 
 		session.removeAttribute("MEMBER_ID");
 
+		return mv;
+	}
+
+	@RequestMapping(value = "/login/findId.do") // 아이디 찾기 폼을 보여주는 메소드
+	public ModelAndView findId(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/login/findId");
+		return mv;
+	}
+
+	@RequestMapping(value = "/login/findIdResult.do", method = RequestMethod.POST) // 입력한 정보에 맞춰서 아이디를 찾아주는 거
+	public ModelAndView findIdResult(HttpServletRequest request, CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView("/login/findIdResult");
+
+		String name = request.getParameter("name");
+		String email = request.getParameter("email") + "@" + request.getParameter("e_domain");
+
+		commandMap.put("NAME", name);
+		commandMap.put("EMAIL", email);
+
+		List<Map<String, Object>> list = loginService.findIdWithEmail(commandMap.getMap());
+		mv.addObject("list", list);
+		mv.addObject("name", name);
+		mv.addObject("email", email);
 		return mv;
 	}
 

@@ -2,6 +2,7 @@ package grasse.member.login;
 
 import java.security.Key;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,17 +23,18 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	// 아이디 찾기
-	public String findId(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return loginDAO.findId(map);
+	@Override
+	public List<Map<String, Object>> findIdWithEmail(Map<String, Object> map) throws Exception {
+
+		return (List<Map<String, Object>>) loginDAO.findIdWithEmail(map);
 	}
 
 	/* 비밀번호 찾기 */
-	public void findPasswd(Map<String, Object> map, Key privateKey) throws Exception {
+	public void changePw(Map<String, Object> map, Key privateKey) throws Exception {
 		map.put("PASSWORD_CHK1", RSAUtil.decrypt(privateKey, map.get("PASSWD2").toString()));
 		map.put("PASSWORD_CHK2", SHA256Util.hashing(map.get("PASSWORD_CHK1").toString()));
 
-		loginDAO.findPasswd(map);
+		loginDAO.changePw(map);
 	}
 
 	// 자동로그인 체크한 경우에 사용자 테이블에 세션과 유효시간을 저장하기 위한 메서드

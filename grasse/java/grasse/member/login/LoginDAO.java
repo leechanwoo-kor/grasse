@@ -1,5 +1,6 @@
 package grasse.member.login;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
@@ -16,13 +17,15 @@ public class LoginDAO extends AbstractDAO {
 	}
 
 	// 아이디 찾기
-	public String findId(Map<String, Object> map) throws Exception {
-		return (String) selectOne("member.findId", map);
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> findIdWithEmail(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return (List<Map<String, Object>>) selectList("member.findIdWithEmail", map);
 	}
 
-	// 비밀번호 찾기변경
-	public void findPasswd(Map<String, Object> map) throws Exception {
-		update("member.findPasswd", map);
+	// 비밀번호 변경
+	public void changePw(Map<String, Object> map) throws Exception {
+		update("member.changePw", map);
 	}
 
 	// 자동로그인 체크한 경우에 사용자 테이블에 세션과 유효시간을 저장

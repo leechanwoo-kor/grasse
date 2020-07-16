@@ -34,7 +34,7 @@
 		<div id="contents">
 
 			<form id="frm" name="frm"
-				action="loginForm.do" method="post" onsubmit="return changePw();">
+				action="changePwComplete.do" method="post" onsubmit="return changePw();">
 				<input type="hidden" name="modulus" id="modulus" value="${Modulus}">
 				<input type="hidden" name="exponent" id="exponent"
 					value="${Exponent}">
