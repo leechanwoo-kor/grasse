@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 <html lang="kr">
@@ -19,7 +18,7 @@
 	href="<c:url value='/resources/common/css/common.css'/>">
 <style>
 body {
-	padding: 0px
+	padding-top: 30px
 }
 
 #tile_header {
@@ -28,7 +27,6 @@ body {
 
 #tile_body {
 	width: 100%;
-	float: left;
 }
 </style>
 </head>
@@ -39,6 +37,9 @@ body {
 	</div>
 	<div id="tile_body">
 		<tiles:insertAttribute name="tile_body" />
+	</div>
+	<div id="tile_footer">
+		<tiles:insertAttribute name="tile_footer" />
 	</div>
 </body>
 

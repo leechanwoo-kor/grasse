@@ -1,11 +1,13 @@
 package grasse.member.login;
 
 import java.security.Key;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,7 +44,8 @@ public class LoginController {
 		HttpSession session = request.getSession();
 
 		commandMap.put("MEMBER_ID", request.getParameter("id"));
-
+		commandMap.put("idSave", request.getParameter("idSave"));
+		commandMap.put("autoLogin", request.getParameter("autoLogin"));
 		Map<String, Object> member = loginService.login(commandMap.getMap());
 
 		String passwd = request.getParameter("passwd");
@@ -50,12 +53,36 @@ public class LoginController {
 		if (member != null && member.get("PASSWD").equals(passwd)) {
 			session.setAttribute("member", member);
 			mv.addObject("member", member);
-			mv.setViewName("/main");
+			
+			if(commandMap.get("autoLogin")!=null) {
+				Cookie autoLogin = new Cookie("autoLogin", session.getId());
+				autoLogin.setPath("/");
+				int amount = 60*60*24*7;
+				autoLogin.setMaxAge(amount);
+				response.addCookie(autoLogin);
+				
+				String SESSIONKEY = session.getId();
+				Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
+				
+				commandMap.put("MEMBER_ID", commandMap.get("MEMBER_ID"));
+				commandMap.put("SESSIONKEY", SESSIONKEY);
+				commandMap.put("SESSIONLIMIT", sessionLimit);
+				
+				loginService.keepLogin(commandMap.getMap());
+			}
+			
+			if(commandMap.get("MEMBER_ID").equals("ADMIN")) {
+				mv.setViewName(".tiles/admin/adminMain");
+			}
+			else {
+				mv.setViewName(".tiles/main/main");
+			}
+			
 		} else {
-			mv.addObject("member", member);
 			mv.addObject("errCode", 1);
-			mv.setViewName("/login/loginForm");
+			mv.setViewName(".tiles/login/loginForm");
 		}
+		
 		return mv;
 	}
 
@@ -71,7 +98,7 @@ public class LoginController {
 		}
 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/main.do");
+		mv.setViewName(".tiles/main/main");
 
 		return mv;
 	}
@@ -79,7 +106,7 @@ public class LoginController {
 	/* 비밀번호 찾기 폼 */
 	@RequestMapping(value = "/login/findPw.do")
 	public ModelAndView findPasswdForm() {
-		ModelAndView mv = new ModelAndView("/login/findPw");
+		ModelAndView mv = new ModelAndView(".tiles/login/findPw");
 
 		return mv;
 	}
@@ -88,7 +115,7 @@ public class LoginController {
 	@RequestMapping(value = "/login/changePw.do", method = RequestMethod.POST)
 	public ModelAndView changePw(HttpServletRequest request, CommandMap commandMap, HttpSession session)
 			throws Exception {
-		ModelAndView mv = new ModelAndView("/login/changePw");
+		ModelAndView mv = new ModelAndView(".tiles/login/changePw");
 
 		RSAKeySet keySet = new RSAKeySet();
 
@@ -117,7 +144,7 @@ public class LoginController {
 	@RequestMapping(value = "/login/changePwComplete.do", method = RequestMethod.POST)
 	public ModelAndView joinComplete(CommandMap commandMap, HttpServletRequest request, HttpSession session)
 			throws Exception {
-		ModelAndView mv = new ModelAndView("/main");
+		ModelAndView mv = new ModelAndView(".tiles/main/main");
 
 		/* System.out.println("맵!!" + commandMap.getMap()); */
 
@@ -138,13 +165,13 @@ public class LoginController {
 
 	@RequestMapping(value = "/login/findId.do") // 아이디 찾기 폼을 보여주는 메소드
 	public ModelAndView findId(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/login/findId");
+		ModelAndView mv = new ModelAndView(".tiles/login/findId");
 		return mv;
 	}
 
 	@RequestMapping(value = "/login/findIdResult.do", method = RequestMethod.POST) // 입력한 정보에 맞춰서 아이디를 찾아주는 거
 	public ModelAndView findIdResult(HttpServletRequest request, CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView("/login/findIdResult");
+		ModelAndView mv = new ModelAndView(".tiles/login/findIdResult");
 
 		String name = request.getParameter("name");
 		String email = request.getParameter("email") + "@" + request.getParameter("e_domain");

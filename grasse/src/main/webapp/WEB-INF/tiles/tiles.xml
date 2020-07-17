@@ -16,6 +16,8 @@
 		template="/WEB-INF/tiles/layouts/base_layout.jsp">
 		<put-attribute name="tile_header"
 			value="/WEB-INF/tiles/layouts/header.jsp" />
+					<put-attribute name="tile_footer"
+			value="/WEB-INF/tiles/layouts/footer.jsp" />
 	</definition>
 	<!-- tiles 사용하여 화면에 표현 -->
 	<definition name=".tiles/*/*" extends="base-layout">

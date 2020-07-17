@@ -40,7 +40,7 @@
 
 
 	<!-- Tiles View Resolver -->
-	<bean id="tielsViewResolver"
+	<bean id="tilesViewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
@@ -64,9 +64,10 @@
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" p:order="1">
 	</bean>
 
-	<!-- Bean Name View Resolver -->
-	<bean
-		class="org.springframework.web.servlet.view.BeanNameViewResolver"
-		p:order="2" />
+	<!-- Bean Name View Resolver <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" 
+		p:order="1" /> -->
+
+	<!-- View Resolver -->
+
 
 </beans>

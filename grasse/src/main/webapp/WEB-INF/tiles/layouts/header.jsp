@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 </head>
 <body>

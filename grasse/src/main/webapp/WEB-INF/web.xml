@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/jsp/main.jsp</welcome-file>
+		<welcome-file>/WEB-INF/jsp/main/main.jsp</welcome-file>
 	</welcome-file-list>
    
 	<!-- 문자 인코딩 시작 -->

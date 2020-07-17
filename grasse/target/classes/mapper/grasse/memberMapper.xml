@@ -7,42 +7,49 @@
 <mapper namespace="member">
 
 	<!-- 회원가입 -->
-
-	<insert parameterType="hashmap" id="insertMember"
-		keyProperty="MEMBER_NO" useGeneratedKeys="true">
-
-		<selectKey resultType="java.lang.Integer"
-			keyProperty="MEMZBER_NO" order="BEFORE">
-			SELECT MEMBER_NO_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-	
+	<insert id="insertMember" parameterType="hashmap">
 		<![CDATA[
-			INSERT INTO MEMBER
-				(MEMBER_NO,
-				MEMBER_ID,
-			  	PASSWD,
-			 	NAME, 
-			 	BIRTH, 
-			 	ZIPCODE, 
-			 	ADDR1, 
-			 	ADDR2, 
-			 	PHONE, 
-			 	EMAIL, 
-			 	REGDATE)
-			VALUES
-				(#{MEMBER_NO}, 
-				#{MEMBER_ID}, 
-				#{PASSWD}, 
-				#{NAME}, 
-				#{BIRTH}, 
-				#{ZIPCODE}, 
-				#{ADDR1}, 
-				#{ADDR2}, 
-				#{PHONE}, 
-				#{EMAIL}, 
-				SYSDATE)
-			]]>
+		INSERT INTO MEMBER
+			(
+			MEMBER_NO,
+			MEMBER_ID,
+		  	PASSWD,
+		 	NAME, 
+		 	BIRTH, 
+		 	ZIPCODE, 
+		 	ADDR1, 
+		 	ADDR2, 
+		 	PHONE, 
+		 	EMAIL, 
+		 	REGDATE)
+		VALUES
+			(
+			MEMBER_NO_SEQ.NEXTVAL, 
+			#{MEMBER_ID}, 
+			#{PASSWD}, 
+			#{NAME}, 
+			#{BIRTH}, 
+			#{ZIPCODE}, 
+			#{ADDR1}, 
+			#{ADDR2}, 
+			#{PHONE}, 
+			#{EMAIL}, 
+			SYSDATE)
+		]]>
 	</insert>
+
+	<!-- 아이디 체크 -->
+	<select id="checkId" parameterType="String" resultType="int">
+	<![CDATA[
+		SELECT 
+			COUNT(*) 
+		FROM 
+			MEMBER
+		WHERE 
+			MEMBER_ID = #{MEMBER_ID}
+	]]>
+	</select>
+
 
 	<!-- 로그인 -->
 
@@ -67,6 +74,39 @@
 				WHERE
 					MEMBER_ID = #{MEMBER_ID}
 		]]>
+	</select>
+
+	<!-- 자동로그인 -->
+
+	<update id="keepLogin">
+		<![CDATA[
+			UPDATE MEMBER
+				SET SESSIONKEY = #{SESSIONKEY},
+				SESSIONKEYLIMIT = #{SESSIONLIMIT}
+			WHERE MEMBER_ID = #{MEMBER_ID}
+		]]>
+	</update>
+
+	<!-- 자동로그인 세션 ID로 저장 -->
+
+	<select id="checkUserWithSessionKey" parameterType="String"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				MEMBER_NO,
+				MEMBER_ID,
+				PASSWD,
+				NAME,
+				BIRTH,
+				ZIPCODE,
+				ADDR1,
+				ADDR2,
+				PHONE,
+				EMAIL,
+				SESSIONKEYFROMMEMBER
+			WHERE SESSIONKEY = #{SESSIONKEY} AND
+				SESSIONKEYLIMIT > SYSDATE
+	]]>
 	</select>
 
 	<!-- 아이디 찾기 -->
