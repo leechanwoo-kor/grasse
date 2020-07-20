@@ -30,10 +30,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/* 비밀번호 찾기 */
-	public void changePw(Map<String, Object> map, Key privateKey) throws Exception {
-		map.put("PASSWORD_CHK1", RSAUtil.decrypt(privateKey, map.get("PASSWD2").toString()));
-		map.put("PASSWORD_CHK2", SHA256Util.hashing(map.get("PASSWORD_CHK1").toString()));
-
+	public void changePw(Map<String, Object> map) throws Exception {
+		
 		loginDAO.changePw(map);
 	}
 

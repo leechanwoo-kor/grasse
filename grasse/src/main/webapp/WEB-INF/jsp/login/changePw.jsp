@@ -85,21 +85,6 @@
 	</div>
 </div>
 
-<script>
-	$(document).ready(function() {
-		$("#modulus").val("${Modulus}");
-		$("#exponent").val("${Exponent}");
-
-		$("#changePass").click(function(event) {
-			var rsa = new RSAKey();
-			rsa.setPublic($('#modulus').val(), $('#exponent').val());
-
-			$("#PASSWD2").val(rsa.encrypt($("#PASSWD").val()));
-			return true;
-
-		})
-	});
-</script>
 <script type="text/javascript">
 	$("input[name=PASSWD]")
 			.blur(

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 뷰포트 -->
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <script type="text/javascript">
@@ -31,7 +32,18 @@
 	            setCookie("userInputId", userInputId, 7); // 7일 동안 쿠키 보관
 	        }
 	    });
+
+		$("#findId").on("click", function(e) { //아이디 찾기
+			e.preventDefault();
+			fn_findId();
+		}).trigger("create");
+
+		$("a[name='findPw']").on("click", function(e) { //비밀번호 찾기
+			e.preventDefault();
+			fn_findPw();
+		}).trigger("create");
 	});
+
 
 	function setCookie(cookieName, value, exdays){
 	    var exdate = new Date();
@@ -75,6 +87,18 @@
 		if (txt.defaultValue == txt.value)
 			txt.value = "";
 	}
+
+	function fn_findId() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/login/findId.do' />");
+		comSubmit.submit();
+	}
+	
+	function fn_findPw() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/login/findPw.do' />");
+		comSubmit.submit();
+	}
 </script>
 </head>
 
@@ -116,8 +140,9 @@
 					<div class="form-group">
 						<input type="button" name="join_btn"
 							style="width: 160; font-family: 돋움; background-color: #000000; color: #FFFFFF">
-						<a href="#this" class="btn" id="findId">아이디 찾기</a> <a href="#this"
-							class="btn" id="findPw">비밀번호 찾기</a>
+						<a href="#this" class="btn btn-info" id="findId" name="findId">아이디
+							찾기</a> <a href="#this" class="btn btn-info" id="findPw" name="findPw">비밀번호
+							찾기</a>
 					</div>
 
 					<p class="mt-5 mb-3 text-muted text-center">© 2020. GRASSE. All
@@ -126,7 +151,6 @@
 			</div>
 		</div>
 	</div>
-
 
 
 

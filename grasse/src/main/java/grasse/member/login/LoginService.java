@@ -11,9 +11,9 @@ public interface LoginService {
 
 	// 아이디찾기
 	List<Map<String, Object>> findIdWithEmail(Map<String, Object> map) throws Exception;
-	
+
 	// 비밀번호 찾기
-	void changePw(Map<String, Object> map, Key privateKey) throws Exception;
+	void changePw(Map<String, Object> map) throws Exception;
 
 	// 자동로그인 체크한 경우에 사용자 테이블에 세션과 유효시간을 저장하기 위한 메서드
 	void keepLogin(Map<String, Object> map) throws Exception;

@@ -13,7 +13,7 @@ public class MainController {
 
 	@RequestMapping(value="/main.do")
     public ModelAndView mainPage() {
-    	ModelAndView mv = new ModelAndView("/main");
+    	ModelAndView mv = new ModelAndView("/main/main");
     	
     	return mv;
     }

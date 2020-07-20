@@ -125,12 +125,12 @@
 
 	<!-- 비밀번호 변경 -->
 	<update id="changePw" parameterType="hashMap">
-	<![CDATA[
-	UPDATE MEMBER
-	SET
-	PASSWD=${PASSWD}
-	WHERE
-	NAME=#{NAME} AND EMAIL=#{EMAIL} AND MEMBER_ID=#{MEMBER_ID}
+		<![CDATA[
+		UPDATE MEMBER
+		SET
+			PASSWD=#{PASSWD2}
+		WHERE
+			NAME=#{NAME} AND EMAIL=#{EMAIL} AND MEMBER_ID=#{MEMBER_ID}
 	]]>
 	</update>
 

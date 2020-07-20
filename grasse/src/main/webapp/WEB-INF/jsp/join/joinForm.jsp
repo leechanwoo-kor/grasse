@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
 <script type="text/javascript">
 
 function check() {
@@ -122,123 +121,126 @@ function check() {
 		}
 	</script>
 
+	<!-- 회원가입 폼 -->
 
-	<div class="join" align="center">
-		<h2>회원가입</h2>
-		<h3>기본정보</h3>
-		<p>
-			<font color="red">*</font>필수입력사항
-		</p>
-		<form name="Reg_form" action="/grasse/join/joinComplete.do"
-			method="post" onsubmit="return check()">
-			<table cellpadding="0" cellspacing="0" align="center">
-				<tbody>
-					<tr>
-						<th>아이디<font color="red">*</font></th>
-						<td><input type="text" id="MEMBER_ID" name="MEMBER_ID">(영문소문자/숫자,
-							4~16자)
-							<p class="alertId alert-positive"></p></td>
-					</tr>
-					<tr>
-						<th>비밀번호<font color="red">*</font></th>
-						<td><input type="password" id="PASSWD" name="PASSWD">(영문
-							대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)
-							<p class="alertPass alert-positive"></p></td>
-					</tr>
-					<tr>
-						<th>비밀번호 확인<font color="red">*</font></th>
-						<td><input type="password" id="PASSWD2" name="PASSWD2">
-							<p class="alertPass2 alert-positive"></p></td>
-					</tr>
-					<tr>
-						<th>이름<font color="red">*</font></th>
-						<td><input type="text" id="NAME" name="NAME">
-							<p class="alertName alert-positive"></td>
-					</tr>
-					<tr>
-						<th>생년월일<font color="red">*</font></th>
-						<td><input type="text" id="BIRTH" name="BIRTH"
-							placeholder="ex)19971217">
-							<p class="alertBirth alert-positive"></td>
-					</tr>
-					<tr>
-						<th>주소<font color="red">*</font></th>
-						<td><input type="text" id="ZIPCODE" name="ZIPCODE"
-							placeholder="우편번호"> <input type="button" value="우편번호"
-							onclick="execDaumPostcode()"><br> <input type="text"
-							id="ADDR1" name="ADDR1" placeholder="기본주소"> <input
-							type="text" id="ADDR2" name="ADDR2" placeholder="상세주소"><br />
-							<input type="text" id="extraADDR" name="extraADDR"
-							placeholder="참고항목"></td>
-					</tr>
-					<tr>
-						<th>휴대전화<font color="red">*</font></th>
-						<td><input type="text" id="PHONE" name="PHONE"
-							placeholder="-없이 번호만 입력해주세요">
-							<p class="alertPhone alert-positive"></td>
-					</tr>
-					<tr>
-						<th>이메일<font color="red">*</font></th>
-						<td><input type="text" id="EMAIL" name="EMAIL" class="box"
-							placeholder="이메일을 입력하세요"><input type="button"
-							id="emailBtn" value="인증메일 발송">
-							<p class="alertEmail alert-positive"></td>
-					</tr>
-					<tr>
-						<th>이메일 인증<font color="red">*</font></th>
-						<td><input type="text" id="emailAuth" placeholder="인증번호입력" />
-							<button type="button" id="emailAuthBtn">이메일인증</button></td>
-					<tr>
-						<td><input type="hidden" id="random" value="${random}" /></td>
-						<br />
-						<br />
-						<br />
-						<br />
-					</tr>
-				</tbody>
-			</table>
-			<div class="이용약관">
-				<h3>[필수] 이용약관 동의</h3>
-				<p class="check">
-					<span>이용약관에 동의하십니까?</span> <input id="agree_service_check"
-						name="agree_service_check[]" value="1" type="checkbox"><label
-						for="agree_service_check">동의함</label>
-				</p>
-			</div>
-			<div class="">
-				<h3>[필수] 개인정보 수집 및 이용 동의</h3>
-				<div class="content">
-					■ 수집하는 개인정보 항목<br>회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를
-					수집하고 있습니다.
-					<p>ο 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 휴대전화번호 , 이메일 , 서비스
-						이용기록 , 접속 로그 , 결제기록</p>
+	<div class="container" style="padding-top: 50px;">
+		<div class="join" align="center">
+			<h2>회원가입</h2>
+			<h3>기본정보</h3>
+			<p>
+				<font color="red">*</font>필수입력사항
+			</p>
+			<form name="Reg_form" action="/grasse/join/joinComplete.do"
+				method="post" onsubmit="return check()">
+				<table cellpadding="0" cellspacing="0" align="center">
+					<tbody>
+						<tr>
+							<th>아이디<font color="red">*</font></th>
+							<td><input type="text" id="MEMBER_ID" name="MEMBER_ID">(영문소문자/숫자,
+								4~16자)
+								<p class="alertId alert-positive"></p></td>
+						</tr>
+						<tr>
+							<th>비밀번호<font color="red">*</font></th>
+							<td><input type="password" id="PASSWD" name="PASSWD">(영문
+								대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)
+								<p class="alertPass alert-positive"></p></td>
+						</tr>
+						<tr>
+							<th>비밀번호 확인<font color="red">*</font></th>
+							<td><input type="password" id="PASSWD2" name="PASSWD2">
+								<p class="alertPass2 alert-positive"></p></td>
+						</tr>
+						<tr>
+							<th>이름<font color="red">*</font></th>
+							<td><input type="text" id="NAME" name="NAME">
+								<p class="alertName alert-positive"></td>
+						</tr>
+						<tr>
+							<th>생년월일<font color="red">*</font></th>
+							<td><input type="text" id="BIRTH" name="BIRTH"
+								placeholder="ex)19971217">
+								<p class="alertBirth alert-positive"></td>
+						</tr>
+						<tr>
+							<th>주소<font color="red">*</font></th>
+							<td><input type="text" id="ZIPCODE" name="ZIPCODE"
+								placeholder="우편번호"> <input type="button" value="우편번호"
+								onclick="execDaumPostcode()"><br> <input
+								type="text" id="ADDR1" name="ADDR1" placeholder="기본주소">
+								<input type="text" id="ADDR2" name="ADDR2" placeholder="상세주소"><br />
+								<input type="text" id="extraADDR" name="extraADDR"
+								placeholder="참고항목"></td>
+						</tr>
+						<tr>
+							<th>휴대전화<font color="red">*</font></th>
+							<td><input type="text" id="PHONE" name="PHONE"
+								placeholder="-없이 번호만 입력해주세요">
+								<p class="alertPhone alert-positive"></td>
+						</tr>
+						<tr>
+							<th>이메일<font color="red">*</font></th>
+							<td><input type="text" id="EMAIL" name="EMAIL" class="box"
+								placeholder="이메일을 입력하세요"><input type="button"
+								id="emailBtn" value="인증메일 발송">
+								<p class="alertEmail alert-positive"></td>
+						</tr>
+						<tr>
+							<th>이메일 인증<font color="red">*</font></th>
+							<td><input type="text" id="emailAuth" placeholder="인증번호입력" />
+								<button type="button" id="emailAuthBtn">이메일인증</button></td>
+						<tr>
+							<td><input type="hidden" id="random" value="${random}" /></td>
+							<br />
+							<br />
+							<br />
+							<br />
+						</tr>
+					</tbody>
+				</table>
+				<div class="이용약관">
+					<h3>[필수] 이용약관 동의</h3>
+					<p class="check">
+						<span>이용약관에 동의하십니까?</span> <input id="agree_service_check"
+							name="agree_service_check[]" value="1" type="checkbox"><label
+							for="agree_service_check">동의함</label>
+					</p>
 				</div>
-				<p class="check">
-					<span>개인정보 수집 및 이용에 동의하십니까?</span> <input id="agree_privacy_check"
-						name="agree_privacy_check[]" value="1" type="checkbox"><label
-						for="agree_privacy_check">동의함</label>
-				</p>
-			</div>
-			<div>
-				<h3>[선택] 개인정보 제3자 제공 동의</h3>
-				<div class="content">
-					아래 내용의 동의 여부는 회원가입에 영향을 미치지 않습니다. 단, 동의 거부시 서비스 이용에 제한이 있을 수 있습니다.<br>
-					<br> - 제공 받는 자 : Grasse<br> - 제공 항목 : ~~~~<br> - 제공
-					목적 : ~~~~<br> - 보유 및 이용기간 : 평생<br>
+				<div class="">
+					<h3>[필수] 개인정보 수집 및 이용 동의</h3>
+					<div class="content">
+						■ 수집하는 개인정보 항목<br>회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를
+						수집하고 있습니다.
+						<p>ο 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 휴대전화번호 , 이메일 , 서비스
+							이용기록 , 접속 로그 , 결제기록</p>
+					</div>
+					<p class="check">
+						<span>개인정보 수집 및 이용에 동의하십니까?</span> <input id="agree_privacy_check"
+							name="agree_privacy_check[]" value="1" type="checkbox"><label
+							for="agree_privacy_check">동의함</label>
+					</p>
 				</div>
-				<p class="check">
-					<span>개인정보 제3자 제공에 동의하십니까?</span> <input
-						id="agree_information_check" name="agree_information_check[]"
-						value="1" type="checkbox"><label
-						for="agree_information_check">동의함</label>
-				</p>
-			</div>
-			<div align="center">
-				<input type="button" value="회원가입취소"
-					onclick="location.href='/grasse/main'" />&emsp;&emsp; <input
-					type="submit" value="회원가입" />
-			</div>
-		</form>
+				<div>
+					<h3>[선택] 개인정보 제3자 제공 동의</h3>
+					<div class="content">
+						아래 내용의 동의 여부는 회원가입에 영향을 미치지 않습니다. 단, 동의 거부시 서비스 이용에 제한이 있을 수 있습니다.<br>
+						<br> - 제공 받는 자 : Grasse<br> - 제공 항목 : ~~~~<br> - 제공
+						목적 : ~~~~<br> - 보유 및 이용기간 : 평생<br>
+					</div>
+					<p class="check">
+						<span>개인정보 제3자 제공에 동의하십니까?</span> <input
+							id="agree_information_check" name="agree_information_check[]"
+							value="1" type="checkbox"><label
+							for="agree_information_check">동의함</label>
+					</p>
+				</div>
+				<div align="center">
+					<input type="button" value="회원가입취소"
+						onclick="location.href='/grasse/main'" />&emsp;&emsp; <input
+						type="submit" value="회원가입" />
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 

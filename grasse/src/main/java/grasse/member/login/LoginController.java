@@ -53,36 +53,35 @@ public class LoginController {
 		if (member != null && member.get("PASSWD").equals(passwd)) {
 			session.setAttribute("member", member);
 			mv.addObject("member", member);
-			
-			if(commandMap.get("autoLogin")!=null) {
+
+			if (commandMap.get("autoLogin") != null) {
 				Cookie autoLogin = new Cookie("autoLogin", session.getId());
 				autoLogin.setPath("/");
-				int amount = 60*60*24*7;
+				int amount = 60 * 60 * 24 * 7;
 				autoLogin.setMaxAge(amount);
 				response.addCookie(autoLogin);
-				
+
 				String SESSIONKEY = session.getId();
-				Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
-				
+				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+
 				commandMap.put("MEMBER_ID", commandMap.get("MEMBER_ID"));
 				commandMap.put("SESSIONKEY", SESSIONKEY);
 				commandMap.put("SESSIONLIMIT", sessionLimit);
-				
+
 				loginService.keepLogin(commandMap.getMap());
 			}
-			
-			if(commandMap.get("MEMBER_ID").equals("ADMIN")) {
+
+			if (commandMap.get("MEMBER_ID").equals("ADMIN")) {
 				mv.setViewName(".tiles/admin/adminMain");
-			}
-			else {
+			} else {
 				mv.setViewName(".tiles/main/main");
 			}
-			
+
 		} else {
 			mv.addObject("errCode", 1);
 			mv.setViewName(".tiles/login/loginForm");
 		}
-		
+
 		return mv;
 	}
 
@@ -126,16 +125,7 @@ public class LoginController {
 		commandMap.put("MEMBER_ID", MEMBER_ID);
 		commandMap.put("EMAIL", EMAIL);
 
-		/* Front Side로 공개키 전달 */
-		mv.addObject("Modulus", keySet.getPublicKeyModulus());
-		mv.addObject("Exponent", keySet.getPublicKeyExponent());
-
-		session.setAttribute("NAME", commandMap.get("NAME"));
-		session.setAttribute("MEMBER_ID", commandMap.get("MEMBER_ID"));
-		session.setAttribute("EMAIL", commandMap.get("EMAIL"));
-
-		/* 세션에 개인키 저장 */
-		session.setAttribute("RSA_private", keySet.getPrivateKey());
+		session.setAttribute("member", commandMap.getMap());
 
 		return mv;
 	}
@@ -146,19 +136,15 @@ public class LoginController {
 			throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/main/main");
 
-		/* System.out.println("맵!!" + commandMap.getMap()); */
+		Map<String, Object> PwMap = (Map<String, Object>) session.getAttribute("member");
+		PwMap.put("PASSWD2", request.getParameter("PASSWD2"));
 
-		commandMap.put("MEMBER_ID", session.getAttribute("MEMBER_ID"));
+		loginService.changePw(PwMap);
 
-		if (session.getAttribute("RSA_private") != null) {
-			loginService.changePw(commandMap.getMap(), (Key) session.getAttribute("RSA_private"));
-			// if(memberService.regist(member, (Key)session.getAttribute("RSA_private")) >
-			// 0)
-			mv.addObject("Modulus", commandMap.get("modulus"));
-			mv.addObject("Exponent", commandMap.get("exponent"));
+		/* 세션삭제 */
+		if (session != null) {
+			session.invalidate();
 		}
-
-		session.removeAttribute("MEMBER_ID");
 
 		return mv;
 	}

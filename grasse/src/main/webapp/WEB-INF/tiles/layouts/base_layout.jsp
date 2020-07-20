@@ -17,15 +17,15 @@
 <link rel="stylesheet"
 	href="<c:url value='/resources/common/css/common.css'/>">
 <style>
-body {
-	padding-top: 30px
-}
 
 #tile_header {
+	top: 0;
 	width: 100%;
+	border: 0px red solid;
 }
 
 #tile_body {
+	padding-top: 30px
 	width: 100%;
 }
 </style>

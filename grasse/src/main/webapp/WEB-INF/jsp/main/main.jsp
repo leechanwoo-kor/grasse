@@ -20,8 +20,13 @@
 					<li id="right"><a href="#">ORDER</a></li>
 					<li id="right"><a href="#">SHOPPING CART</a></li>
 					<li id="right"><a href="#">MYPAGE</a></li>
-					<li id="right"><a href="#this" name="join">JOIN</a></li>
-					<li id="right"><a href="#this" name="login">LOGIN</a></li>
+					<c:if test="${sessionScope.member == null }">
+						<li id="right"><a href="#this" name="join">JOIN</a></li>
+						<li id="right"><a href="#this" name="login">LOGIN</a></li>
+					</c:if>
+					<c:if test="${sessionScope.member != null }">
+						<li id="right"><a href="#this" name="logout">LOGOUT</a></li>	
+					</c:if>
 				</ul>
 			</div>
 
@@ -114,6 +119,11 @@
 				e.preventDefault();
 				fn_login();
 			}).trigger("create");
+
+			$("a[name='logout']").on("click", function(e) { //회원가입
+				e.preventDefault();
+				fn_logout();
+			}).trigger("create");
 		});
 
 		function fn_main() {
@@ -129,6 +139,11 @@
 		function fn_login() {
 			var comSubmit = new ComSubmit();
 			comSubmit.setUrl("<c:url value='/login/loginForm.do' />");
+			comSubmit.submit();
+		}
+		function fn_logout() {
+			var comSubmit = new ComSubmit();
+			comSubmit.setUrl("<c:url value='/login/logout.do' />");
 			comSubmit.submit();
 		}
 	</script>
