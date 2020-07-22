@@ -1,0 +1,95 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<head>
+<%@ include file="/WEB-INF/include/include-header.jspf"%>
+</head>
+<body class="py-5">
+	<div class="logo" style="padding-top: 50px;">
+		<h1 class="logo text-center display-1">GRASSE</h1>
+	</div>
+
+	<div class="hr py-5">
+		<hr style="width: 80%; border: solid 1px black; margin: 0 auto">
+	</div>
+
+	<div class="menu">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-1 col-md-1 mx-auto"></div>
+				<div class="col-lg-2 col-md-2 mx-auto">
+					<a class="col-md-2 text-dark text-center h5" href="#" name="best">BEST</a>
+				</div>
+				<div class="col-lg-2 col-md-2 mx-auto">
+					<a class="col-md-2 text-dark text-center h5" href="#" name="new">NEW</a>
+				</div>
+				<div class="col-lg-2 col-md-2 mx-auto">
+					<a class="col-md-2 text-dark text-center h5" href="#" name="man">MAN</a>
+				</div>
+				<div class="col-lg-2 col-md-2 mx-auto">
+					<a class="col-md-2 text-dark text-center h5" href="#" name="woman">WOMAN</a>
+				</div>
+				<div class="col-lg-2 col-md-2 mx-auto">
+					<a class="col-md-2 text-dark text-center h5" href="#"
+						name="container">CONTAINER</a>
+				</div>
+				<div class="col-lg-1 col-md-1 mx-auto"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="hr py-5">
+		<hr style="width: 80%; border: dashed 1px black; margin: 0 auto">
+	</div>
+
+</body>
+<%@ include file="/WEB-INF/include/include-body.jspf"%>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("a[name='best']").on("click", function(e) { // BEST
+			e.preventDefault();
+			fn_best();
+		}).trigger("create");
+		$("a[name='new']").on("click", function(e) { // NEW
+			e.preventDefault();
+			fn_new();
+		}).trigger("create");
+		$("a[name='man']").on("click", function(e) { // man
+			e.preventDefault();
+			fn_man();
+		}).trigger("create");
+		$("a[name='woman']").on("click", function(e) { // woman
+			e.preventDefault();
+			fn_woman();
+		}).trigger("create");
+		$("a[name='container']").on("click", function(e) { // container
+			e.preventDefault();
+			fn_container();
+		}).trigger("create");
+	});
+	function fn_best() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/item/best.do' />");
+		comSubmit.submit();
+	}
+	function fn_new() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/item/new.do' />");
+		comSubmit.submit();
+	}
+	function fn_man() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/item/man.do' />");
+		comSubmit.submit();
+	}
+	function fn_woman() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/item/woman.do' />");
+		comSubmit.submit();
+	}
+	function fn_container() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/item/container.do' />");
+		comSubmit.submit();
+	}
+</script>

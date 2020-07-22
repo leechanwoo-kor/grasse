@@ -13,11 +13,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
-<!-- common CSS -->
-<link rel="stylesheet"
-	href="<c:url value='/resources/common/css/common.css'/>">
 <style>
-
 #tile_header {
 	top: 0;
 	width: 100%;
@@ -25,7 +21,7 @@
 }
 
 #tile_body {
-	padding-top: 120px;
+	padding-top: 50px
 	width: 100%;
 }
 </style>

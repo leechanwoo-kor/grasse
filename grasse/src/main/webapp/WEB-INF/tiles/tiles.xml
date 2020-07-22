@@ -1,27 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
 <tiles-definitions>
+
+	<!-- main -->
+	<definition name="main-layout"
+		template="/WEB-INF/tiles/layouts/base_layout.jsp">
+		<put-attribute name="tile_header"
+			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
+		<put-attribute name="tile_menu"
+			value="/WEB-INF/tiles/layouts/tile_menu.jsp" />
+		<put-attribute name="tile_footer"
+			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+	</definition>
+	<definition name=".tiles/main/*" extends="main-layout">
+		<put-attribute name="tile_body"
+			value="/WEB-INF/jsp/main/{1}.jsp" />
+	</definition>
+
 	<!-- login -->
 	<definition name="login-layout"
 		template="/WEB-INF/tiles/layouts/login_layout.jsp">
+		<put-attribute name="tile_header"
+			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
+		<put-attribute name="tile_footer"
+			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
 	</definition>
-	<definition name="login/*" extends="login-layout">
+	<definition name=".tiles/login/*" extends="login-layout">
 		<put-attribute name="tile_body"
 			value="/WEB-INF/jsp/login/{1}.jsp" />
 	</definition>
-	
-	<!-- base -->
-	<definition name="base-layout"
-		template="/WEB-INF/tiles/layouts/base_layout.jsp">
+
+	<!-- join -->
+	<definition name="join-layout"
+		template="/WEB-INF/tiles/layouts/join_layout.jsp">
 		<put-attribute name="tile_header"
-			value="/WEB-INF/tiles/layouts/header.jsp" />
-					<put-attribute name="tile_footer"
-			value="/WEB-INF/tiles/layouts/footer.jsp" />
+			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
+		<put-attribute name="tile_footer"
+			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
 	</definition>
-	<!-- tiles 사용하여 화면에 표현 -->
-	<definition name=".tiles/*/*" extends="base-layout">
+	<definition name=".tiles/join/*" extends="join-layout">
 		<put-attribute name="tile_body"
-			value="/WEB-INF/jsp/{1}/{2}.jsp" />
+			value="/WEB-INF/jsp/join/{1}.jsp" />
 	</definition>
+
+	<!-- item -->
+	<definition name="item-layout"
+		template="/WEB-INF/tiles/layouts/item_layout.jsp">
+		<put-attribute name="tile_header"
+			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
+		<put-attribute name="tile_menu"
+			value="/WEB-INF/tiles/layouts/tile_menu.jsp" />
+		<put-attribute name="tile_footer"
+			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+	</definition>
+	<definition name=".tiles/item/*" extends="item-layout">
+		<put-attribute name="tile_body"
+			value="/WEB-INF/jsp/item/{1}.jsp" />
+	</definition>
+
 </tiles-definitions>

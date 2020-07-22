@@ -57,10 +57,6 @@
 
 <script type="text/javascript">
 
-$(document).ready(function() {
-	$("input[name='MEMBER_ID']").focus();
-});
-
 function check() {
 		var reg = document.Reg_form;
 
@@ -133,6 +129,9 @@ function check() {
 			<h2>회원가입</h2>
 		</div>
 
+		<div class="hr py-5">
+			<hr style="width: 80%; border: solid 1px black; margin: 0 auto">
+		</div>
 		<div class="row">
 			<div class="col-md-2 order-md-1"></div>
 			<div class="col-md-8 order-md-1">
@@ -142,123 +141,73 @@ function check() {
 				</h6>
 				<form name="Reg_form" action="/grasse/join/joinComplete.do"
 					method="post" onsubmit="return check()">
-
-					<div class="form-group row pt-5">
-						<label class="col-sm-3 col-form-label">아이디<font
-							color="red">*</font></label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="MEMBER_ID"
-								name="MEMBER_ID">(영문소문자/숫자, 4~16자)
-							<p class="alertId alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">비밀번호<font
-							color="red">*</font></label>
-						<div class="col-sm-5">
-							<input type="password" class="form-control" id="PASSWD"
-								name="PASSWD">(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)
-							<p class="alertPass alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">비밀번호 확인<font
-							color="red">*</font></label>
-						<div class="col-sm-5">
-							<input type="password" class="form-control" id="PASSWD2"
-								name="PASSWD2">
-							<p class="alertPass2 alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">이름<font color="red">*</font></label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="NAME" name="NAME">
-							<p class="alertName alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">생년월일<font
-							color="red">*</font></label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="BIRTH" name="BIRTH"
-								placeholder="ex)19971217">
-							<p class="alertBirth alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">주소<font color="red">*</font></label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="ZIPCODE"
-								name="ZIPCODE" placeholder="우편번호">
-						</div>
-						<div class="col-sm-3">
-							<button type="button" class="btn btn-secondary btn-sm"
-								onclick="execDaumPostcode()">우편번호</button>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="ADDR1" name="ADDR1"
-								placeholder="기본주소">
-						</div>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="ADDR2" name="ADDR2"
-								placeholder="상세주소">
-						</div>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="extraADDR"
-								name="extraADDR" placeholder="참고항목">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">휴대전화<font
-							color="red">*</font></label>
-						<div class="col-sm-5">
-							<input type="text" class="form-control" id="PHONE" name="PHONE"
-								placeholder="-없이 번호만 입력해주세요">
-							<p class="alertPhone alert-positive"></p>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">이메일<font
-							color="red">*</font></label>
-						<div class="col-sm-5">
-							<input type="text" class="form-control" id="EMAIL" name="EMAIL"
-								placeholder="이메일을 입력하세요">
-						</div>
-						<div class="col-sm-3">
-							<button type="button" class="btn btn-secondary btn-sm"
-								id="emailBtn">인증메일 발송</button>
-							<p class="alertEmail alert-positive">
-								</td>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">이메일 인증<font
-							color="red">*</font></label>
-						<div class="col-sm-5">
-							<input type="text" class="form-control" id="emailAuth"
-								placeholder="인증번호입력">
-						</div>
-						<div class="col-sm-3">
-							<button type="button" class="btn btn-secondary btn-sm"
-								id="emailAuthBtn">이메일인증</button>
-							<p class="alertEmail alert-positive">
-								<input type="hidden" id="random" value="${random}" />
-						</div>
-					</div>
-
-					<div class="이용약관 pt-5">
+					<table cellpadding="0" cellspacing="0" align="center">
+						<tbody>
+							<tr>
+								<th>아이디<font color="red">*</font></th>
+								<td><input type="text" id="MEMBER_ID" name="MEMBER_ID">(영문소문자/숫자,
+									4~16자)
+									<p class="alertId alert-positive"></p></td>
+							</tr>
+							<tr>
+								<th>비밀번호<font color="red">*</font></th>
+								<td><input type="password" id="PASSWD" name="PASSWD">(영문
+									대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)
+									<p class="alertPass alert-positive"></p></td>
+							</tr>
+							<tr>
+								<th>비밀번호 확인<font color="red">*</font></th>
+								<td><input type="password" id="PASSWD2" name="PASSWD2">
+									<p class="alertPass2 alert-positive"></p></td>
+							</tr>
+							<tr>
+								<th>이름<font color="red">*</font></th>
+								<td><input type="text" id="NAME" name="NAME">
+									<p class="alertName alert-positive"></td>
+							</tr>
+							<tr>
+								<th>생년월일<font color="red">*</font></th>
+								<td><input type="text" id="BIRTH" name="BIRTH"
+									placeholder="ex)19971217">
+									<p class="alertBirth alert-positive"></td>
+							</tr>
+							<tr>
+								<th>주소<font color="red">*</font></th>
+								<td><input type="text" id="ZIPCODE" name="ZIPCODE"
+									placeholder="우편번호"> <input type="button" value="우편번호"
+									onclick="execDaumPostcode()"><br> <input
+									type="text" id="ADDR1" name="ADDR1" placeholder="기본주소">
+									<input type="text" id="ADDR2" name="ADDR2" placeholder="상세주소"><br />
+									<input type="text" id="extraADDR" name="extraADDR"
+									placeholder="참고항목"></td>
+							</tr>
+							<tr>
+								<th>휴대전화<font color="red">*</font></th>
+								<td><input type="text" id="PHONE" name="PHONE"
+									placeholder="-없이 번호만 입력해주세요">
+									<p class="alertPhone alert-positive"></td>
+							</tr>
+							<tr>
+								<th>이메일<font color="red">*</font></th>
+								<td><input type="text" id="EMAIL" name="EMAIL" class="box"
+									placeholder="이메일을 입력하세요"><input type="button"
+									id="emailBtn" value="인증메일 발송">
+									<p class="alertEmail alert-positive"></td>
+							</tr>
+							<tr>
+								<th>이메일 인증<font color="red">*</font></th>
+								<td><input type="text" id="emailAuth" placeholder="인증번호입력" />
+									<button type="button" id="emailAuthBtn">이메일인증</button></td>
+							<tr>
+								<td><input type="hidden" id="random" value="${random}" /></td>
+								<br />
+								<br />
+								<br />
+								<br />
+							</tr>
+						</tbody>
+					</table>
+					<div class="이용약관">
 						<h3>[필수] 이용약관 동의</h3>
 						<p class="check">
 							<span>이용약관에 동의하십니까?</span> <input id="agree_service_check"
@@ -266,7 +215,6 @@ function check() {
 								for="agree_service_check">동의함</label>
 						</p>
 					</div>
-
 					<div class="">
 						<h3>[필수] 개인정보 수집 및 이용 동의</h3>
 						<div class="content">
@@ -281,7 +229,6 @@ function check() {
 								type="checkbox"><label for="agree_privacy_check">동의함</label>
 						</p>
 					</div>
-
 					<div>
 						<h3>[선택] 개인정보 제3자 제공 동의</h3>
 						<div class="content">
@@ -296,11 +243,10 @@ function check() {
 								for="agree_information_check">동의함</label>
 						</p>
 					</div>
-
 					<div class="row">
 						<div class="col">
-							<a href="/grasse/main.do"
-								class="btn btn-secondary btn-lg btn-block">회원가입 취소</a>
+							<button class="btn btn-secondary btn-lg btn-block"
+								onclick="location.href='/grasse/main.do'">회원가입취소</button>
 						</div>
 						<div class="col">
 							<button class="btn btn-secondary btn-lg btn-block" type="submit">회원가입</button>
@@ -585,4 +531,4 @@ $(document).ready(function() {
 	});
 
 </script>
-</html>
+< / html>
