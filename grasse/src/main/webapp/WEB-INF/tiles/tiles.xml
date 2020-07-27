@@ -4,6 +4,19 @@
 
 <tiles-definitions>
 
+	<!-- admin -->
+	<definition name="admin-layout"
+		template="/WEB-INF/tiles/layouts/admin/admin_layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/admin/header.jsp" />
+		<put-attribute name="sidebar"
+			value="/WEB-INF/tiles/layouts/admin/sidebar.jsp" />
+	</definition>
+	<definition name=".tiles/admin/*/*" extends="admin-layout">
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/admin/{1}/{2}.jsp" />
+	</definition>	
+	
 	<!-- main -->
 	<definition name="main-layout"
 		template="/WEB-INF/tiles/layouts/base_layout.jsp">

@@ -5,6 +5,67 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="item">
+	<!-- 전체 상품 리스트 -->
+	<select id="selectAllItem" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				ITEM_NO,
+				NAME,
+				CONTENT,
+				REGDATE,
+				PRICE,
+				RELATED,
+				KEYWORD,
+				READCOUNT,
+				CATEGORY
+			FROM
+				ITEM
+		]]>
+	</select>
 
-
+	<!-- 아이템 가져오기 -->
+	<select id="selectOneItem" parameterType="hashmap" resultType="hashMap">
+		<![CDATA[
+			SELECT 
+				ITEM_NO,
+				NAME,
+				CONTENT,
+				REGDATE,
+				PRICE,
+				RELATED,
+				KEYWORD,
+				READCOUNT,
+				CATEGORY
+			FROM
+				ITEM
+			WHERE
+				ITEM_NO = #{ITEM_NO}
+		]]>
+	</select>
+	
+	<!-- 상품 조회수 증가 -->
+	<update id="updateReadcnt" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				ITEM
+			SET
+				READCOUNT = READCOUNT+1
+			WHERE
+				ITEM_NO = #{ITEM_NO}
+		]]>
+	</update>
+	
+	<!-- 상품 속성 가져오기  -->
+	<select id="selectItemAttribute" parameterType="hashmap" resultType="hashMap">
+		<![CDATA[
+			SELECT
+				ITEM_SIZE,
+				COUNT,
+				PRICE
+			FROM 
+				ITEM_ATTRIBUTE
+			WHERE
+				ITEM_NO = #{ITEM_NO}
+		]]>
+	</select>
 </mapper>

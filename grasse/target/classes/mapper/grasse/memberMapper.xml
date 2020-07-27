@@ -38,6 +38,27 @@
 		]]>
 	</insert>
 
+	<select id="selectMemberList" parameterType="hashmap"
+		resultType="hashMap">
+		<![CDATA[
+			SELECT
+					MEMBER_NO,
+					MEMBER_ID,
+					PASSWD,
+					NAME,
+					BIRTH,
+					PHONE,
+					EMAIL,
+					ZIPCODE,
+					ADDR1,
+					ADDR2,
+					REGDATE,
+					POINT
+			FROM
+					MEMBER
+		]]>
+	</select>
+
 	<!-- 아이디 체크 -->
 	<select id="checkId" parameterType="String" resultType="int">
 	<![CDATA[
