@@ -7,30 +7,84 @@
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <script type="text/javascript">
-function BuyCheck(index) {
-	if(form.option.value=='none'){
-		alert("옵션을 선택해주세요");
-		return false;
+//qa
+$(document).ready(function() {
+
+	$("#qaWrite").click(function() {
+		location.href = "/grasse/itemDetail/qaWriteForm.do?ITEM_NO=1";
+	});
+	$("a[name='qaTitle']").on("click", function(e) { //제목 
+		e.preventDefault();
+		fn_openQADetail($(this));
+	});
+	
+	$("#reviewWrite").on("click", function(e) { //글쓰기 버튼
+		e.preventDefault();
+		fn_openBoardWrite();
+	});
+
+	$("a[name='reviewTitle']").on("click", function(e) { //제목누르면 리뷰로 넘언간다. 
+		e.preventDefault();
+		fn_openBoardDetail($(this));
+	});
+});
+
+	function fn_openQADetail(obj) {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/itemDetail/qaDetail.do'/>");
+		comSubmit.addParam("QA_NO", obj.parent().find("#QA_NO").val());
+		comSubmit.submit();
+	}
+	function fn_openBoardWrite() {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/review/writeForm.do' />");
+		comSubmit.submit();
+	}
+	function fn_openBoardDetail(obj) {
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/review/detail.do' />");
+		comSubmit.addParam("REVIEW_NO", obj.parent().find("#REVIEW_NO")
+				.val());
+		comSubmit
+				.addParam("ITEM_NO", obj.parent().find("#ITEM_NO").val());
+		comSubmit.submit();
 	}
 
-	if (index == 1) {
-    	document.form.action = '/grasse/cart/cart';
-    }
-    if (index == 2) {
-       document.form.action = '/grasse/cart/addCart';
-    }
-	if (index == 3) {
-	  alert('관심상품으로 등록되었습니다.');
+
+//itemDetail
+function BuyCheck(index) {
+		if(form.option.value=='none'){
+			alert("옵션을 선택해주세요");
+			return false;
+		}
+
+		if (index == 1) {
+	    	document.form.action = '/grasse/order/order.do';
+	    }
+	    if (index == 2) {
+	       document.form.action = '/grasse/cart/addCart.do';
+	    }
+		if (index == 3) {
+		  alert('관심상품으로 등록되었습니다.');
+		}
+		$(this).sendForm(index);	   
 	}
-	   document.form.submit();
-}
 </script>
 
 <script>
     function fnMove(divId){
         var offset = $("."+divId).offset();
-        $('html, body').animate({scrollTop : offset.top}, 400);
+        $('html, body').animate({scrollTop : offset.top-100}, 400);
     }
+    
+    $(function() {
+        $("#MOVE_TOP_BTN").click(function() {
+            $('html, body').animate({
+                scrollTop : 0
+            }, 400);
+            return false;
+        });
+    });
 </script>
 
 <style>
@@ -48,21 +102,21 @@ function BuyCheck(index) {
 }
 .it_dt_info{
 	font-family: 'Lato','Nanum Gothic';
-	width:48%;
+	width:45%;
 	height:490px;
 	float:right;
+	position:relative;
+	vertical-align: top;
+    line-height: 21px !important;
+    text-align: left;
+    font-size: 12pt;
+    padding:5px;
 }
 .it-name{
     text-align: left; 
     font-size: 25px; 
     color: #000000; 
     font-weight: bold;
-}
-.it-dt-info-style {
-    vertical-align: top;
-    line-height: 21px !important;
-    text-align: left;
-    font-size: 12pt;
 }
 .MK_price {
     margin: 0px 0 0 31px;
@@ -71,19 +125,57 @@ function BuyCheck(index) {
 .MK_qty-ctrl {
     width: 150px!important;
 }
+.MK_inner-opt-cm {
+	position:absolute;
+	max-height:200px;
+	width:100%;
+	overflow: auto;
+}
+.good_total {
+	position:absolute;
+	bottom:120px;
+}
 .it-dt-btn-group{
+	position:absolute;
+	bottom:0px;
+	max-width:100%;
+	height:auto;
 }
 .it-dt-sl-btn-group{
 	width:100%;
-	height: 50px;
+	height:25px;
 	text-align:center;
 	font-size:14pt;
+	position:relative;
+	vertical_align:top;
+	border-radius:1em;
+	background-color:#A4A4A4;
+}
+.it-dt-sl-btn-group > .Btn {
+	background-color:transparent; 
+	color:#FFFFFF;
+	width:33%;
+}
+.it-dt-img {
+
 }
 .btn btn-default2 {
     padding: 4px 1px!important;
     width: 15%!important;
     height: 3%!important;
     margin: -17px 0 0 0!important;
+}
+table{
+width:100%;
+border: 1px solid #444444;
+border-collapse:collapse;
+align:center;
+text-align:center;
+}
+th,td{
+border: 1px solid #444444;
+align:center;
+text-align:center;
 }
 </style>
 </head>
@@ -93,137 +185,235 @@ function BuyCheck(index) {
 <br>
 <center>
 <div class="container">
-	<div class="it-dt-thumb">
-		<img width="100%" height="100%" src="${images[0] }" />
-	</div>         	
-
-	<div class="it_dt_info">
-		<form name="form" id="form" method="post">
-			<input type="hidden" name="NAME" id="NAME" value="${item.NAME}">
-			<p class="it-name">${item.NAME }</p>
-			
-			<div class="it-dt-info-style">
+	<div class="it-dt" style="height:550px; padding-bottom:50px;">
+		<div class="it-dt-thumb">
+			<img width="100%" height="100%" src="${images[0] }" />
+		</div>   
+		
+		<a id="MOVE_TOP_BTN" href="#" style="position:fixed; right:20px; bottom:20px;z-index:99;">
+			<img src="/grasse/resources/images/top_btn.png"/></a>
+	
+		<div class="it_dt_info">
+			<form name="form" id="form" method="post">
+				<input type="hidden" name="item" value="${item }">
+				<p class="it-name">${item.NAME }</p>
+				
 				<!-- 상품가격  -->
-	            <input type="hidden" name="PRICE" id="PRICE" value="${item.PRICE }">
-	            <p class="it-price"><br>판매가&emsp;&emsp;${item.PRICE }원</p>
-					
+				<div style="height:100px; position:static;">
+	            <p style="height:20px"><br>판매가&emsp;&emsp;${item.PRICE }원</p>
+	            <p><br>배송비&emsp;&emsp;무료</p>
+	            
+		            
 				<!-- 용량 -->
+				<div style="width:18%;height:30px;float:left;">용량</div>
+				<div style="height:30px;float:left;vertical-align:middle">
 				<select id="option" onchange="setOption(this)" onchange="this.blur();">
 					<option value="none" selected disabled><필수> 용량을 선택해주세요.</option>
 					<c:forEach items="${itemAttribute}" var="at">
 						<c:if test="${at.COUNT==0 }">
-							<option value="${at.PRICE}" style="color:#C0C0C0;" disabled>${at.ITEM_SIZE } (품절)</option>
+							<option value="" 
+									style="color:#C0C0C0;" disabled>${at.ITEM_SIZE } (품절)</option>
 						</c:if>
 						<c:if test="${at.COUNT!=0 }">
-							<option value="${at}" style="onfocus: #FFFFFF">${at.ITEM_SIZE }</option>
+							<option value="${at.ATTRIBUTE_NO},${at.ITEM_SIZE},${at.PRICE}" 
+									style="onfocus: #FFFFFF">${at.ITEM_SIZE }</option>
 						</c:if>
 					</c:forEach>
-						
-				</select>
-				
+				</select></div><br>
+				</div>
+					
+					
 				<!-- 사이즈, 색상, 개수출력 -->
 				<div id="attribute">
 					<ul class="MK_inner-opt-cm" id="total_price"></ul>
 					<div id="MK_innerOptTotal" class="good_total">
 						<p class="totalRight">
-							<span class="MK_txt-total">TOTAL</span> 
-							<span id="MK_txt-won" data-price="">&emsp;&emsp;0원</span>
+							<span class="MK_txt-total">TOTAL&emsp;&emsp;&emsp;&emsp;</span> 
+							<span id="MK_txt-won" data-price="0">0원</span>
 						</p>
 					</div>
 				</div>
-			</div>
-			
-			<div class="it-dt-btn-group">
-				<!-- BUY,ADD CART추가하기 -->
-				<a><input name="buy" onclick="BuyCheck(1);" type="image"
-                           src="/grasse/resources/images/buy.PNG" /> 
-                   <input type="hidden" name="ITEM_NO" id="ITEM_NO" value="${item.ITEM_NO }" /></a><br>
-				<a><input name="cart" onclick="BuyCheck(2);" type="image"
-                           src="/grasse/resources/images/cart.PNG" /></a><br>
-			
-				<input name="wishList" onclick="BuyCheck(4);" type="image" 
-						src="/grasse/resources/images/wishlist.PNG" value="wishlist" />
-			</div>
-		</form>
+				
+				<div class="it-dt-btn-group">
+					<!-- BUY,ADD CART추가하기 -->
+					<a><input type="image" class="buy" id="buy"
+							 src="/grasse/resources/images/buy.PNG" onclick="BuyCheck(1);"  /></a><br>
+					<a><input class="cart" onclick="BuyCheck(2);" type="image"
+		                          src="/grasse/resources/images/cart.PNG" /></a><br>
+					<input class="wishList" onclick="BuyCheck(3);" type="image" 
+							src="/grasse/resources/images/wishlist.PNG" value="wishlist" />
+				</div>
+			</form>
+		</div>
 	</div>
-   
-	<div class="it-dt-sl-btn-group">
-		<input type="button" value="상품상세정보" name="itemDetailBtn" onclick="fnMove('it-dt-img')">
-		<input type="button" value="상품후기" name="itemReviewBtn" onclick="fnMove('it-dt-rv')">
-		<input type="button" value="상품문의" name="itemQaBtn" onclick="fnMove('it-dt-qa')">
-	</div> 
+	   
+	<button class="it-dt-sl-btn-group" width="100%">
+		<input type="button" value="상품상세정보" class="Btn" onclick="fnMove('it-dt-img')" >
+		<input type="button" value="상품후기 (0)" class="Btn" onclick="fnMove('it-dt-rv')" >
+		<input type="button" value="상품문의 (0)" class="Btn" onclick="fnMove('it-dt-qa')" >
+	</button> 
+	
 	
 	<!-- 상품 상세 이미지 -->
-	<div class="it-dt-img" >
+	<div class="it-dt-img">
 		<c:forEach items="${images }" var="image" begin="1">
 			<img src="${image }"/>
 		</c:forEach>
 	</div>
 	
-	<div class="it-dt-sl-btn-group">
-		<input type="button" value="상품상세정보" name="itemDetailBtn" onclick="fnMove('it-dt-img')">
-		<input type="button" value="상품후기" name="itemDetailBtn" onclick="fnMove('it-dt-rv')">
-		<input type="button" value="상품문의" name="itemDetailBtn" onclick="fnMove('it-dt-qa')">
-	</div> 
-	<div class="it-dt-rv">
-		rv<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	</div>
+	<button class="it-dt-sl-btn-group" width="100%">
+		<input type="button" value="상품상세정보" class="Btn" onclick="fnMove('it-dt-img')" >
+		<input type="button" value="상품후기 (0)" class="Btn" onclick="fnMove('it-dt-rv')" >
+		<input type="button" value="상품문의 (0)" class="Btn" onclick="fnMove('it-dt-qa')" >
+	</button> 
 	
-	<div class="it-dt-sl-btn-group">
-		<input type="button" value="상품상세정보" name="itemDetailBtn" onclick="fnMove('it-dt-img')">
-		<input type="button" value="상품후기" name="itemDetailBtn" onclick="fnMove('it-dt-rv')">
-		<input type="button" value="상품문의" name="itemDetailBtn" onclick="fnMove('it-dt-qa')">
-	</div> 
+	<div class="it-dt-rv">
+		<br><h4>REVIEW</h4>	<h6>리뷰 제목을 누르면 리뷰 상세보기로 넘어갑니다.</h6>
+		<form>	
+	    <table width="50%" align="center" border="1" cellspacing="0"
+			cellpadding="1" class="board_review3">
+			<thead>
+			<tr valign="middle">
+				<th scope="col">번호</th>
+				<th>리뷰제목</th>
+				<th>작성자</th>
+				<th>작성날짜</th>
+			</tr>
+			</thead>
+			<tbody>
+				<c:choose>
+				<c:when test="${fn:length(reviewList)>0}">
+					<c:forEach items="${reviewList}" var="row">
+						<tr>
+							<td>${row.REVIEW_NO}</td>
+							<td class="title">
+								<a href="#this" name="reviewTitle">${row.TITLE }</a>
+							<td>${row.MEMBER_ID}</td>
+							<td>${row.REGDATE}</td>
+	   <input type="hidden" id="REVIEW_NO" value="${row.REVIEW_NO}">
+		<input type="hidden" id="ITEM_NO" value="${row.ITEM_NO }">
+							
+						</tr>
+					</c:forEach>
+				</c:when>
+		
+				<c:otherwise>
+							<td colspan="5" align="center">상품리뷰가 없습니다.</td>
+				</c:otherwise> 
+				</c:choose>
+			</tbody>	
+		</table>
+		<button type="button" id="reviewWrite" style="float:right;">리뷰 작성하기</button><br>
+
+	</form>
+	</div><br><br>
+	
+	<button class="it-dt-sl-btn-group" width="100%">
+		<input type="button" value="상품상세정보" class="Btn" onclick="fnMove('it-dt-img')" >
+		<input type="button" value="상품후기 (0)" class="Btn" onclick="fnMove('it-dt-rv')" >
+		<input type="button" value="상품문의 (0)" class="Btn" onclick="fnMove('it-dt-qa')" >
+	</button>
+	
 	<div class="it-dt-qa">
-		qa<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><h4>Q&A</h4><br>
+		<table border="1" width="800px" align="center">
+			<colgroup>
+				<col width="5%" />
+				<col width="25%" />
+				<col width="10%" />
+				<col width="10%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">글번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+	
+				<c:choose>
+					<c:when test="${fn:length(qaList)>0}">
+						<c:forEach items="${qaList }" var="row">
+							<tr>
+								<td>${row.QA_NO }</td>
+								<td class="title"><a href="#this" name="qaTitle">${row.TITLE }</a>
+								<td>${row.MEMBER_ID }</td>
+								<td>${row.REGDATE}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="4" align="center">상품문의가 없습니다.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
+			</tbody>
+		</table>
+		<button type="button" id="qaWrite" style="float:right;">문의하기</button>
+		<input type="hidden" id="QA_NO" value="${row.QA_NO}"></td>
+		<input type="hidden" id="ITEM_NO" value="${row.ITEM_NO }"></td>
 	</div>
+</div>
 </center>
+
 
 <%@ include file="/WEB-INF/include/include-body.jspf"%>
 <script>
 var totprice = 0;
 var r_optno = [];
+
 function setOption(obj) {
-	 var optno = $("#option option:selected").val();	//선택한 옵션
-	 if (!optno || in_array(optno,r_optno)) return;
+	//선택한 옵션가져오기.  optno[0]=ATTRIBUTE_NO, optno[1]=ITEM_SIZE, optno[2]=PRICE
+	 var optno = $("#option option:selected").val().split(",");
+	 var attrno = optno[0];
+	 var size = optno[1];
+	 var price = parseInt(optno[2]);
+	 
+	 if (!optno) return;
+	 if(in_array(attrno,r_optno)){
+		 alert("이미 선택된 옵션입니다.");
+		 return;
+	 }
+	 alert(optno);
+	 
 
 	//선택에 따라 li생성
-	 var li = "<li class='MK_li_1_1'>"
-		 		+ "<span class='it-size'>" + $("#option option:selected") + "</span>"
-		 		//선택한 옵션번호랑 그 옵션의 ATTRIBUTE_NO, COUNT 저장
+	 var li = "<li class='MK_li'>"
+		 		+ "<br>" + size
+		 		//선택한 옵션과 COUNT 저장
 		 		+ "<input type='hidden' name='optno[]' value='" + optno +"'>"
-		 		+ "<input type='hidden' name='attribute_no[]' " 
-		 				+ "value='" + $("option:selected",$(obj)).attr("ATTRIBUTE_NO") + "'>" 
+		 		+ "<input type='hidden' name='attrno' value='" + attrno + "'>"
 		 		+ "<input type='hidden' class='item-count' " 
-		 				+ "value='" + $("option:selected",$(obj)).attr("COUNT") + "'>" 
-		 		//선택한 갯수 
-		 		+ "<div class='MK_qty-ctrl'>" 
+		 				+ "value='" + parseInt($(".input_ea").eq(thisIdx).val()) + "'>" 
+		 		
+		 		+ "<div class='MK_qty-ctrl' style='width:100%;'>" 
+		 			//선택한 갯수 
 		 			+ "<input type='text' name='ea[]' value='1' class='input_ea' size='2' maxlength='3'>"
-		 			+ "<span class='ea'>"
 		 			//갯수 조절 버튼
+		 			+ "<span class='ea'>"
 		 			+ "<a class='MK_btn-up'>"
 		 			+ "<img src='/grasse/resources/images/btn_num_up.gif' alt='' /></a>" 
 		 			+ "<a class='MK_btn-dw'>" 
 		 			+ "<img src='/grasse/resources/images/btn_num_down.gif' alt='' /></a></span>"
 		 			//가격 출력
 		 			+ "<span class='MK_price' "
-		 				+ "data-price='" + $("option:selected".PRICE) + "'>" 
-		 				+($("option:selected".PRICE)) + "원</span>"
+		 				+ "data-price='" + price + "'>" + price + "원</span>"
 		 			//선택취소
-		 			+ "<a href='#' optno='" + optno + "' class='MK_btn-del'>"
-		 			+ "<img src='/grasse/resources/images/btn_close.gif' alt='' /></a></li></div>";
+		 			+ "<a href='#' this_price='" + price + "' class='MK_btn-del'>"
+		 			+ "<img src='/grasse/resources/images/btn_close.gif' alt='' /></a></div></li>";
 
 
 	 $("#total_price").append(li);
-	 r_optno.push(optno);
+	 r_optno.push(attrno);
 	 var thisIdx = $(".input_ea").index(this);
+	 var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
 	 var index = parseInt($(".input_ea").eq(thisIdx).val());
 	 change_ea(this,1);
 	 
-	 var price = parseInt($("option:selected").val().attr("PRICE"));
-	 alert(price);
 	 price = price*inputEa;
-	 price = parseInt(price);
 	 if(totprice != 0){
 	    totprice = $("#MK_txt-won").data("price");
 	 }
@@ -232,20 +422,26 @@ function setOption(obj) {
 	 $("#MK_txt-won").html((totprice)+"원");
 }
 
-
+	$("#it-dt-btn-group").on("click", "a.buy", function(){
+		var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+		optno.append(","+inputEa);
+		console.log(optno);
+	})
+	
+	
 	//
 	 $("#total_price").on("click", "li a.MK_btn-del", function(){
 		 var ritem = $(this).attr("optno");
-		 var thisIdx = $(".MK_btn-del").index(this); 
-	     console.log("음"+thisIdx);
-	     var price = $(".MK_price").eq(thisIdx).data("price");
-		 console.log("zz"+price);
-		 var totprice = $("#MK_txt-won").data("price");
-		 totprice = totprice - price;
+		 var price = $(this).attr("this_price");
+		 var thisIdx = $(".MK_btn-del").index(this);
+		 var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+		 var totprice = parseInt($("#MK_txt-won").data("price"));
+		
+		 totprice = totprice - (price*inputEa);
 		 $("#MK_txt-won").data("price",totprice);
 		 $("#MK_txt-won").html((totprice)+"원");
 		 r_optno = $.grep(r_optno,function(v){ return v != ritem; });
-		 $(".MK_li_1_1").eq(thisIdx).remove();
+		 $(".MK_li").eq(thisIdx).remove();
 	});
 
 	 //
@@ -253,12 +449,12 @@ function setOption(obj) {
 		 var thisIdx = $(".MK_btn-up").index(this);    
 		 change_ea(this,1);
 		 var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+		 var price = parseInt($("#option option:selected").val().split(",")[2]);
 		 var mStock = parseInt($(".mstock").eq(thisIdx).val()); 
-		 var price = parseInt($("option:selected",$('#option')).attr("price"));
+		 
 		 $(".MK_price").eq(thisIdx).data("price",(price*inputEa));
 		 var total = $(".MK_price").eq(thisIdx).html((price*inputEa)+"원");
-		 var totprice = $("#MK_txt-won").data("price");
-		 console.log(totprice);
+		 var totprice = parseInt($("#MK_txt-won").data("price"));
 		 totprice = totprice + price;
 		 $("#MK_txt-won").data("price",totprice);
 		 $("#MK_txt-won").html((totprice)+"원");
@@ -278,7 +474,7 @@ function setOption(obj) {
    $("#total_price").on("keyup", "li input.input_ea", function(e){
        var thisIdx = $(".input_ea").index(this); 
        var mStock = parseInt($(".mstock").eq(thisIdx).val()); 
-       var price = parseInt($("option:selected",$('#option')).attr("price"));
+       var price = parseInt($("#option option:selected").val().split(",")[2]);
        var totprice = $("#MK_txt-won").data("price");
 
        $(this).val($(this).val().replace(/[^0-9]/g,""));
@@ -304,6 +500,7 @@ function setOption(obj) {
       $("#total_price").on("click", "li a.MK_btn-dw", function(e) {
        var thisIdx = $(".MK_btn-dw").index(this); 
        var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+       var price = parseInt($("#option option:selected").val().split(",")[2]);
 
        if(inputEa == 1){
           alert("1개 이상 주문하셔야 합니다.");
@@ -313,7 +510,6 @@ function setOption(obj) {
 
        change_ea(this,-1);
         inputEa = parseInt($(".input_ea").eq(thisIdx).val());
-        var price = parseInt($("option:selected",$('#option')).attr("price"));
         $(".MK_price").eq(thisIdx).data("price",(price*inputEa));
         var total = $(".MK_price").eq(thisIdx).html((price*inputEa)+"원");
         var totprice = $("#MK_txt-won").data("price");
@@ -339,6 +535,28 @@ function setOption(obj) {
 
          return false;
       }
+
+      function sendForm(index){
+          alert(index);
+    	  var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+    	  if (index == 1) {
+  	    	var li =  "<span>"
+  			 			+ "<input type='hidden' name='optno' value='" 
+  			 			+ $(this).attr("optno") + "," + inputEa
+  			 			+ "'></span>"
+  			 $("it-dt-btn-group").append(li);
+	  	    }
+	  	    if (index == 2) {
+	  	       document.form.action = '/grasse/cart/addCart.do';
+	  	    }
+	  		if (index == 3) {
+	  		  alert('관심상품으로 등록되었습니다.');
+	  		}
+
+	  		document.form.submit();
+      }
+
+    	      
 </script>
 
 </body>

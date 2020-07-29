@@ -6,83 +6,132 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<script src="../resources/ckeditor/ckeditor.js"></script>
 
-<script src="/resources/ckeditor/ckeditor.js"></script>
 </head>
 
 <body>
 
 	<script>
 		function check() {
-			// 태그를 name으로 조회할 경우
-			//var product_name=document.form1.product_name.value;
-			// 태그를 id로 조회할 경우
-			var product_name = $("#product_name").val();
-			var price = $("#price").val();
-			var description = $("#description").val();
-			if (product_name == "") { //빈값이면
-				alert("상품이름을 입력하세요");
-				$("#product_name").focus(); //입력포커스 이동
-				return false; //함수 종료, 폼 데이터를 제출하지 않음
-			}
-			if (price == "") {
-				alert("가격을 입력하세요");
-				$("#price").focus();
+
+			var form = document.form;
+
+			if (form.NAME.value == "") {
+				alert("제목을 작성해주십시오.");
+				form.NAME.focus();
 				return false;
 			}
-			/*     if(description==""){
-			 alert("상품 설명을 입력하세요");
-			 $("#description").focus();
-			 return;
-			 } */
-			//폼 데이터를 받을 주소
-			document.form1.action = "${path}/shop/product/insert.do";
-			//폼 데이터를 서버에 전송
-			document.form1.submit();
+			if (form.CONTENT.value == "") {
+				alert("내용을 작성해주십시오.");
+				form.CONTENT.focus();
+				return false;
+			}
+			if (form.PRICE.value == "") {
+				alert("가격을 작성해주십시오.");
+				form.PRICE.focus();
+				return false;
+			}
 
-			return true;
 		}
 	</script>
 
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 		<h2 class="py-3">상품 등록</h2>
 
-		<form name="form1" method="post" enctype="multipart/form-data"
+		<form name="form" action="/grasse/admin/itemWrite.do" method="post"
 			onsubmit="return check()">
-			<table>
-				<tr>
-					<td>상품명</td>
-					<td><input name="product_name" id="product_name"></td>
-				</tr>
-				<tr>
-					<td>가격</td>
-					<td><input name="price" id="price"></td>
-				</tr>
-				<tr>
-					<td>상품설명</td>
-					<td><textarea rows="5" cols="60" name="description"
-							id="description"></textarea> <script>
-								//위쪽과 마찬가지로 같은페이지에서 스마트에디터를 동시에 2개를 사용할 수 없으므로 주석처리 한다.
-								//id가 description인 태그에 ckeditor를 적용시킴
-								//CKEDITOR.replace("description"); //이미지 업로드 안됨
-								/* CKEDITOR.replace("description",{
-								 filebrowserUploadUrl : "${path}/imageUpload.do"
-								 }); */
-							</script></td>
-				</tr>
-				<tr>
-					<td>상품이미지</td>
-					<td><input type="file" name="file1" id="file1"></td>
-				</tr>
-			</table>
 
-			<div class="row py-5 justify-content-center">
+			<input type="hidden" name="READCOUNT" value="0"/>
+
+			<div class="row justify-content-md-center">
+				<div class="col-sm-9">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<label class="input-group-text">제목</label>
+						</div>
+						<input type="text" class="form-control" id="NAME" name="NAME">
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="input-group mb-3">
+						<select class="custom-select" id="CATEGORY" name="CATEGORY">
+							<option selected>분류</option>
+							<option value="1">One</option>
+							<option value="2">Two</option>
+							<option value="3">Three</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">가격</span>
+					</div>
+					<input type="text" class="form-control" id="PRICE" name="PRICE">
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+				<div class="col_c" style="margin-bottom: 30px">
+					<div class="input-group">
+						<textarea class="form-control" id="CONTENT" name="CONTENT"></textarea>
+<!-- 
+						<script type="text/javascript">
+							var editorConfig = {
+								filebrowserUploadUrl : "/admin/fileUpload.do", //이미지 업로드
+							};
+
+							CKEDITOR.replace('CONTENT', editorConfig, {
+								height : 500
+							});
+						</script>
+						 -->
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">키워드</span>
+					</div>
+					<input type="text" class="form-control" id="KEYWORD" name="KEYWORD">
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">관련상품</span>
+					</div>
+					<input type="text" class="form-control" id="RELATED" name="RELATED">
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="inputGroupFileAddon">썸네일</span>
+					</div>
+					<div class="custom-file">
+						&nbsp;<input type="file" class="form-control-file"
+							id="exampleFormControlFile">
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-md-center">
 				<div class="col">
 					<a href="/grasse/admin/itemList.do"
-						class="btn btn-outline-dark my-2 my-sm-0">목록으로</a>
+						class="btn btn-outline-secondary"
+						style="width: 20%; font-weight: bold">목록으로</a>
 				</div>
 				<div class="col">
-					<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">작성하기</button>
+					<button type="submit" class="btn btn-outline-secondary"
+						style="width: 20%; font-weight: bold">등록</button>
 				</div>
 			</div>
 		</form>

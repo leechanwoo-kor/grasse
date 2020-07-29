@@ -18,6 +18,13 @@ public class AdminItemServiceImpl implements AdminItemService{
 		// TODO Auto-generated method stub
 		return adminItemDAO.selectItemList(map);
 	}
+
+	// 상품 등록
+	@Override
+	public void insertItem(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		adminItemDAO.insertItem(map);
+	}
 	
 	
 }

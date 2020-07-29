@@ -51,7 +51,7 @@
 
 		<div class="row pt-3">
 			<div class="col col-lg-3">
-				<a href="/grasse/admin/itemUpdateForm.do"
+				<a href="/grasse/admin/itemWriteForm.do"
 					class="btn btn-outline-dark my-2 my-sm-0">글쓰기</a>
 			</div>
 			<div class="col col-lg-6">

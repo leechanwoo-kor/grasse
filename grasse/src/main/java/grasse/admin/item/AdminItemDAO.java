@@ -14,4 +14,9 @@ public class AdminItemDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectItemList(Map<String, Object> map) throws Exception{
 		return (List<Map<String, Object>>)selectList("item.selectAllItem", map);
 	}
+	
+	// 상품 등록
+	public void insertItem(Map<String, Object> map) throws Exception{
+		insert("item.insertItem", map);
+	}
 }
