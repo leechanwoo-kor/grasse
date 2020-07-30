@@ -21,14 +21,7 @@
 }
 
 #body {
-	width: 100%;
-}
-
-#menu{
-	width: 100%;
-}
-
-#footer {
+	padding-top: 80px;
 	width: 100%;
 }
 </style>
@@ -37,9 +30,6 @@
 <body>
 	<div id="header">
 		<tiles:insertAttribute name="header" />
-	</div>
-	<div id="menu">
-		<tiles:insertAttribute name="menu" />
 	</div>
 	<div id="body">
 		<tiles:insertAttribute name="body" />

@@ -15,62 +15,95 @@
 	<definition name=".tiles/admin/*/*" extends="admin-layout">
 		<put-attribute name="content"
 			value="/WEB-INF/jsp/admin/{1}/{2}.jsp" />
-	</definition>	
-	
+	</definition>
+
 	<!-- main -->
 	<definition name="main-layout"
-		template="/WEB-INF/tiles/layouts/base_layout.jsp">
-		<put-attribute name="tile_header"
-			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
-		<put-attribute name="tile_menu"
-			value="/WEB-INF/tiles/layouts/tile_menu.jsp" />
-		<put-attribute name="tile_footer"
-			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+		template="/WEB-INF/tiles/layouts/main_layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/tiles/layouts/tiles/menu.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
 	<definition name=".tiles/main/*" extends="main-layout">
-		<put-attribute name="tile_body"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/main/{1}.jsp" />
 	</definition>
 
 	<!-- login -->
 	<definition name="login-layout"
 		template="/WEB-INF/tiles/layouts/login_layout.jsp">
-		<put-attribute name="tile_header"
-			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
-		<put-attribute name="tile_footer"
-			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
 	<definition name=".tiles/login/*" extends="login-layout">
-		<put-attribute name="tile_body"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/login/{1}.jsp" />
 	</definition>
 
 	<!-- join -->
 	<definition name="join-layout"
 		template="/WEB-INF/tiles/layouts/join_layout.jsp">
-		<put-attribute name="tile_header"
-			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
-		<put-attribute name="tile_footer"
-			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
 	<definition name=".tiles/join/*" extends="join-layout">
-		<put-attribute name="tile_body"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/join/{1}.jsp" />
 	</definition>
 
 	<!-- item -->
 	<definition name="item-layout"
 		template="/WEB-INF/tiles/layouts/item_layout.jsp">
-		<put-attribute name="tile_header"
-			value="/WEB-INF/tiles/layouts/tile_header.jsp" />
-		<put-attribute name="tile_menu"
-			value="/WEB-INF/tiles/layouts/tile_menu.jsp" />
-		<put-attribute name="tile_footer"
-			value="/WEB-INF/tiles/layouts/tile_footer.jsp" />
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/tiles/layouts/tiles/menu.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
 	<definition name=".tiles/item/*" extends="item-layout">
-		<put-attribute name="tile_body"
+		<put-attribute name="body"
 			value="/WEB-INF/jsp/item/{1}.jsp" />
 	</definition>
+
+	<!-- itemDetail -->
+	<definition name="itemDetail-layout"
+		template="/WEB-INF/tiles/layouts/itemDetail_layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/tiles/layouts/tiles/menu.jsp" />
+		<put-attribute name="review"
+			value="/WEB-INF/jsp/review/review.jsp" />
+		<put-attribute name="qa" value="/WEB-INF/jsp/qa/qa.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
+	</definition>
+	<definition name=".tiles/itemDetail/*"
+		extends="itemDetail-layout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/itemDetail/{1}.jsp" />
+	</definition>
+
+	<!-- Notice -->
+	<definition name="notice-layout"
+		template="/WEB-INF/tiles/layouts/join_layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
+	</definition>
+	<definition name=".tiles/notice/*" extends="notice-layout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/notice/{1}.jsp" />
+	</definition>
+
 
 </tiles-definitions>

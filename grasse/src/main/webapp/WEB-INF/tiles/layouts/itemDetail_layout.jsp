@@ -21,15 +21,17 @@
 }
 
 #body {
+	padding-top: 80px;
 	width: 100%;
 }
 
-#menu{
-	width: 100%;
+#review {
+	width: 80%;
+	margin:0px auto;
 }
-
-#footer {
-	width: 100%;
+#qa {
+	width: 80%;
+	margin:0px auto;
 }
 </style>
 </head>
@@ -38,11 +40,14 @@
 	<div id="header">
 		<tiles:insertAttribute name="header" />
 	</div>
-	<div id="menu">
-		<tiles:insertAttribute name="menu" />
-	</div>
 	<div id="body">
 		<tiles:insertAttribute name="body" />
+	</div>
+	<div id="review">
+		<tiles:insertAttribute name="review" />
+	</div>
+	<div id="qa">
+		<tiles:insertAttribute name="qa" />
 	</div>
 	<div id="footer">
 		<tiles:insertAttribute name="footer" />

@@ -14,28 +14,27 @@
 	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	crossorigin="anonymous">
 <style>
-#tile_header {
+#header {
 	top: 0;
 	width: 100%;
 	border: 0px red solid;
 }
 
-#tile_body {
-	padding-top: 50px
-	width: 100%;
+#body {
+	padding-top: 50px width: 100%;
 }
 </style>
 </head>
 
 <body>
-	<div id="tile_header">
-		<tiles:insertAttribute name="tile_header" />
+	<div id="header">
+		<tiles:insertAttribute name="header" />
 	</div>
-	<div id="tile_body">
-		<tiles:insertAttribute name="tile_body" />
+	<div id="body">
+		<tiles:insertAttribute name="body" />
 	</div>
-	<div id="tile_footer">
-		<tiles:insertAttribute name="tile_footer" />
+	<div id="footer">
+		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
 

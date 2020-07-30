@@ -2,12 +2,13 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="review">
 
 
 	<!-- 리뷰 리스트 -->
-     <select id="ReviewList" parameterType="hashmap" resultType="hashmap">
+	<select id="selectAllReview" parameterType="hashmap"
+		resultType="hashmap">
      
       <![CDATA[
       SELECT
@@ -27,11 +28,11 @@
            		
       ]]>
 
-</select>
+	</select>
 
 
-<!-- 리뷰 쓰기 -->
-   <insert id="Review_write" parameterType="hashmap">
+	<!-- 리뷰 쓰기 -->
+	<insert id="insertReview" parameterType="hashmap">
       <![CDATA[
          INSERT INTO REVIEW 
          (  REVIEW_NO,
@@ -50,10 +51,11 @@
 			#{ITEM_NO}
 		)
     ]]>
-</insert>
+	</insert>
 
-<!-- 리뷰 상세보기 -->
-<select id="Review_selectDetail" parameterType="hashmap" resultType="hashmap">
+	<!-- 리뷰 상세보기 -->
+	<select id="selectOneReview" parameterType="hashmap"
+		resultType="hashmap">
       <![CDATA[
         SELECT
       		REVIEW_NO,
@@ -68,10 +70,10 @@
         WHERE
             REVIEW_NO = #{REVIEW_NO}       
       ]]>
-</select>
+	</select>
 
-<!-- 리뷰 수정 -->
-<update id="Review_update" parameterType="hashmap">
+	<!-- 리뷰 수정 -->
+	<update id="updateReview" parameterType="hashmap">
     <![CDATA[
         UPDATE 
 			REVIEW
@@ -83,41 +85,21 @@
         WHERE
             REVIEW_NO = #{REVIEW_NO ,jdbcType=DOUBLE}   
     ]]>
-</update>
+	</update>
 
-<!-- 리뷰 삭제 -->
-<delete id="Review_delete" parameterType="hashmap">
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview" parameterType="hashmap">
 	 <![CDATA[
         DELETE REVIEW
         WHERE
             REVIEW_NO = #{REVIEW_NO}   
     ]]>
-</delete>
+	</delete>
 
-<!-- 리뷰 댓글 수정 -->
-<update id="Review_Commentupdate" parameterType="hashmap">
-    <![CDATA[
-        UPDATE REVIEW_COMMENT
-        SET
-            CONTENT = #{CONTENT,jdbcType=VARCHAR}
-			
-        WHERE
-            REVIEW_COMMENT_NO = #{REVIEW_COMMENT_NO ,jdbcType=DOUBLE}   
-    ]]>
-</update>
 
-<!-- 리뷰 댓글 삭제 -->
-<delete id="Review_Commentdelete" parameterType="hashmap">
-	 <![CDATA[
-        DELETE REVIEW_COMMENT
-        WHERE
-            REVIEW_COMMENT_NO = #{REVIEW_COMMENT_NO}   
 
-    ]]>
-</delete>
-
-<!-- 리뷰 댓글 쓰기 -->
-<insert id="ReviewWriteComment" parameterType="hashmap">
+	<!-- 리뷰 댓글 쓰기 -->
+	<insert id="insertReviewComment" parameterType="hashmap">
       <![CDATA[
       
          INSERT INTO REVIEW_COMMENT
@@ -135,10 +117,11 @@
 			SYSDATE	
 		)
     ]]>
-</insert>
+	</insert>
 
-<!-- 리뷰 댓글 리스트 -->
-    <select id="ReviewCommentList" parameterType="hashmap" resultType="hashmap">
+	<!-- 리뷰 댓글 리스트 -->
+	<select id="selectReviewComment" parameterType="hashmap"
+		resultType="hashmap">
       <![CDATA[
          SELECT
            	REVIEW_COMMENT_NO,
@@ -153,7 +136,29 @@
            	ORDER BY REVIEW_COMMENT_NO DESC
            		
       ]]>
-</select>
+	</select>
 
- 
+	<!-- 리뷰 댓글 수정 -->
+	<update id="updateReviewComment" parameterType="hashmap">
+    <![CDATA[
+        UPDATE REVIEW_COMMENT
+        SET
+            CONTENT = #{CONTENT,jdbcType=VARCHAR}
+			
+        WHERE
+            REVIEW_COMMENT_NO = #{REVIEW_COMMENT_NO ,jdbcType=DOUBLE}   
+    ]]>
+	</update>
+
+	<!-- 리뷰 댓글 삭제 -->
+	<delete id="deleteReviewComment" parameterType="hashmap">
+	 <![CDATA[
+        DELETE REVIEW_COMMENT
+        WHERE
+            REVIEW_COMMENT_NO = #{REVIEW_COMMENT_NO}   
+
+    ]]>
+	</delete>
+
+
 </mapper>

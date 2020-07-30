@@ -10,7 +10,7 @@
 		<!-- start nav -->
 		<div class="container">
 			<a class="navbar-brand text-dark" href="#" name="main">GRASSE</a> <a
-				class="nav-link text-dark" href="#" name="notice">NOTICE</a> <a
+				class="nav-link text-dark" href="/grasse/notice/noticeList.do" name="notice">NOTICE</a> <a
 				class="nav-link text-dark" href="#" name="faq">FAQ</a> <a class="nav-link text-dark"
 				href="#" name="qna">QNA</a>
 
@@ -54,12 +54,12 @@
 			fn_join();
 		}).trigger("create");
 
-		$("a[name='login']").on("click", function(e) { //회원가입
+		$("a[name='login']").on("click", function(e) { //로그인
 			e.preventDefault();
 			fn_login();
 		}).trigger("create");
 
-		$("a[name='logout']").on("click", function(e) { //회원가입
+		$("a[name='logout']").on("click", function(e) { //로그아웃
 			e.preventDefault();
 			fn_logout();
 		}).trigger("create");

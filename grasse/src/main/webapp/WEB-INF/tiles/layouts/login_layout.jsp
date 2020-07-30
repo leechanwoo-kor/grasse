@@ -18,13 +18,13 @@
 	href="<c:url value='/resources/common/css/common.css'/>">
 <style>
 
-#tile_header {
+#header {
 	top: 0;
 	width: 100%;
 	border: 0px red solid;
 }
 
-#tile_body {
+#body {
 	padding-top: 120px;
 	width: 100%;
 }
@@ -32,14 +32,14 @@
 </head>
 
 <body>
-	<div id="tile_header">
-		<tiles:insertAttribute name="tile_header" />
+	<div id="header">
+		<tiles:insertAttribute name="header" />
 	</div>
-	<div id="tile_body">
-		<tiles:insertAttribute name="tile_body" />
+	<div id="body">
+		<tiles:insertAttribute name="body" />
 	</div>
-	<div id="tile_footer">
-		<tiles:insertAttribute name="tile_footer" />
+	<div id="footer">
+		<tiles:insertAttribute name="footer" />
 	</div>
 </body>
 
