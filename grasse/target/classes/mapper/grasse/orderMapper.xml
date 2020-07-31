@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+	<insert id="insertOrder" parameterType="hashmap">
+		<![CDATA[
+		INSERT INTO ORDER_TABLE
+		(
+		ORDER_NO,
+		RECIPIENT_NAME,
+		RECIPIENT_ZIPCODE,
+		RECIPIENT_ADDR1,
+		RECIPIENT_ADDR2,
+		RECIPIENT_EXTRAADDR,
+		REGDATE,
+		TOTALPRICE,
+		PAYMENT,
+		MEMBER_ID,
+		RECIPIENT_PHONE
+		)
+		VALUES
+		(
+		ORDER_NO_SEQ.NEXTVAL,
+		#{RECIPIENT_NAME},
+		#{RECIPIENT_ZIPCODE},
+		#{RECIPIENT_ADDR1},
+		#{RECIPIENT_ADDR2},
+		#{RECIPIENT_EXTRAADDR},
+		SYSDATE,
+		#{TOTALPRICE},
+		#{PAYMENT},
+		#{MEMBER_ID},
+		#{RECIPIENT_PHONE}
+		)
+	]]>
+	</insert>
+
+	<select id="order_no" resultType="hashmap">
+		select ORDER_NO_SEQ.CURRVAL as
+		ORDER_NO from dual
+	</select>
+
+	<insert id="insertOrderDetail" parameterType="hashmap">
+	<![CDATA[
+	INSERT INTO ORDER_DETAIL
+	(
+		ORDER_DETAIL_NO,
+		ORDER_NO,
+		ATTRIBUTE_NO,
+		ITEM_NO,
+		COUNT
+	)
+	VALUES
+	(
+		ORDER_DETAIL_NO_SEQ.NEXTVAL,
+		#{ORDER_NO},
+		#{ATTRIBUTE_NO},
+		#{ITEM_NO},
+		#{COUNT}
+	)
+	]]>
+	</insert>
+
+	<update id="addPoint" parameterType="hashmap">
+	<![CDATA[
+		UPDATE
+			MEMBER
+		SET
+			POINT = POINT + #{ADDPOINT}
+		WHERE
+			MEMBER_ID = #{MEMBER_ID}
+	]]>
+	</update>
+	<update id="subPoint" parameterType="hashmap">
+	<![CDATA[
+		UPDATE
+			MEMBER
+		SET
+			POINT = POINT - #{USEPOINT}
+		WHERE
+			MEMBER_ID = #{MEMBER_ID}
+	]]>
+	</update>
+	<select id="selectOrderMemberInfo" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+		SELECT
+			ORDER_NO,
+			RECIPIENT_NAME,
+			RECIPIENT_ZIPCODE,
+			RECIPIENT_ADDR1,
+			RECIPIENT_ADDR2,
+			RECIPIENT_EXTRAADDR,
+			REGDATE,
+			TOTALPRICE,
+			PAYMENT,
+			MEMBER_ID,
+			RECIPIENT_PHONE,
+			STATE
+		FROM
+			ORDER_TABLE
+		WHERE
+			ORDER_NO = #{ORDER_NO}
+	]]>
+	</select>
+
+	<select id="selectOrderInfo" parameterType="hashmap"
+		resultType="hashmap">
+	<![CDATA[
+	SELECT
+		REGDATE,
+		STATE,
+		MEMBER_ID,
+		ORDER_NO,
+		COUNT,
+		ITEM_NO,
+		ATTRIBUTE_NO,
+		NAME,
+		PRICE,
+		CONTENT,
+		ITEM_SIZE
+	FROM
+		(SELECT
+			a.REGDATE,
+			a.STATE,
+			a.MEMBER_ID,
+			a.ORDER_NO,
+			b.COUNT,
+			b.ITEM_NO,
+			b.ATTRIBUTE_NO,
+			c.PRICE,
+			c.CONTENT,
+			c.NAME,
+			d.ITEM_SIZE
+		FROM
+			ORDER_TABLE a, ORDER_DETAIL b, ITEM c, ITEM_ATTRIBUTE d
+		WHERE
+			a.ORDER_NO = b.ORDER_NO AND
+			b.ITEM_NO = c.ITEM_NO AND
+			b.ATTRIBUTE_NO=d.ATTRIBUTE_NO AND
+			a.MEMBER_ID = #{MEMBER_ID} AND
+			a.ORDER_NO = #{ORDER_NO}
+		ORDER BY
+			a.ORDER_NO desc)
+	GROUP BY
+		REGDATE,
+		STATE,
+		MEMBER_ID,
+		ORDER_NO,
+		COUNT,
+		ITEM_NO,
+		ATTRIBUTE_NO,
+		NAME,
+		PRICE,
+		CONTENT,
+		ITEM_SIZE
+	]]>
+	</select>
+
+
+	<update id="updateOrderState" parameterType="hashmap">
+		UPDATE
+		ORDER_TABLE
+		SET
+		STATE = #{selectState}
+		WHERE
+		ORDER_NO = #{ORDER_NO}
+	</update>
+
+</mapper>

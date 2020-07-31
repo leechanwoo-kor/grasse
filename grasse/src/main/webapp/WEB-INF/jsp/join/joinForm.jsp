@@ -122,6 +122,9 @@ function check() {
 			reg.EMAIL.focus();
 			return false;
 		}
+		if(reg=true){
+			alert("회원가입이 완료되었습니다.");
+		}
 	}
 </script>
 </head>

@@ -5,12 +5,14 @@
 <head>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	var action = "";
 	var url = "";
 	var type = "";
-	var itemno = 0;
+	var ITEM_NO = 0;
 
 	$(document).ready(function() {
 		// 리뷰쓰기 버튼 클릭
@@ -21,11 +23,34 @@
 			$("#modalSubmit").text("작성하기");
 			$("#reviewModal").modal();
 		});
+
+		// 리뷰상세 클릭
+		$("#detailBtn").on("click", function() {
+			action = "modify";
+			type = "PUT";
+
+			var tr = $(this);
+			var td = tr.children();
+
+			var TITLE = td.eq(1).text();
+			var CONTENT = td.eq(2).text();
+			var MEMBER_ID = td.eq(3).text();
+
+			// CONTENT 담기
+			$("#MEMBER_ID").text(MEMBER_ID);
+			$("#TITLE").text(TITLE);
+			$("#CONTENT").text(CONTENT);
+
+			$("#modal-title").text("리뷰상세");
+			$("#modalSubmit").text("수정하기");
+			$("#reviewModal").modal();
+		});
+
 	});
 </script>
 
 </head>
-<body>
+<body class="review">
 	<div class="container">
 		<h4 class="text-center py-3">REVIEW</h4>
 
@@ -35,6 +60,7 @@
 					<tr>
 						<th>번호</th>
 						<th>리뷰제목</th>
+						<th>리뷰내용</th>
 						<th>작성자</th>
 						<th>작성날짜</th>
 					</tr>
@@ -43,12 +69,13 @@
 					<c:choose>
 						<c:when test="${fn:length(reviewList)>0}">
 							<c:forEach items="${reviewList}" var="row">
-								<tr>
+								<tr class="clickable-row" id="detailBtn" data-toggle="modal"
+									data-target="#reviewModal">
 									<td>${row.REVIEW_NO}</td>
-									<td><a data-toggle="modal" href="#reviewModal">${row.TITLE }</a></td>
+									<td>${row.TITLE}</td>
+									<td>${row.CONTENT}</td>
 									<td>${row.MEMBER_ID}</td>
 									<td>${row.REGDATE}</td>
-
 								</tr>
 							</c:forEach>
 						</c:when>
@@ -84,6 +111,7 @@
 				<button id="writeBtn" type="button"
 					class="btn btn-outline-dark my-2 my-sm-0" style="float: right;"
 					data-toggle="modal" data-target="#reviewModal">리뷰쓰기</button>
+				<input type="hidden" name="ITEM_NO" value="${map.ITEM_NO}">
 			</div>
 		</div>
 

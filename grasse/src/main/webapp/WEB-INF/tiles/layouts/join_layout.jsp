@@ -21,7 +21,9 @@
 }
 
 #body {
-	padding-top: 50px width: 100%;
+	padding-top: 50px;
+	width: 80%;
+	margin: 0px auto;
 }
 </style>
 </head>

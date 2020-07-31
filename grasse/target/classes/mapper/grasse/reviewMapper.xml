@@ -10,23 +10,21 @@
 	<select id="selectAllReview" parameterType="hashmap"
 		resultType="hashmap">
      
-      <![CDATA[
-      SELECT
-      		REVIEW_NO,
-           	TITLE,
-           	CONTENT,
-           	REGDATE,
+		<![CDATA[
+		SELECT
+			REVIEW_NO,
+			TITLE,
+			CONTENT,
+			REGDATE,
 			MEMBER_ID,
 			ITEM_NO
-      FROM
-      	REVIEW         
-	
+		FROM
+			REVIEW
 		WHERE
 			ITEM_NO = #{ITEM_NO}
 		ORDER BY
 			REVIEW_NO DESC
-           		
-      ]]>
+		]]>
 
 	</select>
 

@@ -11,7 +11,7 @@
 		<div class="container">
 			<a class="navbar-brand text-dark" href="#" name="main">GRASSE</a> <a
 				class="nav-link text-dark" href="/grasse/notice/noticeList.do" name="notice">NOTICE</a> <a
-				class="nav-link text-dark" href="#" name="faq">FAQ</a> <a class="nav-link text-dark"
+				class="nav-link text-dark" href="/grasse/faq/faqList.do" name="faq">FAQ</a> <a class="nav-link text-dark"
 				href="#" name="qna">QNA</a>
 
 			<button class="navbar-toggler collapsed" type="button"

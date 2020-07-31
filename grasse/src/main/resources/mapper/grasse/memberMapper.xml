@@ -18,7 +18,8 @@
 		 	BIRTH, 
 		 	ZIPCODE, 
 		 	ADDR1, 
-		 	ADDR2, 
+		 	ADDR2,
+		 	EXTRAADDR,
 		 	PHONE, 
 		 	EMAIL, 
 		 	REGDATE)
@@ -32,6 +33,7 @@
 			#{ZIPCODE}, 
 			#{ADDR1}, 
 			#{ADDR2}, 
+			#{EXTRAADDR},
 			#{PHONE}, 
 			#{EMAIL}, 
 			SYSDATE)
@@ -52,6 +54,7 @@
 					ZIPCODE,
 					ADDR1,
 					ADDR2,
+					EXTRAADDR,
 					REGDATE,
 					POINT
 			FROM
@@ -71,6 +74,29 @@
 	]]>
 	</select>
 
+	<select id="memberInfoList" parameterType="hashMap"
+		resultType="hashMap">
+		<![CDATA[
+				SELECT
+					MEMBER_NO,
+					MEMBER_ID,
+					PASSWD,
+					NAME,
+					BIRTH,
+					PHONE,
+					EMAIL,
+					ZIPCODE,
+					ADDR1,
+					ADDR2,
+					EXTRAADDR,
+					REGDATE,
+					POINT
+				FROM
+					MEMBER
+				WHERE
+					MEMBER_ID = #{MEMBER_ID}
+		]]>
+	</select>
 
 	<!-- 로그인 -->
 
@@ -88,6 +114,7 @@
 					ZIPCODE,
 					ADDR1,
 					ADDR2,
+					EXTRAADDR,
 					REGDATE,
 					POINT
 				FROM
@@ -122,6 +149,7 @@
 				ZIPCODE,
 				ADDR1,
 				ADDR2,
+				EXTRAADDR,
 				PHONE,
 				EMAIL,
 				SESSIONKEYFROMMEMBER

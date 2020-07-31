@@ -6,8 +6,27 @@
 
 <mapper namespace="faq">
 
+	<!-- FAQ 작성 -->
+	<insert id="insertFaq" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO FAQ (
+				FAQ_NO,
+				TITLE,
+				CONTENT,
+				REGDATE,
+				MEMBER_ID )
+			VALUES (
+				FAQ_NO_SEQ.NEXTVAL,
+				#{TITLE},
+				#{CONTENT},
+				SYSDATE,
+				#{MEMBER_ID} )
+		]]>
+	</insert>
+
 	<!-- 전체 FAQ 리스트 -->
-	<select id="selectAllFaq" parameterType="hashmap" resultType="hashmap">
+	<select id="selectAllFaq" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT
 				FAQ_NO,

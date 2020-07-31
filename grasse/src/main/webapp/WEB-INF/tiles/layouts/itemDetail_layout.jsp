@@ -21,17 +21,19 @@
 }
 
 #body {
-	padding-top: 80px;
-	width: 100%;
+	padding-top: 120px;
+	width: 80%;
+	margin: 0px auto;
 }
 
 #review {
 	width: 80%;
-	margin:0px auto;
+	margin: 0px auto;
 }
+
 #qa {
 	width: 80%;
-	margin:0px auto;
+	margin: 0px auto;
 }
 </style>
 </head>

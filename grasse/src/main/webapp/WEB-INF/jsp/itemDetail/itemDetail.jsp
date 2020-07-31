@@ -118,27 +118,17 @@
 </style>
 </head>
 <body>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-
-	<div class="container pagination justify-content-center">
-		<div class="it-dt" style="height: 550px; padding-bottom: 50px;">
+	<div class="container justify-content-center py-5">
+		<div class="it-dt">
 			<div class="it-dt-thumb">
 				<img width="100%" height="100%"
 					src="http://perfumegraphy.com/web/product/big/20200617/dc5125dfccd0ef342895e912c6e799f6.jpg" />
 			</div>
 
-			<a id="MOVE_TOP_BTN" href="#"
-				style="position: fixed; right: 20px; bottom: 20px; z-index: 99;">
-				<img src="/grasse/resources/images/top_btn.png" />
-			</a>
-
 			<div class="it_dt_info">
 				<form name="form" id="form" method="post">
-					<input type="hidden" name="item" value="${map }">
+					<input type="hidden" name="item" value="${map }"> <input
+						type="hidden" name="ITEM_NO" value="${map.ITEM_NO }">
 					<p class="it-name">${map.NAME }</p>
 
 					<!-- 상품가격  -->
@@ -154,7 +144,7 @@
 						<!-- 용량 -->
 						<div style="width: 18%; height: 30px; float: left;">용량</div>
 						<div style="height: 30px; float: left; vertical-align: middle">
-							<select id="option" onchange="setOption(this)"
+							<select id="option" name="SIZE" onchange="setOption(this)"
 								onchange="this.blur();">
 								<option value="none" selected disabled><필수> 용량을
 									선택해주세요.</option>
@@ -187,27 +177,42 @@
 
 					<div class="it-dt-btn-group">
 						<!-- BUY,ADD CART추가하기 -->
+						<!-- 구매하기 -->
 						<a><input type="image" class="buy" id="buy"
 							src="/grasse/resources/images/buy.PNG" onclick="BuyCheck(1);">
-						</a><br> <a><input class="cart" onclick="BuyCheck(2);"
-							type="image" src="/grasse/resources/images/cart.PNG" /></a><br>
+						</a><br>
+						<!-- 장바구니 담기 -->
+						<a><input class="cart" onclick="BuyCheck(2);" type="image"
+							src="/grasse/resources/images/cart.PNG" /></a><br>
+						<!-- 찜 하기 -->
 						<input class="wishList" onclick="BuyCheck(3);" type="image"
 							src="/grasse/resources/images/wishlist.PNG" value="wishlist" />
 
 					</div>
 				</form>
 
+				<!-- 
+			<a id="MOVE_TOP_BTN" href="#"
+				style="position: fixed; right: 20px; bottom: 20px; z-index: 99;">
+				<img src="/grasse/resources/images/top_btn.png" />
+			</a>
+ -->
+
 			</div>
 		</div>
 
-		<button class="it-dt-sl-btn-group" width="100%">
-			<input type="button" value="상품상세정보" class="Btn"
-				onclick="fnMove('it-dt-img')"> <input type="button"
-				value="상품후기 (0)" class="Btn" onclick="fnMove('it-dt-rv')"> <input
-				type="button" value="상품문의 (0)" class="Btn"
-				onclick="fnMove('it-dt-qa')">
-		</button>
-
+		<!-- 
+		이동 버튼 그룹
+		<div class="py-5">
+			<button class="it-dt-sl-btn-group" width="100%">
+				<input type="button" value="상품상세정보" class="Btn"
+					onclick="fnMove('it-dt-img')"> <input type="button"
+					value="상품후기 (0)" class="Btn" onclick="fnMove('it-dt-rv')">
+				<input type="button" value="상품문의 (0)" class="Btn"
+					onclick="fnMove('it-dt-qa')">
+			</button>
+		</div>
+ -->
 
 		<!-- 상품 상세 이미지 -->
 		<div class="it-dt-img">
@@ -454,6 +459,7 @@
 			$(".input_ea").each(function() {
 				r_count.push($(this).val());
 			});
+			
 			$("input[type=hidden][name=r_count]").val(r_count);
 			$("input[type=hidden][name=total]").val($(this).attr("totprice"));
 

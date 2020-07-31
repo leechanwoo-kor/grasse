@@ -19,7 +19,7 @@ public class ReviewController {
 	private ReviewService reviewService;
 
 	// 리뷰 작성
-	@RequestMapping(value = "/review", method = RequestMethod.POST)
+	@RequestMapping(value = "/review.do", method = RequestMethod.POST)
 	public void create(CommandMap commandMap) throws Exception {
 		reviewService.ReviewWrite(commandMap.getMap());
 	}
