@@ -1,15 +1,11 @@
 package grasse.member.login;
 
-import java.security.Key;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import grasse.common.util.RSAUtil;
-import grasse.common.util.SHA256Util;
 
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
@@ -17,6 +13,7 @@ public class LoginServiceImpl implements LoginService {
 	@Resource(name = "loginDAO")
 	private LoginDAO loginDAO;
 
+	// 로그인
 	@Override
 	public Map<String, Object> login(Map<String, Object> map) throws Exception {
 		return loginDAO.selectId(map);

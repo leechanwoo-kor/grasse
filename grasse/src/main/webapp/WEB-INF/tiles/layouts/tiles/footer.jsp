@@ -9,21 +9,21 @@
 			<div class="row">
 				<div class="col-md-3 col-sm-3">
 					<div class="single-widget">
-						<h2 class="strong">GRASSE</h2>
+						<h4 class="strong py-3">GRASSE</h4>
 						<div class="widget-inner">
 							<p class="text-white">Office: 서울 종로구 종로78</p>
 							<p class="text-white">Phone: (02) 733-8781</p>
-							<p class="text-white">Fax: (02)733-8781</p>
+							<p class="text-white">Fax: (02) 733-8781</p>
 							<p class="text-white">Email: grasse@gmail.com</p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-3">
 					<div class="single-widget">
-						<h2 class="strong">INFORMATION</h2>
+						<h4 class="strong py-3">INFORMATION</h4>
 						<div class="widget-inner text-gray">
 							<ul>
-								<li><a href class="text-white">Frequently Asked Question</a></li>
+								<li><a href="/grasse/faq/faqList.do" class="text-white">Frequently Asked Question</a></li>
 								<li><a href class="text-white">Terms and Condition</a></li>
 								<li><a href class="text-white">Privacy Policy</a></li>
 								<li><a href class="text-white">Customer Service</a></li>
@@ -35,7 +35,7 @@
 				</div>
 				<div class="col-md-3 col-sm-3">
 					<div class="single-widget">
-						<h2 class="strong">CUSTOMER CARE</h2>
+						<h4 class="strong py-3">CUSTOMER CARE</h4>
 						<div class="widget-inner">
 							<ul>
 								<li><a href class="text-white">Contact Us</a></li>
@@ -48,7 +48,7 @@
 				</div>
 				<div class="col-md-3 col-sm-3">
 					<div class="single-widget">
-						<h2 class="strong">OUR SERVICES</h2>
+						<h4 class="strong py-3">OUR SERVICES</h4>
 						<div class="widget-inner">
 							<ul>
 								<li><a href class="text-white">Shipping & Returns</a></li>

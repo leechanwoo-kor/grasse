@@ -127,8 +127,6 @@
 
 			<div class="it_dt_info">
 				<form name="form" id="form" method="post">
-					<input type="hidden" name="item" value="${map }"> <input
-						type="hidden" name="ITEM_NO" value="${map.ITEM_NO }">
 					<p class="it-name">${map.NAME }</p>
 
 					<!-- 상품가격  -->
@@ -165,7 +163,7 @@
 
 
 					<!-- 사이즈, 색상, 개수출력 -->
-					<div id="attribute">
+					<div id="attribute" class="py-3">
 						<ul class="MK_inner-opt-cm" id="total_price"></ul>
 						<div id="MK_innerOptTotal" class="good_total">
 							<p class="totalRight">
@@ -226,7 +224,6 @@
 
 	</div>
 	<!-- end container -->
-
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script>
 		var totprice = 0;
@@ -253,10 +250,7 @@
 					+ "<br>"
 					+ size
 					//선택한 옵션과 COUNT 저장
-					+ "<input type='hidden' name='optno' class='optno' value='" + optno + "'>"
 					+ "<input type='hidden' name='attrno' class='attrno' value='" + attrno + "'>"
-					+ "<input type='hidden' name='r_optno' value=''>"
-					+ "<input type='hidden' name='r_count' value=''>"
 					+ "<div class='MK_qty-ctrl'>"
 					//선택한 갯수 
 					+ "<input type='text' id='count' value='1' class='input_ea' size='2' maxlength='3'>"
@@ -280,7 +274,6 @@
 			r_attrno.push(attrno);
 
 			r_optno.push(optno);
-			$("input[type=hidden][name=r_optno]").val(r_optno);
 
 			var thisIdx = $(".input_ea").index(this);
 			var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
@@ -318,10 +311,9 @@
 			r_optno = $.grep(r_optno, function(v) {
 				return v != ropt;
 			});
-			count = $.grep(count, function(v) {
+			r_count = $.grep(r_count, function(v) {
 				return v != inputEa;
 			});
-			$("input[type=hidden][name=r_optno]").val(r_optno);
 			$(".MK_li").eq(thisIdx).remove();
 		});
 
@@ -450,30 +442,65 @@
 		}
 
 		//itemDetail
-		function BuyCheck(index) {
+		function BuyCheck(index, url) {
 			if (form.option.value == 'none') {
 				alert("옵션을 선택해주세요");
 				return false;
 			}
 
-			$(".input_ea").each(function() {
-				r_count.push($(this).val());
-			});
-			
-			$("input[type=hidden][name=r_count]").val(r_count);
-			$("input[type=hidden][name=total]").val($(this).attr("totprice"));
-
 			if (index == 1) {
+				to_ajax("/grasse/order/addOrder.do");
 				document.form.action = '/grasse/order/order.do';
 			}
 			if (index == 2) {
-				document.form.action = '/grasse/cart/addCart.do';
+				to_ajax("/grasse/cart/addCart.do");
+				document.form.action = '/grasse/cart/cartList.do';
 			}
 			if (index == 3) {
+				to_ajax("/grasse/wish/addWish.do");
 				alert('관심상품으로 등록되었습니다.');
 			}
 
 			document.form.submit();
+		}
+
+		function to_ajax(url) {
+			$(".input_ea").each(function() {
+				r_count.push($(this).val());
+			});
+
+			var jList = new Array();
+
+			var ITEM_NO = "<c:out value='${map.ITEM_NO}'/>";
+			alert(ITEM_NO);
+
+			for (var i = 0; i < r_attrno.length; i++) {
+				var aJson = {
+					COUNT : r_count[i],
+					ATTRIBUTE_NO : r_attrno[i]
+				};
+				jList.push(aJson);
+			}
+
+			var jsonList = {
+				"ITEM_NO" : ITEM_NO,
+				"ATTRIBUTE" : jList
+			};
+
+			alert(JSON.stringify(jsonList));
+			$.ajax({
+				url : url,
+				type : "POST",
+				data : JSON.stringify(jsonList),
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+					alert("성공");
+				},
+				error : function(request, status, error) {
+					alert("code:" + request.status + "\n" + "message:"
+							+ request.responseText + "\n" + "error:" + error);
+				}
+			});
 		}
 	</script>
 

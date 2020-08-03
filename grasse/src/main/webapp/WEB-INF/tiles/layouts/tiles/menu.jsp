@@ -4,12 +4,20 @@
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf"%>
 </head>
-<body class="py-5">
-	<div class="logo" style="padding-top: 50px;">
+<body>
+	<!-- 
+	<div style="max-height: 300px; overflow: hidden;">
+		<img style="width: 100%; object-fit: contain;"
+			src="https://images.unsplash.com/photo-1589204975097-53f274b1655e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" />
+	</div>
+	 -->
+	<!-- https://images.unsplash.com/photo-1589204975097-53f274b1655e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80 -->
+
+	<div class="logo" style="padding-top: 80px;">
 		<h1 class="logo text-center display-1">GRASSE</h1>
 	</div>
 
-	<div class="hr py-5">
+	<div class="hr py-3">
 		<hr style="width: 80%; border: solid 1px black; margin: 0 auto">
 	</div>
 
@@ -38,8 +46,8 @@
 		</div>
 	</div>
 
-	<div class="hr py-5">
-		<hr style="width: 80%; border: dashed 1px black; margin: 0 auto">
+	<div class="hr py-3">
+		<hr style="width: 80%; border: solid 1px black; margin: 0 auto">
 	</div>
 
 </body>

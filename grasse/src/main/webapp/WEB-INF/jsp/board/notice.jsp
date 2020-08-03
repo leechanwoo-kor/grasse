@@ -12,29 +12,27 @@
 }
 </style>
 </head>
-<body style="padding-top: 100px">
+<body>
 
 	<div class="table-responsive px-5">
 
-		<h2 class="py-3 text-center">공지사항</h2>
-		
-		<table class="table table-hover table-sm">
+		<h2 class="py-3 text-center">NOTICE</h2>
+
+		<table class="table table-bordered table-sm">
 			<thead>
-				<tr>
-					<th>번호</th>
-					<th>카테고리</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성날짜</th>
+				<tr class="text-center">
+					<th style="width: 10%">번호</th>
+					<th style="width: 50%">제목</th>
+					<th style="width: 20%">작성자</th>
+					<th style="width: 20%">작성날짜</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
 					<c:when test="${fn:length(list) > 0 }">
 						<c:forEach items="${list }" var="row">
-							<tr>
+							<tr class="text-center">
 								<td>${row.NOTICE_NO }</td>
-								<td>${row.CATEGORY }</td>
 								<td>${row.TITLE }</td>
 								<td>${row.MEMBER_ID }</td>
 								<td>${row.REGDATE }</td>
@@ -43,7 +41,7 @@
 					</c:when>
 					<c:otherwise>
 						<tr>
-							<td colspan="5" class="text-center py-5">조회된 결과가 없습니다.</td>
+							<td colspan="4" class="text-center py-5">조회된 결과가 없습니다.</td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -51,10 +49,8 @@
 		</table>
 	</div>
 
-
-
 	<div>
-		<ul class="pagination justify-content-center">
+		<ul class="pagination justify-content-center py-5">
 			<li class="page-item disable"><a class="page-link text-dark"
 				href="#">이전 </a></li>
 			<li class="page-item active"><a class="page-link text-dark"

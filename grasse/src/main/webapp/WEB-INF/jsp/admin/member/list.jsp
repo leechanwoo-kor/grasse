@@ -14,24 +14,24 @@
 </head>
 <body>
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-		<h2 class="py-3">회원 관리</h2>
-		
+		<h2 class="py-5 text-center">회원 관리</h2>
+
 		<div class="table-responsive pt-3">
 			<table class="table table-hover table-sm">
 				<thead>
-					<tr>
-						<th>회원번호</th>
-						<th>회원ID</th>
-						<th>회원이름</th>
-						<th>포인트</th>
-						<th>가입날짜</th>
+					<tr class="text-center">
+						<th style="width: 10%">회원번호</th>
+						<th style="width: 25%">회원ID</th>
+						<th style="width: 20%">회원이름</th>
+						<th style="width: 20%">포인트</th>
+						<th style="width: 25%">가입날짜</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:choose>
 						<c:when test="${fn:length(list) > 0 }">
 							<c:forEach items="${list }" var="row">
-								<tr>
+								<tr class="text-center">
 									<td>${row.MEMBER_NO }</td>
 									<td>${row.MEMBER_ID }</td>
 									<td>${row.NAME }</td>
@@ -49,8 +49,9 @@
 				</tbody>
 			</table>
 		</div>
-
-		<div class="text-center py-3">
+		
+		<!-- Pagination -->
+		<div class="text-center py-5">
 			<ul class="pagination justify-content-center">
 				<li class="page-item disable"><a class="page-link text-dark"
 					href="#">이전 </a></li>
@@ -64,6 +65,8 @@
 				</a></li>
 			</ul>
 		</div>
+		<!-- Pagination -->
+		
 	</main>
 </body>
 

@@ -29,7 +29,7 @@
 			action = "modify";
 			type = "PUT";
 
-			var tr = $(this);
+			var tr = $(this).parent();
 			var td = tr.children();
 
 			var TITLE = td.eq(1).text();
@@ -50,29 +50,30 @@
 </script>
 
 </head>
+
 <body class="review">
-	<div class="container">
+	<div class="container py-5">
 		<h4 class="text-center py-3">REVIEW</h4>
 
 		<div class="table-responsive pt-3">
 			<table class="table table-hover table-sm">
 				<thead>
-					<tr>
-						<th>번호</th>
-						<th>리뷰제목</th>
-						<th>리뷰내용</th>
-						<th>작성자</th>
-						<th>작성날짜</th>
+					<tr class="text-center">
+						<th style="width: 10%">번호</th>
+						<th style="width: 25%">리뷰제목</th>
+						<th style="width: 25%">리뷰내용</th>
+						<th style="width: 20%">작성자</th>
+						<th style="width: 20%">작성날짜</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:choose>
 						<c:when test="${fn:length(reviewList)>0}">
 							<c:forEach items="${reviewList}" var="row">
-								<tr class="clickable-row" id="detailBtn" data-toggle="modal"
-									data-target="#reviewModal">
+								<tr class="text-center">
 									<td>${row.REVIEW_NO}</td>
-									<td>${row.TITLE}</td>
+									<td><a href="#" id="detailBtn" data-toggle="modal"
+									data-target="#reviewModal">${row.TITLE}</a></td>
 									<td>${row.CONTENT}</td>
 									<td>${row.MEMBER_ID}</td>
 									<td>${row.REGDATE}</td>
@@ -110,7 +111,7 @@
 			<div class="col col-lg-3">
 				<button id="writeBtn" type="button"
 					class="btn btn-outline-dark my-2 my-sm-0" style="float: right;"
-					data-toggle="modal" data-target="#reviewModal">리뷰쓰기</button>
+					data-toggle="modal" data-target="#reviewModal">글 작성</button>
 				<input type="hidden" name="ITEM_NO" value="${map.ITEM_NO}">
 			</div>
 		</div>

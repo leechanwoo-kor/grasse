@@ -9,10 +9,11 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
 		<!-- start nav -->
 		<div class="container">
-			<a class="navbar-brand text-dark" href="#" name="main">GRASSE</a> <a
-				class="nav-link text-dark" href="/grasse/notice/noticeList.do" name="notice">NOTICE</a> <a
-				class="nav-link text-dark" href="/grasse/faq/faqList.do" name="faq">FAQ</a> <a class="nav-link text-dark"
-				href="#" name="qna">QNA</a>
+			<a class="navbar-brand text-dark" href="/grasse/main.do" name="main">GRASSE</a>
+			<a class="nav-link text-dark" href="/grasse/notice/noticeList.do"
+				name="notice">NOTICE</a> <a class="nav-link text-dark"
+				href="/grasse/faq/faqList.do" name="faq">FAQ</a> <a
+				class="nav-link text-dark" href="/grasse/qna/qnaList.do" name="qna">QNA</a>
 
 			<button class="navbar-toggler collapsed" type="button"
 				data-toggle="collapse" data-target="#navbarResponsive"
@@ -23,69 +24,40 @@
 
 			<div class="navbar-collapse collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
+
 					<c:if test="${sessionScope.member == null }">
-						<li><a class="nav-link text-dark" href="#" name="login">LOGIN</a></li>
-						<li><a class="nav-link text-dark" href="#" name="join">JOIN</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/loginForm.do" name="login">LOGIN</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/join/joinForm.do" name="join">JOIN</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/loginForm.do" name="mypage">MYPAGE</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/loginForm.do" name="order">ORDER</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/loginForm.do" name="cart">SHOPPING CART</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/loginForm.do" name="wishlist">WISH LIST</a></li>
 					</c:if>
 					<c:if test="${sessionScope.member != null }">
-						<li><a class="nav-link text-dark" href="#" name="logout">LOGOUT</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/login/logout.do" name="logout">LOGOUT</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/mypage/memberList.do" name="mypage">MYPAGE</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/mypage/orderList.do" name="order">ORDER</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/mypage/cartList.do" name="cart">SHOPPING CART</a></li>
+						<li><a class="nav-link text-dark"
+							href="/grasse/mypage/wishList.do" name="wishlist">WISH LIST</a></li>
 					</c:if>
-					<li><a class="nav-link text-dark" href="#" name="mypage">MYPAGE</a></li>
-					<li><a class="nav-link text-dark" href="#" name="cart">SHOPPING CART</a></li>
-					<li><a class="nav-link text-dark" href="#" name="order">ORDER</a></li>
-					<li><a class="nav-link text-dark" href="#" name="wishlist">WISH LIST</a></li>
+
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<!-- end nav -->
-	
+
 </body>
-<%@ include file="/WEB-INF/include/include-body.jspf"%>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("a[name='main']").on("click", function(e) { //메인
-			e.preventDefault();
-			fn_main();
-		}).trigger("create");
 
-		$("a[name='join']").on("click", function(e) { //회원가입
-			e.preventDefault();
-			fn_join();
-		}).trigger("create");
-
-		$("a[name='login']").on("click", function(e) { //로그인
-			e.preventDefault();
-			fn_login();
-		}).trigger("create");
-
-		$("a[name='logout']").on("click", function(e) { //로그아웃
-			e.preventDefault();
-			fn_logout();
-		}).trigger("create");
-
-	});
-
-	function fn_main() {
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/main.do' />");
-		comSubmit.submit();
-	}
-	function fn_join() {
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/join/joinForm.do' />");
-		comSubmit.submit();
-	}
-	function fn_login() {
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/login/loginForm.do' />");
-		comSubmit.submit();
-	}
-	function fn_logout() {
-		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/login/logout.do' />");
-		comSubmit.submit();
-	}
-
-</script>
 </html>

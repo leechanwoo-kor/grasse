@@ -32,30 +32,32 @@
 			value="/WEB-INF/jsp/main/{1}.jsp" />
 	</definition>
 
-	<!-- login -->
-	<definition name="login-layout"
-		template="/WEB-INF/tiles/layouts/login_layout.jsp">
+	<!-- mypage -->
+	<definition name="mypage-layout"
+		template="/WEB-INF/tiles/layouts/mypage_layout.jsp">
 		<put-attribute name="header"
 			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
+		<put-attribute name="sidebar"
+			value="/WEB-INF/tiles/layouts/tiles/sidebar.jsp" />
 		<put-attribute name="footer"
 			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
-	<definition name=".tiles/login/*" extends="login-layout">
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/login/{1}.jsp" />
+	<definition name=".tiles/mypage/*/*" extends="mypage-layout">
+		<put-attribute name="content"
+			value="/WEB-INF/jsp/mypage/{1}/{2}.jsp" />
 	</definition>
 
-	<!-- join -->
-	<definition name="join-layout"
-		template="/WEB-INF/tiles/layouts/join_layout.jsp">
+	<!-- member -->
+	<definition name="member-layout"
+		template="/WEB-INF/tiles/layouts/member_layout.jsp">
 		<put-attribute name="header"
 			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
 		<put-attribute name="footer"
 			value="/WEB-INF/tiles/layouts/tiles/footer.jsp" />
 	</definition>
-	<definition name=".tiles/join/*" extends="join-layout">
+	<definition name=".tiles/member/*/*" extends="member-layout">
 		<put-attribute name="body"
-			value="/WEB-INF/jsp/join/{1}.jsp" />
+			value="/WEB-INF/jsp/member/{1}/{2}.jsp" />
 	</definition>
 
 	<!-- item -->
@@ -91,7 +93,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/itemDetail/{1}.jsp" />
 	</definition>
-	
+
 	<!-- order -->
 	<definition name="order-layout"
 		template="/WEB-INF/tiles/layouts/order_layout.jsp">
@@ -107,7 +109,7 @@
 
 	<!-- Board -->
 	<definition name="board-layout"
-		template="/WEB-INF/tiles/layouts/join_layout.jsp">
+		template="/WEB-INF/tiles/layouts/board_layout.jsp">
 		<put-attribute name="header"
 			value="/WEB-INF/tiles/layouts/tiles/header.jsp" />
 		<put-attribute name="footer"

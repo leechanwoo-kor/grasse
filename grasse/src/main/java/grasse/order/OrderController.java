@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +35,8 @@ public class OrderController {
 
 	// 디테일에서
 	@RequestMapping(value = "/order/order.do")
-	public ModelAndView buy(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public @ResponseBody ModelAndView buy(CommandMap commandMap, HttpServletRequest request,
+			@RequestBody Map<String, Object> jsonList) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/order/orderForm");
 		HttpSession session = request.getSession();
 
@@ -53,7 +55,7 @@ public class OrderController {
 		String NAME = (String) commandMap.get("NAME");
 		String SIZE = (String) commandMap.get("SIZE");
 
-		cartMap.put("ATTRIBUTE_NO", ATTRIBUTE_NO);
+		cartMap.put("ATTRIBUTE_NO", 1);
 		cartMap.put("ITEM_NO", 2);
 		cartMap.put("COUNT", COUNT);
 		cartMap.put("CONTENT", "ㅎㅅㅎ"/* CONTENT */);
@@ -111,7 +113,7 @@ public class OrderController {
 
 	@RequestMapping(value = "/order/orderSuccess.do")
 	public ModelAndView orderSuccess(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("order/orderSuccess");
+		ModelAndView mv = new ModelAndView(".tiles/order/orderSuccess");
 		HttpSession session = request.getSession();
 		return mv;
 	}
@@ -142,7 +144,10 @@ public class OrderController {
 			commandMap.put("MEMBER_ID", member.get("MEMBER_ID"));
 			System.out.println(commandMap.getMap());
 			System.out.println("회원결제");
-			/* System.out.println(commandMap.getMap()); */
+			Map<String, Object> memberInfo = new HashMap<String, Object>();
+			memberInfo = memberService.memberInfo(commandMap.getMap());
+
+			mv.addObject("memberInfo", memberInfo);
 		}
 		commandMap.put("cart_No", session.getAttribute("CART_NO"));
 		System.out.println("인서트오더감??");
@@ -184,7 +189,7 @@ public class OrderController {
 		writer.print(json);
 		writer.flush();
 		writer.close();
-		ModelAndView mv = new ModelAndView("order/orderForm");
+		ModelAndView mv = new ModelAndView(".tiles/order/orderForm");
 
 		return mv;
 	}

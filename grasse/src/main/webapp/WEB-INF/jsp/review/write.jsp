@@ -78,7 +78,7 @@
 
 					<div class="row md-form mb-5">
 						<label class="col col-sm-2">리뷰 내용</label>
-						<textarea rows="10" id="CONTENT"
+						<textarea rows="15" id="CONTENT"
 							class="col col-sm-10 form-control"></textarea>
 					</div>
 

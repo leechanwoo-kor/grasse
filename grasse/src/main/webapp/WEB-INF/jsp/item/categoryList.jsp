@@ -14,32 +14,31 @@
 	<!-- 카테고리 상품 폼 -->
 
 	<div class="container pt-5">
+
+		<!-- Grid row -->
 		<div class="row">
 			<div class="col lg-8">
 				<div class="row">
 					<c:choose>
 						<c:when test="${fn:length(list) > 0 }">
-
 							<c:forEach items="${list }" var="row">
-								<!-- ITEM_NO -->
-
-								<div class="col-lg-4 col-md-6 mb-4">
-									<div class="card h-100">
-										<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }"> <img
-											class=card-img-top " src="http://placehold.it/700x400" alt>
+								<!-- Grid col -->
+								<div class="col-lg-3 col-md-6 mb-4">
+									<div class="card">
+										<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
+											<img class="card-img-top" src="http://placehold.it/200x250"
+											alt="">
 										</a>
 										<div class="card-body">
-											<h4 class="card-title">
+											<h5 class="card-title text-center">
 												<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-											</h4>
-											<h5>${row.PRICE }</h5>
-											<p class="card-text">${row.CONTENT }</p>
+											</h5>
+											<%-- <p class="card-text text-center">${row.CONTENT }</p> --%>
 										</div>
-										<div class="card-footer">
-											<small class="text-muted">★ ★ ★ ★ ★</small>
-										</div>
+										<div class="card-footer"><h6 class="text-center">${row.PRICE }</h6></div>
 									</div>
 								</div>
+								<!-- Grid col -->
 							</c:forEach>
 						</c:when>
 
@@ -51,8 +50,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- row -->
+		<!-- Grid row -->
 
+		<!-- Pagination -->
 		<div>
 			<ul class="pagination justify-content-center py-5">
 				<li class="page-item disable"><a class="page-link text-dark"
@@ -67,8 +67,11 @@
 				</a></li>
 			</ul>
 		</div>
+		<!-- Pagination -->
+
 	</div>
 	<!-- container -->
+
 </body>
 
 </html>

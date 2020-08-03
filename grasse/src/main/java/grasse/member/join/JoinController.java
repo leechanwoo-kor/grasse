@@ -31,7 +31,7 @@ public class JoinController {
 	// 회원가입
 	@RequestMapping(value = "/join/joinForm.do")
 	public ModelAndView memberJoin(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/join/joinForm");
+		ModelAndView mv = new ModelAndView(".tiles/member/join/joinForm");
 
 		return mv;
 	}

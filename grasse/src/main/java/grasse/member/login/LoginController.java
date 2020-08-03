@@ -1,6 +1,7 @@
 package grasse.member.login;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import grasse.common.map.CommandMap;
-import grasse.common.util.RSAKeySet;
 
 @Controller
 public class LoginController {
@@ -28,7 +28,7 @@ public class LoginController {
 	/* 로그인 폼 */
 	@RequestMapping(value = "/login/loginForm.do")
 	public @ResponseBody ModelAndView loginForm(HttpSession session, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/login/loginForm");
+		ModelAndView mv = new ModelAndView(".tiles/member/login/loginForm");
 
 		return mv;
 	}
@@ -41,15 +41,16 @@ public class LoginController {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 
-		commandMap.put("MEMBER_ID", request.getParameter("id"));
+		commandMap.put("MEMBER_ID", request.getParameter("MEMBER_ID"));
 		commandMap.put("idSave", request.getParameter("idSave"));
 		commandMap.put("autoLogin", request.getParameter("autoLogin"));
 		Map<String, Object> member = loginService.login(commandMap.getMap());
 
-		String passwd = request.getParameter("passwd");
+		String PASSWD = request.getParameter("PASSWD");
 
-		if (member != null && member.get("PASSWD").equals(passwd)) {
+		if (member != null && member.get("PASSWD").equals(PASSWD)) {
 			session.setAttribute("member", member);
+			session.setAttribute("MEMBER_ID", request.getParameter("MEMBER_ID"));
 			mv.addObject("member", member);
 
 			if (commandMap.get("autoLogin") != null) {
@@ -69,15 +70,15 @@ public class LoginController {
 				loginService.keepLogin(commandMap.getMap());
 			}
 
-			if (commandMap.get("MEMBER_ID").equals("ADMIN")) {
-				mv.setViewName(".tiles/admin/adminMain");
+			if (commandMap.get("MEMBER_ID").equals("admin")) {
+				mv.setViewName(".tiles/admin/main/main");
 			} else {
 				mv.setViewName(".tiles/main/main");
 			}
 
 		} else {
 			mv.addObject("errCode", 1);
-			mv.setViewName(".tiles/login/loginForm");
+			mv.setViewName(".tiles/member/login/loginForm");
 		}
 
 		return mv;
@@ -87,6 +88,7 @@ public class LoginController {
 	@RequestMapping("/login/logout.do")
 	public ModelAndView logout(HttpServletResponse response, HttpServletRequest request, CommandMap commandMap)
 			throws Exception {
+		ModelAndView mv = new ModelAndView(".tiles/main/main");
 		HttpSession session = request.getSession(false);
 
 		/* 세션삭제 */
@@ -94,16 +96,38 @@ public class LoginController {
 			session.invalidate();
 		}
 
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName(".tiles/main/main");
+		return mv;
+	}
 
+	/* 아이디 찾기 폼 */
+	@RequestMapping(value = "/login/findId.do")
+	public ModelAndView findId(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView(".tiles/member/login/findId");
+		return mv;
+	}
+
+	/* 입력한 정보에 맞춰서 아이디를 찾아주는 거 */
+	@RequestMapping(value = "/login/findIdResult.do", method = RequestMethod.POST)
+	public ModelAndView findIdResult(HttpServletRequest request, CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView(".tiles/member/login/findIdResult");
+
+		String NAME = request.getParameter("NAME");
+		String EMAIL = request.getParameter("EMAIL") + "@" + request.getParameter("E_DOMAIN");
+
+		commandMap.put("NAME", NAME);
+		commandMap.put("EMAIL", EMAIL);
+
+		List<Map<String, Object>> list = loginService.findIdWithEmail(commandMap.getMap());
+		mv.addObject("list", list);
+		mv.addObject("NAME", NAME);
+		mv.addObject("EMAIL", EMAIL);
 		return mv;
 	}
 
 	/* 비밀번호 찾기 폼 */
 	@RequestMapping(value = "/login/findPw.do")
 	public ModelAndView findPasswdForm() {
-		ModelAndView mv = new ModelAndView(".tiles/login/findPw");
+		ModelAndView mv = new ModelAndView(".tiles/member/login/findPw");
 
 		return mv;
 	}
@@ -112,62 +136,39 @@ public class LoginController {
 	@RequestMapping(value = "/login/changePw.do", method = RequestMethod.POST)
 	public ModelAndView changePw(HttpServletRequest request, CommandMap commandMap, HttpSession session)
 			throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/login/changePw");
+		ModelAndView mv = new ModelAndView(".tiles/member/login/changePw");
 
-		RSAKeySet keySet = new RSAKeySet();
-
-		String Name = request.getParameter("Name");
+		String NAME = request.getParameter("NAME");
 		String MEMBER_ID = request.getParameter("MEMBER_ID");
 		String EMAIL = request.getParameter("EMAIL");
-		commandMap.put("Name", Name);
+
+		commandMap.put("NAME", NAME);
 		commandMap.put("MEMBER_ID", MEMBER_ID);
 		commandMap.put("EMAIL", EMAIL);
 
-		session.setAttribute("member", commandMap.getMap());
+		List<Map<String, Object>> list = loginService.findIdWithEmail(commandMap.getMap());
+
+		mv.addObject("list", list);
+		mv.addObject("NAME", NAME);
+		mv.addObject("MEMBER_ID", MEMBER_ID);
+		mv.addObject("EMAIL", EMAIL);
 
 		return mv;
 	}
 
 	/* 비밀번호 변경 */
 	@RequestMapping(value = "/login/changePwComplete.do", method = RequestMethod.POST)
-	public ModelAndView joinComplete(CommandMap commandMap, HttpServletRequest request, HttpSession session)
-			throws Exception {
+	public ModelAndView joinComplete(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/main/main");
 
-		Map<String, Object> PwMap = (Map<String, Object>) session.getAttribute("member");
+		Map<String, Object> PwMap = new HashMap<String, Object>();
+		PwMap.put("NAME", request.getParameter("NAME"));
+		PwMap.put("MEMBER_ID", request.getParameter("MEMBER_ID"));
+		PwMap.put("EMAIL", request.getParameter("EMAIL"));
 		PwMap.put("PASSWD2", request.getParameter("PASSWD2"));
 
 		loginService.changePw(PwMap);
 
-		/* 세션삭제 */
-		if (session != null) {
-			session.invalidate();
-		}
-
 		return mv;
 	}
-
-	@RequestMapping(value = "/login/findId.do") // 아이디 찾기 폼을 보여주는 메소드
-	public ModelAndView findId(CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/login/findId");
-		return mv;
-	}
-
-	@RequestMapping(value = "/login/findIdResult.do", method = RequestMethod.POST) // 입력한 정보에 맞춰서 아이디를 찾아주는 거
-	public ModelAndView findIdResult(HttpServletRequest request, CommandMap commandMap) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/login/findIdResult");
-
-		String name = request.getParameter("name");
-		String email = request.getParameter("email") + "@" + request.getParameter("e_domain");
-
-		commandMap.put("NAME", name);
-		commandMap.put("EMAIL", email);
-
-		List<Map<String, Object>> list = loginService.findIdWithEmail(commandMap.getMap());
-		mv.addObject("list", list);
-		mv.addObject("name", name);
-		mv.addObject("email", email);
-		return mv;
-	}
-
 }

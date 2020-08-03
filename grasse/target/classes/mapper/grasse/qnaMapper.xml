@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+
+	<!-- QNA 작성 -->
+	<insert id="insertQna" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO QNA (
+				QNA_NO,
+				CATEGORY,
+				TITLE,
+				CONTENT,
+				REGDATE,
+				MEMBER_ID )
+			VALUES (
+				QNA_NO_SEQ.NEXTVAL,
+				#{CATEGORY},
+				#{TITLE},
+				#{CONTENT},
+				SYSDATE,
+				#{MEMBER_ID} )
+		]]>
+	</insert>
+
+	<!-- 전체 QNA 리스트 -->
+	<select id="selectAllQna" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				QNA_NO,
+				CATEGORY,
+				TITLE,
+				CONTENT,
+				REGDATE,
+				MEMBER_ID
+			FROM
+				QNA
+		]]>
+	</select>
+
+</mapper>

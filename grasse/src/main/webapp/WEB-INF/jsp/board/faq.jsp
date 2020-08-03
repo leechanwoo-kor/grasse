@@ -12,26 +12,26 @@
 }
 </style>
 </head>
-<body style="padding-top: 100px">
+<body>
 
 	<div class="table-responsive px-5">
 
 		<h2 class="py-3 text-center">FAQ</h2>
-		
-		<table class="table table-hover table-sm">
+
+		<table class="table table-bordered table-sm">
 			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성날짜</th>
+				<tr class="text-center">
+					<th style="width: 10%">번호</th>
+					<th style="width: 50%">제목</th>
+					<th style="width: 20%">작성자</th>
+					<th style="width: 20%">작성날짜</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:choose>
 					<c:when test="${fn:length(list) > 0 }">
 						<c:forEach items="${list }" var="row">
-							<tr>
+							<tr class="text-center">
 								<td>${row.FAQ_NO }</td>
 								<td>${row.TITLE }</td>
 								<td>${row.MEMBER_ID }</td>
@@ -52,7 +52,7 @@
 
 
 	<div>
-		<ul class="pagination justify-content-center">
+		<ul class="pagination justify-content-center py-5">
 			<li class="page-item disable"><a class="page-link text-dark"
 				href="#">이전 </a></li>
 			<li class="page-item active"><a class="page-link text-dark"

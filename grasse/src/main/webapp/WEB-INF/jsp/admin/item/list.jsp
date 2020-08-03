@@ -14,23 +14,23 @@
 </head>
 <body>
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-		<h2 class="py-3">상품 관리</h2>
+		<h2 class="py-5 text-center">상품 관리</h2>
 		<div class="table-responsive pt-3">
 			<table class="table table-hover table-sm">
 				<thead>
-					<tr>
-						<th>상품번호</th>
-						<th>상품이름</th>
-						<th>가격</th>
-						<th>조회수</th>
-						<th>등록일자</th>
+					<tr class="text-center">
+						<th style="width: 10%">상품번호</th>
+						<th style="width: 25%">상품이름</th>
+						<th style="width: 20%">가격</th>
+						<th style="width: 20%">조회수</th>
+						<th style="width: 25%">등록일자</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:choose>
 						<c:when test="${fn:length(list) > 0 }">
 							<c:forEach items="${list }" var="row">
-								<tr>
+								<tr class="text-center">
 									<td>${row.ITEM_NO }</td>
 									<td>${row.NAME }</td>
 									<td>${row.PRICE }</td>
@@ -49,12 +49,15 @@
 			</table>
 		</div>
 
+
 		<div class="row pt-3">
 			<div class="col col-lg-3">
 				<a href="/grasse/admin/itemWriteForm.do"
 					class="btn btn-outline-dark my-2 my-sm-0">글쓰기</a>
 			</div>
-			<div class="col col-lg-6">
+
+			<!-- Pagination -->
+			<div class="col col-lg-6 py-5">
 				<ul class="pagination justify-content-center">
 					<li class="page-item disable"><a class="page-link text-dark"
 						href="#">이전 </a></li>
@@ -68,6 +71,7 @@
 					</a></li>
 				</ul>
 			</div>
+			<!-- Pagination -->
 		</div>
 
 		<form class="form-inline justify-content-center my-lg-0">
