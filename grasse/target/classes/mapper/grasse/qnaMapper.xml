@@ -10,18 +10,22 @@
 	<insert id="insertQna" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO QNA (
-				QNA_NO,
 				CATEGORY,
 				TITLE,
 				CONTENT,
 				REGDATE,
+				REF,
+				RE_STEP,
+				RE_LEVEL,
 				MEMBER_ID )
 			VALUES (
-				QNA_NO_SEQ.NEXTVAL,
 				#{CATEGORY},
 				#{TITLE},
 				#{CONTENT},
 				SYSDATE,
+				#{REF},
+				#{RE_STEP},
+				#{RE_LEVEL},
 				#{MEMBER_ID} )
 		]]>
 	</insert>
@@ -30,16 +34,68 @@
 	<select id="selectAllQna" parameterType="hashmap"
 		resultType="hashmap">
 		<![CDATA[
+			SELECT * FROM
+				(SELECT rownum as RNUM,s.*
+			FROM
+				(SELECT QNA_NO, CATEGORY, TITLE, CONTENT, REGDATE, REF, RE_STEP, RE_LEVEL, MEMBER_ID
+				FROM
+					QNA)S)
+				WHERE 
+					RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+				ORDER BY
+					QNA_NO DESC		
+		]]>
+	</select>
+
+	<!-- QNA 조회 -->
+	<select id="selectQna" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
 			SELECT
 				QNA_NO,
 				CATEGORY,
 				TITLE,
 				CONTENT,
 				REGDATE,
+				REF,
+				RE_STEP,
+				RE_LEVEL,
 				MEMBER_ID
 			FROM
 				QNA
+			WHERE
+				QNA_NO = #{QNA_NO}
 		]]>
 	</select>
+
+	<!-- QNA 수정 -->
+	<update id="updateQna" parameterType="hashmap">
+		<![CDATA[
+			UPDATE QNA
+			SET
+				CATEGORY=#{CATEGORY},
+				TITLE=#{TITLE},
+				CONTENT=#{CONTENT}
+			WHERE
+				QNA_NO = #{QNA_NO}
+		]]>
+	</update>
+
+	<!-- QNA 삭제 -->
+	<delete id="deleteQna">
+	<![CDATA[
+		DELETE FROM QNA
+		WHERE QNA_NO = #{QNA_NO}
+	]]>
+	</delete>
+
+	<select id="qnaTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM
+		QNA
+	</select>
+
 
 </mapper>

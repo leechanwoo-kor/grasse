@@ -10,14 +10,12 @@
 	<insert id="insertNotice" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO NOTICE (
-				NOTICE_NO,
 				CATEGORY,
 				TITLE,
 				CONTENT,
 				REGDATE,
 				MEMBER_ID )
 			VALUES (
-				NOTICE_NO_SEQ.NEXTVAL,
 				#{CATEGORY},
 				#{TITLE},
 				#{CONTENT},
@@ -30,6 +28,29 @@
 	<select id="selectAllNotice" parameterType="hashmap"
 		resultType="hashmap">
 		<![CDATA[
+			SELECT * FROM
+			(SELECT rownum as RNUM,s.*
+				FROM
+				(SELECT
+					NOTICE_NO,
+					CATEGORY,
+					TITLE,
+					CONTENT,
+					REGDATE,
+					MEMBER_ID
+				FROM
+					NOTICE)S)
+				WHERE
+					RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+				ORDER BY
+					NOTICE_NO DESC
+		]]>
+	</select>
+
+	<!-- 공지사항 조회 -->
+	<select id="selectNotice" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
 			SELECT
 				NOTICE_NO,
 				CATEGORY,
@@ -39,7 +60,39 @@
 				MEMBER_ID
 			FROM
 				NOTICE
+			WHERE
+				NOTICE_NO = #{NOTICE_NO}
 		]]>
+	</select>
+
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice" parameterType="hashmap">
+		<![CDATA[
+			UPDATE NOTICE
+			SET
+				CATEGORY=#{CATEGORY},
+				TITLE=#{TITLE},
+				CONTENT=#{CONTENT}
+			WHERE
+				NOTICE_NO = #{NOTICE_NO}
+		]]>
+	</update>
+
+	<!-- 공지사항 삭제 -->
+	<delete id="deleteNotice">
+	<![CDATA[
+		DELETE FROM NOTICE
+		WHERE NOTICE_NO = #{NOTICE_NO}
+	]]>
+	</delete>
+
+	<select id="getTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM
+		NOTICE
+
 	</select>
 
 </mapper>

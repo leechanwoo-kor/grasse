@@ -3,11 +3,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="order">
+
 	<insert id="insertOrder" parameterType="hashmap">
 		<![CDATA[
 		INSERT INTO ORDER_TABLE
 		(
-		ORDER_NO,
 		RECIPIENT_NAME,
 		RECIPIENT_ZIPCODE,
 		RECIPIENT_ADDR1,
@@ -21,7 +21,6 @@
 		)
 		VALUES
 		(
-		ORDER_NO_SEQ.NEXTVAL,
 		#{RECIPIENT_NAME},
 		#{RECIPIENT_ZIPCODE},
 		#{RECIPIENT_ADDR1},
@@ -36,10 +35,12 @@
 	]]>
 	</insert>
 
+
 	<select id="order_no" resultType="hashmap">
-		select ORDER_NO_SEQ.CURRVAL as
-		ORDER_NO from dual
+		select ORDER_TABLE_SEQ.CURRVAL
+		as ORDER_NO from dual
 	</select>
+
 
 	<insert id="insertOrderDetail" parameterType="hashmap">
 	<![CDATA[
@@ -82,6 +83,40 @@
 			MEMBER_ID = #{MEMBER_ID}
 	]]>
 	</update>
+
+	<select id="selectOrderList" parameterType="hashmap"
+		resultType="hashmap">
+		
+		<![CDATA[
+			SELECT * FROM
+				(SELECT rownum as RNUM,s.*
+					FROM(SELECT
+						*
+					FROM ORDER_TABLE)S)
+				WHERE
+					RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+				ORDER BY
+					ORDER_NO DESC
+		]]>
+
+	</select>
+	
+	<select id="selectMyOrderList" parameterType="hashmap"
+		resultType="hashmap">
+		
+		<![CDATA[
+			SELECT 
+				* 
+			FROM
+				ORDER_TABLE
+			WHERE
+				MEMBER_ID = #{MEMBER_ID}
+			ORDER BY
+				ORDER_NO DESC
+		]]>
+
+	</select>
+
 	<select id="selectOrderMemberInfo" parameterType="hashmap"
 		resultType="hashmap">
 	<![CDATA[
@@ -167,5 +202,12 @@
 		WHERE
 		ORDER_NO = #{ORDER_NO}
 	</update>
+
+	<select id="orderTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM ORDER_TABLE
+	</select>
 
 </mapper>

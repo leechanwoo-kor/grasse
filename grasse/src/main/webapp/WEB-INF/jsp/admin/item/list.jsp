@@ -15,7 +15,9 @@
 <body>
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 		<h2 class="py-5 text-center">상품 관리</h2>
-		<div class="table-responsive pt-3">
+		<div class="dropdown-divider mb-3 py-3"></div>
+
+		<div class="table-responsive pt-3 mx-auto" style="width: 80%;">
 			<table class="table table-hover table-sm">
 				<thead>
 					<tr class="text-center">
@@ -32,7 +34,8 @@
 							<c:forEach items="${list }" var="row">
 								<tr class="text-center">
 									<td>${row.ITEM_NO }</td>
-									<td>${row.NAME }</td>
+									<td><a class="text-dark"
+										href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a></td>
 									<td>${row.PRICE }</td>
 									<td>${row.READCOUNT }</td>
 									<td>${row.REGDATE }</td>
@@ -55,23 +58,12 @@
 				<a href="/grasse/admin/itemWriteForm.do"
 					class="btn btn-outline-dark my-2 my-sm-0">글쓰기</a>
 			</div>
+			<div class="col col-lg-6">
+				<!-- Pagination -->
 
-			<!-- Pagination -->
-			<div class="col col-lg-6 py-5">
-				<ul class="pagination justify-content-center">
-					<li class="page-item disable"><a class="page-link text-dark"
-						href="#">이전 </a></li>
-					<li class="page-item active"><a class="page-link text-dark"
-						href="#">1</a></li>
-					<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-					<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-					<li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-					<li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-					<li class="page-item"><a class="page-link text-dark" href="#">다음
-					</a></li>
-				</ul>
+				${AdminItemListPaging.pagingHTML}
+				<!-- Pagination -->
 			</div>
-			<!-- Pagination -->
 		</div>
 
 		<form class="form-inline justify-content-center my-lg-0">

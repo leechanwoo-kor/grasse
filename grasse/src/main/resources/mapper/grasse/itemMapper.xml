@@ -10,57 +10,104 @@
 	<insert id="insertItem" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO ITEM (
-				ITEM_NO,
 				NAME,
+				THUMBNAIL,
 				CONTENT,
 				REGDATE,
 				PRICE,
-				RELATED,
-				KEYWORD,
 				READCOUNT,
 				CATEGORY )
 			VALUES (
-				ITEM_NO_SEQ.NEXTVAL,
 				#{NAME},
+				#{THUMBNAIL},
 				#{CONTENT},
 				SYSDATE,
 				#{PRICE},
-				#{RELATED},
-				#{KEYWORD},
 				#{READCOUNT},
 				#{CATEGORY} )
 		]]>
 	</insert>
 
 	<!-- 전체 상품 리스트 -->
-	<select id="selectAllItem" parameterType="hashmap" resultType="hashmap">
+	<select id="selectAllItem" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT rownum as RNUM,s.*
+					FROM 
+					(SELECT 
+						ITEM_NO,
+						NAME,
+						THUMBNAIL,
+						CONTENT,
+						REGDATE,
+						PRICE,
+						READCOUNT,
+						CATEGORY
+					FROM
+						ITEM)S)
+					WHERE
+				RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+				ORDER BY
+				ITEM_NO DESC
+		]]>
+	</select>
+
+	<!-- 카테고리별 상품 리스트 -->
+	<select id="selectCategoryItem" parameterType="hashmap"
+		resultType="hashmap">
 		<![CDATA[
 			SELECT
-				ITEM_NO,
-				NAME,
-				CONTENT,
-				REGDATE,
-				PRICE,
-				RELATED,
-				KEYWORD,
-				READCOUNT,
-				CATEGORY
+				*
 			FROM
 				ITEM
+			WHERE
+				CATEGORY = #{CATEGORY}
+		]]>
+	</select>
+
+	<!-- 신규 상품 리스트 -->
+	<select id="selectNewItem" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				*
+			FROM
+				ITEM
+			WHERE
+				ROWNUM < 5
+		]]>
+	</select>
+
+	<!-- 인기 상품 리스트 -->
+	<select id="selectBestItem" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				*
+			FROM (　　　　
+				SELECT 
+					*
+				FROM 
+					ITEM
+				ORDER BY 
+					READCOUNT DESC
+				) e
+			WHERE rownum < 5
 		]]>
 	</select>
 
 	<!-- 아이템 가져오기 -->
-	<select id="selectOneItem" parameterType="hashmap" resultType="hashMap">
+	<select id="selectOneItem" parameterType="hashmap"
+		resultType="hashMap">
 		<![CDATA[
 			SELECT 
 				ITEM_NO,
 				NAME,
+				THUMBNAIL,
 				CONTENT,
 				REGDATE,
 				PRICE,
-				RELATED,
-				KEYWORD,
 				READCOUNT,
 				CATEGORY
 			FROM
@@ -69,7 +116,7 @@
 				ITEM_NO = #{ITEM_NO}
 		]]>
 	</select>
-	
+
 	<!-- 상품 조회수 증가 -->
 	<update id="updateReadcnt" parameterType="hashmap">
 		<![CDATA[
@@ -81,18 +128,28 @@
 				ITEM_NO = #{ITEM_NO}
 		]]>
 	</update>
-	
-	<!-- 상품 속성 가져오기  -->
-	<select id="selectItemAttribute" parameterType="hashmap" resultType="hashMap">
+
+	<!-- 상품 속성 가져오기 -->
+	<select id="selectItemAttribute" parameterType="hashmap"
+		resultType="hashMap">
 		<![CDATA[
 			SELECT
+				ATTRIBUTE_NO,
 				ITEM_SIZE,
 				COUNT,
-				PRICE
+				ITEM_PRICE
 			FROM 
 				ITEM_ATTRIBUTE
 			WHERE
 				ITEM_NO = #{ITEM_NO}
 		]]>
+	</select>
+
+	<select id="getTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM
+		ITEM
 	</select>
 </mapper>

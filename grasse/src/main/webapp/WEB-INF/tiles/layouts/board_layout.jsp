@@ -21,7 +21,7 @@
 }
 
 #body {
-	padding-top: 100px;
+	padding-top: 80px;
 	padding-bottom: 150px;
 	width: 80%;
 	margin: 0px auto;

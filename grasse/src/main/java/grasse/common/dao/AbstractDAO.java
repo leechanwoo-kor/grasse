@@ -82,4 +82,11 @@ public class AbstractDAO {
 		sqlSession.delete(queryId);
 	}
 
+	// 인트 값 받기
+	@SuppressWarnings("rawtypes")
+	public int selectInt(String queryId) {
+		printQueryId(queryId);
+		return sqlSession.selectOne(queryId);
+	}
+
 }

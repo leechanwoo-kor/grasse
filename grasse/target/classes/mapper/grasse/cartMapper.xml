@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+	<select id="selectCartNo" resultType="int">
+		<![CDATA[
+			SELECT CART_SEQ.NEXTVAL AS CART_NO FROM DUAL
+		]]>
+	</select>
+
+	<insert id="insertOneItem" parameterType="hashmap">
+      <![CDATA[
+         INSERT INTO CART 
+         (  CART_NO,
+           	ATTRIBUTE_NO,
+           	MEMBER_ID,
+           	ITEM_NO,
+			COUNT
+		)
+		VALUES (
+			#{CART_NO},
+			#{ATTRIBUTE_NO},
+			#{MEMBER_ID},
+			#{ITEM_NO},
+			#{COUNT}
+		)
+    ]]>
+	</insert>
+
+
+	<select id="selectAllCartList" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				CART_NO, 
+				NAME,
+				THUMBNAIL,
+				CONTENT,
+				ATTRIBUTE_NO,
+				ITEM_NO,
+				ITEM_PRICE,
+				COUNT,
+				ITEM_SIZE,
+				ITEM_NO
+			FROM (
+				SELECT	
+					CART.CART_NO,
+                    CART.COUNT,
+                    CART.ITEM_NO,
+                    CART.ATTRIBUTE_NO,
+                    ITEM_ATTRIBUTE.ITEM_SIZE,
+                    NAME,
+                    THUMBNAIL,
+                    CONTENT,
+                    ITEM_ATTRIBUTE.ITEM_PRICE,
+                    MEMBER_ID
+				FROM CART
+				INNER JOIN ITEM	ON CART.ITEM_NO = ITEM.ITEM_NO
+                INNER JOIN ITEM_ATTRIBUTE	ON CART.ATTRIBUTE_NO = ITEM_ATTRIBUTE.ATTRIBUTE_NO
+				ORDER BY CART_NO ASC
+			)
+			WHERE
+				MEMBER_ID = #{MEMBER_ID}
+			
+		]]>
+	</select>
+
+	<select id="selectAllCartListNULL" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				CART_NO, 
+				NAME,
+				CONTENT,
+				ATTRIBUTE_NO,
+				ITEM_NO,
+				ITEM_PRICE,
+				COUNT,
+				ITEM_SIZE,
+				ITEM_NO
+			FROM (
+				SELECT	
+					CART.CART_NO,
+                    CART.COUNT,
+                    CART.ITEM_NO,
+                    CART.ATTRIBUTE_NO,
+                    ITEM_ATTRIBUTE.ITEM_SIZE,
+                    NAME,
+                    CONTENT,
+                    ITEM_ATTRIBUTE.ITEM_PRICE,
+                    MEMBER_ID
+				FROM CART
+				INNER JOIN ITEM	ON CART.ITEM_NO = ITEM.ITEM_NO
+                INNER JOIN ITEM_ATTRIBUTE ON CART.ATTRIBUTE_NO = ITEM_ATTRIBUTE.ATTRIBUTE_NO
+				ORDER BY CART_NO ASC
+			)
+			WHERE
+				MEMBER_ID IS NULL
+			
+		]]>
+	</select>
+
+
+	<select id="selectOneItem" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				CART_NO,
+				ATTRIBUTE_NO,
+				MEMBER_ID,
+				ITEM_NO,
+				COUNT
+			FROM 
+				CART
+			WHERE
+				ATTRIBUTE_NO = #{ATTRIBUTE_NO} AND
+				ITEM_NO = #{ITEM_NO} AND
+				MEMBER_ID = #{MEMBER_ID}
+		]]>
+	</select>
+
+	<update id="updateItemCount" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				CART
+			SET 
+				COUNT = COUNT + #{COUNT}
+			WHERE
+				CART_NO = #{CART_NO}
+		]]>
+	</update>
+
+	<delete id="deleteOneItem" parameterType="hashmap">
+		<![CDATA[
+			DELETE 
+			FROM 
+				CART
+			WHERE
+				CART_NO = #{CART_NO}
+		]]>
+	</delete>
+
+	<update id="updateMemberCart" parameterType="hashmap">
+		<![CDATA[
+			UPDATE 
+				CART
+			SET
+				MEMBER_ID = #{MEMBER_ID}
+			WHERE
+				MEMBER_ID IS NULL
+			
+		]]>
+	</update>
+
+</mapper>

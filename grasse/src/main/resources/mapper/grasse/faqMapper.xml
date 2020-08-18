@@ -10,13 +10,11 @@
 	<insert id="insertFaq" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO FAQ (
-				FAQ_NO,
 				TITLE,
 				CONTENT,
 				REGDATE,
 				MEMBER_ID )
 			VALUES (
-				FAQ_NO_SEQ.NEXTVAL,
 				#{TITLE},
 				#{CONTENT},
 				SYSDATE,
@@ -28,6 +26,22 @@
 	<select id="selectAllFaq" parameterType="hashmap"
 		resultType="hashmap">
 		<![CDATA[
+			SELECT * FROM
+				(SELECT rownum as RNUM,s.*
+					FROM
+					(SELECT FAQ_NO, TITLE, CONTENT, REGDATE, MEMBER_ID
+						FROM FAQ)S) 
+					WHERE 
+						RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+						ORDER BY
+						FAQ_NO DESC
+		]]>
+	</select>
+
+	<!-- FAQ 조회 -->
+	<select id="selectFaq" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
 			SELECT
 				FAQ_NO,
 				TITLE,
@@ -36,7 +50,37 @@
 				MEMBER_ID
 			FROM
 				FAQ
+			WHERE
+				FAQ_NO = #{FAQ_NO}
 		]]>
 	</select>
 
+	<!-- FAQ 수정 -->
+	<update id="updateFaq" parameterType="hashmap">
+		<![CDATA[
+			UPDATE FAQ
+			SET
+				TITLE=#{TITLE},
+				CONTENT=#{CONTENT}
+			WHERE
+				FAQ_NO = #{FAQ_NO}
+		]]>
+	</update>
+
+	<!-- FAQ 삭제 -->
+	<delete id="deleteFaq">
+	<![CDATA[
+		DELETE FROM FAQ
+		WHERE FAQ_NO = #{FAQ_NO}
+	]]>
+	</delete>
+
+	<select id="getTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM
+		FAQ
+
+	</select>
 </mapper>

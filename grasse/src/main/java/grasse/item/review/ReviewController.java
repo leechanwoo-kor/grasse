@@ -7,9 +7,15 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import grasse.common.map.CommandMap;
 
@@ -20,14 +26,15 @@ public class ReviewController {
 
 	// 리뷰 작성
 	@RequestMapping(value = "/review.do", method = RequestMethod.POST)
-	public void create(CommandMap commandMap) throws Exception {
-		reviewService.ReviewWrite(commandMap.getMap());
+	public @ResponseBody void create(@RequestBody Map<String, Object> jsonMap) throws Exception {
+		
+		for(String key:jsonMap.keySet()) {
+			Object value = jsonMap.get(key);
+			System.out.println(key +":" + value);
+		}
+		
+		//reviewService.ReviewWrite(jsonMap);
 	}
-	
-	
-	
-	
-	
 
 	// 리뷰 쓰기 폼
 	@RequestMapping(value = "/review/writeForm.do")
@@ -38,33 +45,73 @@ public class ReviewController {
 		return mv;
 	}
 
+	
+	@RequestMapping(value = "/review/write.do")
+	public ModelAndView reviewInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/itemDetail/item.do");
+		
+		System.out.println(commandMap);
+		for(String key : commandMap.keySet()) {
+			Object  value = commandMap.get(key);
+			System.out.println(key + ":" + value);
+		}
+		
+		String data = (String) commandMap.get("data");
+		Gson gson = new Gson();
+		Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {
+	      }.getType());
+		
+
+		System.out.println(dataMap.get("action"));
+		if(((String)dataMap.get("action")) == "수정하기") {
+			reviewService.ReviewUpdate(dataMap);
+			System.out.println("1");
+		} else {
+			reviewService.ReviewWrite(dataMap);
+			System.out.println("2");
+		}
+		
+
+		mv.addObject("ITEM_NO", dataMap.get("ITEM_NO"));
+		mv.addObject("data", dataMap);
+		return mv;
+	}
+	/*
 	// 리뷰 쓰기 완료
 	@RequestMapping(value = "/review/write.do")
 	public ModelAndView reviewInsert(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/itemDetail/item.do");
 		commandMap.put("ITEM_NO", request.getParameter("ITEM_NO"));
 
-		System.out.println(request.getParameter("ITEM_NO"));
+		for(String key:commandMap.keySet()) {
+			Object value = commandMap.get(key);
+			System.out.println(key +":" + value);
+		}
 
 		reviewService.ReviewWrite(commandMap.getMap());
 
 		mv.addObject("ITEM_NO", commandMap.get("ITEM_NO"));
 		return mv;
 	}
-
+*/
 	// 리뷰 상세보기
-	@RequestMapping(value = "/review/detail.do")
-	public ModelAndView reviewDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("itemDetail/review/detail");
-		System.out.println(request.getParameter("REVIEW_NO"));
-
-		commandMap.put("ITEM_NO", request.getParameter("ITEM_NO"));
+	@RequestMapping(value = "/review/detail.do", method=RequestMethod.POST)
+	public @ResponseBody ModelAndView reviewDetail(@RequestBody Map<String, Object> jsonMap, 
+			HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("review/detail");
+		
+		System.out.println("JSON" + jsonMap);
+		for(String key:jsonMap.keySet()) {
+			Object value = jsonMap.get(key);
+			System.out.println(key +":" + value);
+		}
 
 		// 리뷰 상세보기 정보
-		Map<String, Object> map = reviewService.ReviewDetail(commandMap.getMap());
+		Map<String, Object> map = reviewService.ReviewDetail(jsonMap);
+		System.out.println(map);
 		// 리뷰 댓글 리스트
-		List<Map<String, Object>> list = reviewService.ReviewCommentList(commandMap.getMap());
-
+		List<Map<String, Object>> list = reviewService.ReviewCommentList(jsonMap);
+		System.out.println(list);
 		mv.addObject("ID", request.getSession().getAttribute("MEMBER_ID"));
 		mv.addObject("map", map);
 		mv.addObject("list", list);
@@ -87,13 +134,19 @@ public class ReviewController {
 	// 리뷰 수정 완료
 	@RequestMapping(value = "/review/update.do")
 	public ModelAndView reviewUpdate(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/review/detail.do");
+		ModelAndView mv = new ModelAndView("redirect:/itemDetail/item.do");
+		
+		System.out.println("UPDATE");
+		String review = (String) commandMap.get("data");
 
-		commandMap.put("REVIEW_NO", request.getParameter("REVIEW_NO"));
+		Gson gson = new Gson();
 
-		reviewService.ReviewUpdate(commandMap.getMap());
-		mv.addObject("REVIEW_NO", commandMap.get("REVIEW_NO"));
-
+		Map<String, Object> data = gson.fromJson(review, new TypeToken<List<Map<String, Integer>>>() {
+		}.getType());
+		
+		mv.addObject("ITEM_NO", data.get("ITEM_NO"));
+		mv.addObject("REVIEW_NO", data.get("REVIEW_NO"));
+		
 		return mv;
 	}
 

@@ -6,12 +6,21 @@
 
 <mapper namespace="member">
 
+	<!-- 전체 갯수 -->
+	<select id="memberCount" resultType="int">
+		<![CDATA[
+			SELECT
+				COUNT(*)
+			FROM
+				MEMBER
+		]]>
+	</select>
+
 	<!-- 회원가입 -->
 	<insert id="insertMember" parameterType="hashmap">
 		<![CDATA[
 		INSERT INTO MEMBER
 			(
-			MEMBER_NO,
 			MEMBER_ID,
 		  	PASSWD,
 		 	NAME, 
@@ -25,7 +34,6 @@
 		 	REGDATE)
 		VALUES
 			(
-			MEMBER_NO_SEQ.NEXTVAL, 
 			#{MEMBER_ID}, 
 			#{PASSWD}, 
 			#{NAME}, 
@@ -44,22 +52,27 @@
 	<select id="selectMemberList" parameterType="hashmap"
 		resultType="hashMap">
 		<![CDATA[
-			SELECT
-					MEMBER_NO,
-					MEMBER_ID,
-					PASSWD,
-					NAME,
-					BIRTH,
-					PHONE,
-					EMAIL,
-					ZIPCODE,
-					ADDR1,
-					ADDR2,
-					EXTRAADDR,
-					REGDATE,
-					POINT
-			FROM
-					MEMBER
+			SELECT * FROM
+				(SELECT rownum as RNUM,s.*
+					FROM(SELECT
+						MEMBER_NO,
+						MEMBER_ID,
+						PASSWD,
+						NAME,
+						BIRTH,
+						PHONE,
+						EMAIL,
+						ZIPCODE,
+						ADDR1,
+						ADDR2,
+						EXTRAADDR,
+						REGDATE,
+						POINT
+					FROM MEMBER)S)
+				WHERE
+					RNUM >= #{START_NUM} AND RNUM<=#{END_NUM}
+					ORDER BY
+					MEMBER_NO DESC
 		]]>
 	</select>
 
@@ -86,6 +99,7 @@
 		WHERE MEMBER_ID = #{MEMBER_ID}
 	]]>
 	</delete>
+
 	<!-- 아이디 체크 -->
 	<select id="checkId" parameterType="String" resultType="int">
 	<![CDATA[
@@ -205,5 +219,12 @@
 			NAME=#{NAME} AND EMAIL=#{EMAIL} AND MEMBER_ID=#{MEMBER_ID}
 	]]>
 	</update>
+
+	<select id="memberTotalList" parameterType="hashmap"
+		resultType="int">
+		SELECT
+		COUNT(*) TOTAL
+		FROM MEMBER
+	</select>
 
 </mapper>

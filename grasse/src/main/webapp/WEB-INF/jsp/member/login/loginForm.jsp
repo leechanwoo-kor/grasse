@@ -8,6 +8,27 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 뷰포트 -->
 <meta name="viewport" content="width=device-width" initial-scale="1">
+
+<style>
+.input-group-prepend span {
+	/* width: 50px; */
+	background-color: #FFC312;
+	color: black;
+	border: 0 !important;
+}
+
+.login_btn {
+	color: black;
+	background-color: #FFC312;
+	width: 100px;
+}
+
+.login_btn:hover {
+	color: black;
+	background-color: white;
+}
+</style>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("input[name='MEMBER_ID']").focus();
@@ -77,6 +98,7 @@
 			return false;
 		}
 	}
+	
 	function clearText(txt) {
 		if (txt.defaultValue == txt.value)
 			txt.value = "";
@@ -102,16 +124,16 @@
 				<div class="card-body py-5">
 					<form name="loginForm" action="login.do" method="post"
 						onsubmit="return checkIt()">
-						<div class="input-group form-group">
+						<div class="input-group form-group no-border">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fa fa-user"></i></span>
 							</div>
 							<input type="text" class="form-control" placeholder="아이디"
 								name="MEMBER_ID" maxlength="20">
 						</div>
-						<div class="input-group form-group">
+						<div class="input-group form-group no-border">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fa fa-key"></i></span>
+								<span class="input-group-text"><i class="fa fa-lock"></i></span>
 							</div>
 							<input type="password" class="form-control" placeholder="비밀번호"
 								name="PASSWD" maxlength="20">
@@ -130,7 +152,7 @@
 
 						<div class="input-group form-group">
 							<button type="submit"
-								class="btn btn-secondary form-control text-light ">로그인</button>
+								class="btn btn-secondary form-control login_btn">로그인</button>
 						</div>
 					</form>
 				</div>

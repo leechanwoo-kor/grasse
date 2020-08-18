@@ -8,4 +8,8 @@ public interface FaqService {
 	// FAQ 조회
 	List<Map<String, Object>> selectFaqList(Map<String, Object> map) throws Exception;
 
+	// FAQ 조회
+	Map<String, Object> selectFaq(Map<String, Object> map) throws Exception;
+
+	int getTotalList(Map<String, Object> map);
 }

@@ -18,22 +18,33 @@ public class ItemController {
 	private ItemService itemService;
 
 	/* BEST 리스트 */
-	@RequestMapping(value = "/item/best.do")
+	@RequestMapping(value = "/item/bestList.do")
 	public ModelAndView bestItem(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/item/categoryList");
 
-		List<Map<String, Object>> list = itemService.selectItemList(commandMap.getMap());
+		List<Map<String, Object>> list = itemService.selectBestList(commandMap.getMap());
 		mv.addObject("list", list);
 
 		return mv;
 	}
 
 	/* NEW 리스트 */
-	@RequestMapping(value = "/item/new.do")
+	@RequestMapping(value = "/item/newList.do")
 	public ModelAndView newItem(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/item/categoryList");
 
-		List<Map<String, Object>> list = itemService.selectItemList(commandMap.getMap());
+		List<Map<String, Object>> list = itemService.selectNewList(commandMap.getMap());
+		mv.addObject("list", list);
+
+		return mv;
+	}
+
+	/* CATEGORY 리스트 */
+	@RequestMapping(value = "/item/categoryList.do")
+	public ModelAndView itemList(CommandMap commandMap) throws Exception {
+		ModelAndView mv = new ModelAndView(".tiles/item/categoryList");
+
+		List<Map<String, Object>> list = itemService.selectCategoryList(commandMap.getMap());
 		mv.addObject("list", list);
 
 		return mv;
@@ -65,10 +76,11 @@ public class ItemController {
 	@RequestMapping(value = "/item/container.do")
 	public ModelAndView containerItem(CommandMap commandMap) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/item/categoryList");
-		
+
 		List<Map<String, Object>> list = itemService.selectItemList(commandMap.getMap());
 		mv.addObject("list", list);
 
 		return mv;
 	}
+
 }

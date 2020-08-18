@@ -16,7 +16,7 @@
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 		<h2 class="py-5 text-center">회원 관리</h2>
 
-		<div class="table-responsive pt-3">
+		<div class="table-responsive mx-auto" style="width: 80%;">
 			<table class="table table-hover table-sm">
 				<thead>
 					<tr class="text-center">
@@ -33,7 +33,9 @@
 							<c:forEach items="${list }" var="row">
 								<tr class="text-center">
 									<td>${row.MEMBER_NO }</td>
-									<td>${row.MEMBER_ID }</td>
+									<td><a
+										href="/grasse/admin/memberDetail.do?MEMBER_ID=${row.MEMBER_ID }"
+										class="text-dark">${row.MEMBER_ID }</a></td>
 									<td>${row.NAME }</td>
 									<td>${row.POINT }</td>
 									<td>${row.REGDATE }</td>
@@ -49,24 +51,12 @@
 				</tbody>
 			</table>
 		</div>
-		
+
 		<!-- Pagination -->
-		<div class="text-center py-5">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disable"><a class="page-link text-dark"
-					href="#">이전 </a></li>
-				<li class="page-item active"><a class="page-link text-dark"
-					href="#">1</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">다음
-				</a></li>
-			</ul>
-		</div>
+		<div align="center" class="container pt-5" id="paging">
+			${AdminMemberListPaging.pagingHTML}</div>
 		<!-- Pagination -->
-		
+
 	</main>
 </body>
 

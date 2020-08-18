@@ -33,7 +33,9 @@
 						<c:forEach items="${list }" var="row">
 							<tr class="text-center">
 								<td>${row.FAQ_NO }</td>
-								<td>${row.TITLE }</td>
+								<td><a
+									href="/grasse/faq/faqDetail.do?FAQ_NO=${row.FAQ_NO }"
+									class="text-dark">${row.TITLE }</a></td>
 								<td>${row.MEMBER_ID }</td>
 								<td>${row.REGDATE }</td>
 							</tr>
@@ -51,20 +53,8 @@
 
 
 
-	<div>
-		<ul class="pagination justify-content-center py-5">
-			<li class="page-item disable"><a class="page-link text-dark"
-				href="#">이전 </a></li>
-			<li class="page-item active"><a class="page-link text-dark"
-				href="#">1</a></li>
-			<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-			<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-			<li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-			<li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-			<li class="page-item"><a class="page-link text-dark" href="#">다음
-			</a></li>
-		</ul>
-	</div>
+	<div align="center" class="container pt-5" id="paging">
+		${FaqListPaging.pagingHTML}</div>
 
 
 </body>

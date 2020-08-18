@@ -90,154 +90,160 @@
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="col-md-12 order-md-1"
-			style="width: 60%; margin: 0px auto;">
+	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+		<div class="container">
+			<div class="col-md-12 order-md-1"
+				style="width: 60%; margin: 0px auto;">
 
-			<div class="pt-5 text-center">
-				<h2 class="text-center">회원정보 수정</h2>
-			</div>
-
-			<div class="dropdown-divider mb-3 py-3"></div>
-
-			<form name="frm" action="/grasse/mypage/memberModify.do"
-				method="post" onsubmit="return check()">
-
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">아이디</label>
-					<div class="col-7">
-						<input id="MEMBER_ID" name="MEMBER_ID" type="text"
-							class="form-control form-control-sm"
-							value="${memberInfo.MEMBER_ID }" readonly>
-					</div>
+				<div class="pt-5 text-center">
+					<h2 class="text-center">회원정보 수정</h2>
 				</div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">이름</label>
-					<div class="col-7">
-						<input id="NAME" name="NAME" type="text"
-							class="form-control form-control-sm" value="${memberInfo.NAME }"
-							readonly>
-					</div>
-				</div>
+				<div class="dropdown-divider mb-3 py-3"></div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">생일</label>
-					<div class="col-7">
-						<input id="BIRTH" name="BIRTH" type="text"
-							class="form-control form-control-sm" value="${memberInfo.BIRTH }"
-							readonly>
-					</div>
-				</div>
+				<form name="frm" action="/grasse/mypage/memberModify.do"
+					method="post" onsubmit="return check()">
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">주소</label>
-					<div class="col-4">
-						<input id="ZIPCODE" name="ZIPCODE" type="text"
-							class="form-control form-control-sm"
-							value="${memberInfo.ZIPCODE }" readonly>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">아이디</label>
+						<div class="col-7">
+							<input id="MEMBER_ID" name="MEMBER_ID" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.MEMBER_ID }" readonly>
+						</div>
 					</div>
-					<div class="col-3">
-						<button type="button" class="btn btn-secondary btn-sm"
-							onclick="execDaumPostcode()">우편번호</button>
-					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right"></label>
-					<div class="col-7 py-1">
-						<input id="ADDR1" name="ADDR1" type="text"
-							class="form-control form-control-sm" value="${memberInfo.ADDR1 }"
-							readonly>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">이름</label>
+						<div class="col-7">
+							<input id="NAME" name="NAME" type="text"
+								class="form-control form-control-sm" value="${memberInfo.NAME }"
+								readonly>
+						</div>
 					</div>
-					<label class="col-3 col-form-label-sm text-right"></label>
-					<div class="col-7 py-1">
-						<input id="ADDR2" name="ADDR2" type="text"
-							class="form-control form-control-sm" value="${memberInfo.ADDR2 }">
-					</div>
-					<label class="col-3 col-form-label-sm text-right"></label>
-					<div class="col-7 py-1">
-						<input id="EXTRAADDR" name="EXTRAADDR" type="text"
-							class="form-control form-control-sm"
-							value="${memberInfo.EXTRAADDR }">
-					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">휴대전화</label>
-					<div class="col-7">
-						<input id="PHONE" name="PHONE" type="text"
-							class="form-control form-control-sm" value="${memberInfo.PHONE }">
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">생일</label>
+						<div class="col-7">
+							<input id="BIRTH" name="BIRTH" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.BIRTH }" readonly>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">이메일</label>
-					<div class="col-7">
-						<input id="EMAIL" name="EMAIL" type="text"
-							class="form-control form-control-sm" value="${memberInfo.EMAIL }">
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">주소</label>
+						<div class="col-3">
+							<input id="ZIPCODE" name="ZIPCODE" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.ZIPCODE }" readonly>
+						</div>
+						<div class="col-4">
+							<button type="button" class="btn btn-secondary btn-sm"
+								onclick="execDaumPostcode()">우편번호 변경</button>
+						</div>
 					</div>
-				</div>
 
-				<div class="form-group row">
-					<label class="col-3 col-form-label-sm text-right">가입날짜</label>
-					<div class="col-7">
-						<input id="REGDATE" name="REGDATE" type="text"
-							class="form-control form-control-sm"
-							value="${memberInfo.REGDATE }" readonly>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right"></label>
+						<div class="col-7 py-1">
+							<input id="ADDR1" name="ADDR1" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.ADDR1 }" readonly>
+						</div>
+						<label class="col-3 col-form-label-sm text-right"></label>
+						<div class="col-7 py-1">
+							<input id="ADDR2" name="ADDR2" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.ADDR2 }">
+						</div>
+						<label class="col-3 col-form-label-sm text-right"></label>
+						<div class="col-7 py-1">
+							<input id="EXTRAADDR" name="EXTRAADDR" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.EXTRAADDR }">
+						</div>
 					</div>
-				</div>
 
-				<div class="input-group form-group row pt-3">
-					<div class="col-sm">
-						<a href="/grasse/mypage/memberList.do"
-							class="btn btn-secondary btn-sm btn-block">취소</a>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">휴대전화</label>
+						<div class="col-7">
+							<input id="PHONE" name="PHONE" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.PHONE }">
+						</div>
 					</div>
-					<div class="col-sm">
-						<button class="btn btn-success btn-sm btn-block" type="submit">수정</button>
-					</div>
-				</div>
 
-				<div class="input-group form-group row pt-5">
-					<div class="col-sm-6" style="margin: 0px auto;">
-						<button type="button" class="btn btn-danger btn-sm btn-block"
-							data-toggle="modal" data-target="#confirmModal">회원 탈퇴</button>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">이메일</label>
+						<div class="col-7">
+							<input id="EMAIL" name="EMAIL" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.EMAIL }">
+						</div>
 					</div>
-				</div>
-			</form>
-		</div>
-	</div>
 
-	<!-- Modal -->
-	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">회원 탈퇴</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">정말 탈퇴하시겠습니까?</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger"
-						onclick="clickDel(frm)">탈퇴하기</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">취소하기</button>
-				</div>
+					<div class="form-group row">
+						<label class="col-3 col-form-label-sm text-right">가입날짜</label>
+						<div class="col-7">
+							<input id="REGDATE" name="REGDATE" type="text"
+								class="form-control form-control-sm"
+								value="${memberInfo.REGDATE }" readonly>
+						</div>
+					</div>
+
+					<div class="input-group form-group row pt-3">
+						<div class="col-sm">
+							<a href="/grasse/mypage/memberList.do"
+								class="btn btn-outline-dark btn-sm btn-block">취소</a>
+						</div>
+						<div class="col-sm">
+							<button class="btn btn-outline-dark btn-sm btn-block"
+								type="submit">수정</button>
+						</div>
+					</div>
+
+					<div class="input-group form-group row pt-2">
+						<div class="col-sm-6" style="margin: 0px auto;">
+							<button type="button" class="btn btn-danger btn-sm btn-block"
+								data-toggle="modal" data-target="#confirmModal">회원 탈퇴</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-	</div>
 
-	<script>
-		function clickDel(frm) {
-			frm.action = "/grasse/mypage/memberDelete.do";
-			frm.method = "post";
-			frm.submit();
-		}
-	</script>
+		<!-- Modal -->
+		<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">회원 탈퇴</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">정말 탈퇴하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							onclick="clickDel(frm)">탈퇴하기</button>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">취소하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function clickDel(frm) {
+				frm.action = "/grasse/mypage/memberDelete.do";
+				frm.method = "post";
+				frm.submit();
+			}
+		</script>
+	</main>
 </body>
 
 

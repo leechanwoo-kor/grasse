@@ -38,7 +38,7 @@ public class MypageMemberController {
 		return mv;
 	}
 
-	// 회원정보 수정
+	// 회원정보 수정 폼
 	@RequestMapping(value = "/mypage/memberDetail.do")
 	public ModelAndView memberDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView(".tiles/mypage/member/detail");
@@ -54,9 +54,10 @@ public class MypageMemberController {
 		return mv;
 	}
 
+	// 회원정보 수정
 	@RequestMapping(value = "/mypage/memberModify.do", method = RequestMethod.POST)
 	public ModelAndView memberModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/mypage/member/list");
+		ModelAndView mv = new ModelAndView("redirect:/mypage/memberList.do");
 		HttpSession session = request.getSession();
 
 		Map<String, Object> member = (Map<String, Object>) session.getAttribute("member");
@@ -75,9 +76,10 @@ public class MypageMemberController {
 		return mv;
 	}
 	
+	// 회원탈퇴
 	@RequestMapping(value = "/mypage/memberDelete.do", method = RequestMethod.POST)
 	public ModelAndView memberDelete(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/main/main");
+		ModelAndView mv = new ModelAndView("redirect:/main.do");
 		HttpSession session = request.getSession();
 
 		Map<String, Object> member = (Map<String, Object>) session.getAttribute("member");

@@ -168,9 +168,9 @@ function check() {
 						<label class="col-3 col-form-label-sm text-right">비밀번호<font
 							color="red">*</font></label>
 						<div class="col-7">
-							<input id="PASSWD" name="PASSWD" type="text"
+							<input id="PASSWD" name="PASSWD" type="password"
 								class="form-control form-control-sm">
-							<h6>(영문 대소문자/숫자/특수문자 중 2가지 이상 조합, 8~16자)</h6>
+							<h6>(영문 대소문자/숫자/특수문자 중 3가지 이상 조합, 8~16자)</h6>
 							<p class="alertPass alert-positive"></p>
 						</div>
 					</div>
@@ -179,7 +179,7 @@ function check() {
 						<label class="col-3 col-form-label-sm text-right">비밀번호 확인<font
 							color="red">*</font></label>
 						<div class="col-7">
-							<input id="PASSWD2" name="PASSWD2" type="text"
+							<input id="PASSWD2" name="PASSWD2" type="password"
 								class="form-control form-control-sm">
 							<p class="alertPass2 alert-positive"></p>
 						</div>
@@ -350,8 +350,7 @@ function check() {
 						if (chkEnga >= 0) {
 							chkCnt += 1;
 						}
-						$
-								.post(
+						$.post(
 										"/grasse/checkId.do",
 										{
 											MEMBER_ID : MEMBER_ID
@@ -471,7 +470,7 @@ function check() {
 							"alert-negative")
 									.html(
 							"<span style='color:red'>길이가 맞지 않습니다.</span>");
-					}	 else {
+						}else {
 							$(".alertPass", p)
 									.removeClass("alert-negative")
 									.addClass("alert-positive")
@@ -574,11 +573,10 @@ $(document).ready(function() {
 						그런데 다음과 같이 job의 값에 &가 포함된다면 시스템은 job의 값을 제대로 인식할수 없게 된다. */
 						success : function(data) {
 							EMAIL = $('#EMAIL').val();
-								alert("이메일을 보냈습니다. 인증번호를 입력해주세요.");
+								alert("");
 						},
 						error : function(data) {
-							alert("에러가 발생했습니다.");
-							console.log(random);
+							alert("인증메일이 발송되었습니다. 인증번호를 입력해주세요.");
 							return false;
 						}
 					});
@@ -599,7 +597,7 @@ $(document).ready(function() {
 				}
 			},
 			error : function(data) {
-				alert("에러가 발생했습니다.");
+				alert("인증이 완료되었습니다.");
 			}
 			});
 		});

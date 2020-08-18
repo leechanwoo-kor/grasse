@@ -16,7 +16,8 @@
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 		<h2 class="py-5 text-center">FAQ 관리</h2>
 
-		<div class="table-responsive pt-3">
+		<div class="table-responsive pt-3"
+			style="width: 80%; margin: 0px auto;">
 			<table class="table table-hover table-sm">
 				<thead>
 					<tr class="text-center">
@@ -31,8 +32,10 @@
 						<c:when test="${fn:length(list) > 0 }">
 							<c:forEach items="${list }" var="row">
 								<tr class="text-center">
-									<td>${row.NOTICE_NO }</td>
-									<td>${row.TITLE }</td>
+									<td>${row.FAQ_NO }</td>
+									<td><a
+										href="/grasse/admin/faqDetail.do?FAQ_NO=${row.FAQ_NO }"
+										class="text-dark">${row.TITLE }</a></td>
 									<td>${row.MEMBER_ID }</td>
 									<td>${row.REGDATE }</td>
 								</tr>
@@ -46,25 +49,22 @@
 					</c:choose>
 				</tbody>
 			</table>
+			<div class="row pt-3" style="width: 100%;">
+				<div class="col col-lg-3"></div>
+
+				<div class="col col-lg-6">
+					<!-- Pagination -->
+					${AdminFaqListPaging.pagingHTML}
+					<!-- Pagination -->
+				</div>
+				<div class="col col-lg-3">
+					<a href="/grasse/admin/faqWriteForm.do"
+						class="btn btn-outline-dark mx-auto" style="float: right">작성하기</a>
+				</div>
+
+			</div>
 		</div>
-		
-		<!-- Pagination -->
-		<div class="text-center py-5">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disable"><a class="page-link text-dark"
-					href="#">이전 </a></li>
-				<li class="page-item active"><a class="page-link text-dark"
-					href="#">1</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">다음
-				</a></li>
-			</ul>
-		</div>
-		<!-- Pagination -->
-		
+
 	</main>
 </body>
 

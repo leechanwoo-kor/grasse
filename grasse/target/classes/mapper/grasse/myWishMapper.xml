@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myWish">
+
+	<!-- 나의찜목록 -->
+	<select id="selectMyWishList" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT
+				WISH_NO,
+				MEMBER_ID,
+				WISH.ITEM_NO,
+				THUMBNAIL,
+				NAME,
+				PRICE
+			FROM
+				WISH
+				INNER JOIN ITEM ON WISH.ITEM_NO = ITEM.ITEM_NO
+			WHERE  
+				MEMBER_ID = #{MEMBER_ID}
+			ORDER BY
+				WISH_NO DESC				
+		]]>
+	</select>
+
+	<!-- 찜 추가하기 -->
+	<insert id="addMyWish" parameterType="hashmap">
+        <![CDATA[
+         		INSERT INTO WISH 
+         			(
+				 MEMBER_ID,
+				 ITEM_NO
+		)
+		VALUES (
+			#{MEMBER_ID},
+			#{ITEM_NO}
+		)
+    	]]>
+	</insert>
+
+	<!-- 찜삭제 -->
+	<delete id="deleteMyJJim" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM WISH
+			WHERE 
+				WISH_NO = #{WISH_NO}
+		]]>
+	</delete>
+
+
+</mapper>

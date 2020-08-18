@@ -19,4 +19,16 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDAO.selectNoticeList(map);
 	}
 
+	// NOTICE 조회
+	@Override
+	public Map<String, Object> selectNotice(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return noticeDAO.selectNotice(map);
+	}
+
+	@Override
+	public int getTotalList(Map<String, Object> map) throws Exception {
+		return noticeDAO.getTotalList(map);
+	}
+
 }

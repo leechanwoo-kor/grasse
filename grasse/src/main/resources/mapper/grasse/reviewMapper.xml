@@ -33,15 +33,14 @@
 	<insert id="insertReview" parameterType="hashmap">
       <![CDATA[
          INSERT INTO REVIEW 
-         (  REVIEW_NO,
-           	TITLE,
+         (
+         	TITLE,
            	CONTENT,
            	REGDATE,
 			MEMBER_ID,
 			ITEM_NO
 		)
 		VALUES (
-			REVIEW_NO_SEQ.NEXTVAL,
 			#{TITLE},
 			#{CONTENT},
 			SYSDATE,		    

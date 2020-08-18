@@ -16,17 +16,64 @@
 
 	$(document).ready(function() {
 		// 리뷰쓰기 버튼 클릭
-		$("#writeBtn").on("click", function() {
-			action = "create";
-			type = "POST";
+		$(".writeBtn").on("click", function() {
+			var thisIdx = $(".detailBtn").index(this);
+			var memberId = $("input[name=memberId]").eq(thisIdx).val();
+
+			alert(memberId);
+			
 			$("#modal-title").text("리뷰쓰기");
 			$("#modalSubmit").text("작성하기");
+			$("#modal-title").val("리뷰쓰기");
+			$("#modalSubmit").val("작성하기");
+			$("#MEMBER_ID").val(memberId);
+			$("#TITLE").val("");
+			$("#CONTENT").val("");
 			$("#reviewModal").modal();
+
 		});
 
 		// 리뷰상세 클릭
-		$("#detailBtn").on("click", function() {
-			action = "modify";
+		$(".detailBtn").on("click", function() {
+			var thisIdx = $(".detailBtn").index(this);
+			var REVIEW_NO = $("input[name=REVIEW_NO]").eq(thisIdx).val();
+			var rmemberId = $("input[name=rmemberId]").eq(thisIdx).val();
+			var rtitle = $("input[name=rtitle]").eq(thisIdx).val();
+			var rcontent = $("input[name=rcontent]").eq(thisIdx).val();
+
+			/* 
+			 aJson = {
+			 REVIEW_NO : REVIEW_NO,
+			 ITEM_NO : $('#ITEM_NO').val()
+			 };
+			 */
+			$("#modal-title").text("리뷰상세");
+			$("#modalSubmit").text("수정하기");
+			$("#modal-title").val("리뷰상세");
+			$("#modalSubmit").val("수정하기");
+			
+			$("#MEMBER_ID").val(rmemberId);
+			$("#TITLE").val(rtitle);
+			$("#CONTENT").val(rcontent);
+			$("#reviewModal").modal();
+
+			/* 			alert(JSON.stringify(aJson));
+			 $.ajax({
+			 url : "/grasse/review/detail.do",
+			 type : "POST",
+			 data : JSON.stringify(aJson),
+			 success : function(data) {
+			 //$('#reviewModal').modal('toggle');
+			 alert(JSON.stringify(data));
+			
+			 },
+			 error : function(request, status, error) {
+			 alert("code:" + request.status + "\n" + "message:"
+			 + request.responseText + "\n" + "error:" + error);
+			 }
+			 }); */
+
+			/* action = "modify";
 			type = "PUT";
 
 			var tr = $(this).parent();
@@ -43,7 +90,7 @@
 
 			$("#modal-title").text("리뷰상세");
 			$("#modalSubmit").text("수정하기");
-			$("#reviewModal").modal();
+			$("#reviewModal").modal(); */
 		});
 
 	});
@@ -55,6 +102,7 @@
 	<div class="container py-5">
 		<h4 class="text-center py-3">REVIEW</h4>
 
+		<input type="hidden" name="memberId" value="${MEMBER_ID}" />
 		<div class="table-responsive pt-3">
 			<table class="table table-hover table-sm">
 				<thead>
@@ -71,11 +119,16 @@
 						<c:when test="${fn:length(reviewList)>0}">
 							<c:forEach items="${reviewList}" var="row">
 								<tr class="text-center">
-									<td>${row.REVIEW_NO}</td>
-									<td><a href="#" id="detailBtn" data-toggle="modal"
-									data-target="#reviewModal">${row.TITLE}</a></td>
-									<td>${row.CONTENT}</td>
-									<td>${row.MEMBER_ID}</td>
+									<td><input type="hidden" name="REVIEW_NO"
+										value="<c:out value='${row.REVIEW_NO }'/>">${row.REVIEW_NO}
+									</td>
+									<td><input type="hidden" name="rtitle"
+										value="${row.TITLE}" /><a href="#" class="detailBtn"
+										data-target="#reviewModal" data-toggle="modal">${row.TITLE}</a></td>
+									<td><input type="hidden" name="rcontent"
+										value="${row.CONTENT}" />${row.CONTENT}</td>
+									<td><input type="hidden" name="rmemberId"
+										value="${row.MEMBER_ID}" /> ${row.MEMBER_ID}</td>
 									<td>${row.REGDATE}</td>
 								</tr>
 							</c:forEach>
@@ -109,10 +162,11 @@
 				</ul>
 			</div>
 			<div class="col col-lg-3">
-				<button id="writeBtn" type="button"
-					class="btn btn-outline-dark my-2 my-sm-0" style="float: right;"
-					data-toggle="modal" data-target="#reviewModal">글 작성</button>
-				<input type="hidden" name="ITEM_NO" value="${map.ITEM_NO}">
+				<a href="#" type="button"
+					class="writeBtn btn btn-outline-dark my-2 my-sm-0"
+					style="float: right;" data-toggle="modal"
+					data-target="#reviewModal">글 작성</a> <input type="hidden"
+					name="ITEM_NO" value="${map.ITEM_NO}">
 			</div>
 		</div>
 

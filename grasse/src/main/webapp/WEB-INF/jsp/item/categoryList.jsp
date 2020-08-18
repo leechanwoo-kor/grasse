@@ -26,16 +26,19 @@
 								<div class="col-lg-3 col-md-6 mb-4">
 									<div class="card">
 										<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-											<img class="card-img-top" src="http://placehold.it/200x250"
-											alt="">
+											<img class="card-img-top img-thumbnail"
+											src="${row.THUMBNAIL }" alt="">
 										</a>
 										<div class="card-body">
-											<h5 class="card-title text-center">
-												<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
+											<h5 class="card-title text-center" style="height: 30px;">
+												<a class="text-dark"
+													href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
 											</h5>
 											<%-- <p class="card-text text-center">${row.CONTENT }</p> --%>
 										</div>
-										<div class="card-footer"><h6 class="text-center">${row.PRICE }</h6></div>
+										<div class="card-footer">
+											<h6 class="text-center">${row.PRICE }KRW</h6>
+										</div>
 									</div>
 								</div>
 								<!-- Grid col -->
@@ -43,7 +46,7 @@
 						</c:when>
 
 						<c:otherwise>
-							<p class="text-center py-5">조회된 결과가 없습니다.</p>
+							<p class="text-center py-5 mx-auto">조회된 결과가 없습니다.</p>
 						</c:otherwise>
 
 					</c:choose>

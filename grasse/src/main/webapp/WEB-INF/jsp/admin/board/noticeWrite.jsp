@@ -8,102 +8,96 @@
 
 <script src="../resources/ckeditor/ckeditor.js"></script>
 
+<script>
+	function check() {
+
+		var form = document.frm;
+
+		if (frm.TITLE.value == "") {
+			alert("제목을 작성해주십시오.");
+			frm.NAME.focus();
+			return false;
+		}
+		if (frm.CATEGORY.value == "-1") {
+			alert("분류를 선택해주십시오.");
+			frm.CATEGORY.focus();
+			return false;
+		}
+		if (frm.CONTENT.value == "") {
+			alert("내용을 작성해주십시오.");
+			frm.CONTENT.focus();
+			return false;
+		}
+		
+		if(reg=true){
+			alert("공지사항이 작성되었습니다.");
+		}
+
+	}
+</script>
+
 </head>
 
 <body>
+	<div class="container">
+		<main role="main" class="col-md-12 order-md-1"
+			style="width: 60%; margin: 0px auto;">
 
-	<script>
-		function check() {
+			<div class="pt-5">
+				<h2 class="text-center">공지사항 작성</h2>
+			</div>
 
-			var form = document.form;
+			<div class="dropdown-divider mb-3 py-3"></div>
 
-			if (form.TITLE.value == "") {
-				alert("제목을 작성해주십시오.");
-				form.NAME.focus();
-				return false;
-			}
-			if (form.CONTENT.value == "") {
-				alert("내용을 작성해주십시오.");
-				form.CONTENT.focus();
-				return false;
-			}
-			if (form.MEMBER_ID.value == "") {
-				alert("작성자를 작성해주십시오.");
-				form.MEMBER_ID.focus();
-				return false;
-			}
+			<form name="frm" action="/grasse/admin/noticeWrite.do" method="post"
+				onsubmit="return check()">
 
-		}
-	</script>
-
-	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-		<h2 class="py-3">공지사항 작성</h2>
-
-		<form name="form" action="/grasse/admin/noticeWrite.do" method="post"
-			onsubmit="return check()">
-
-			<div class="row justify-content-md-center">
-				<div class="col-sm-9">
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<label class="input-group-text">제목</label>
+				<div class="input-group form-group row mx-3">
+					<div class="col-sm-8">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<label class="input-group-text">제목</label>
+							</div>
+							<input type="text" class="form-control" id="TITLE" name="TITLE">
 						</div>
-						<input type="text" class="form-control" id="TITLE" name="TITLE">
+					</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<select class="custom-select" id="CATEGORY" name="CATEGORY">
+								<option selected value="-1">-----분류-----</option>
+								<option value="0">행사</option>
+								<option value="1">휴가 일정</option>
+								<option value="2">개인정보처리</option>
+								<option value="3">긴급안내(코로나)</option>
+								<option value="4">결제 오류</option>
+							</select>
+						</div>
 					</div>
 				</div>
-				<div class="col-sm-3">
-					<div class="input-group mb-3">
-						<select class="custom-select" id="CATEGORY" name="CATEGORY">
-							<option selected>분류</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-						</select>
+
+				<div class="input-group form-group row mx-3">
+					<div class="col">
+						<div class="input-group">
+							<textarea class="form-control" id="CONTENT" name="CONTENT"
+								rows="15"></textarea>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row justify-content-md-center">
-				<div class="input-group mx-3 mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text">작성자</span>
+				<div class="input-group form-group row mx-3">
+					<div class="col">
+						<a href="/grasse/admin/noticeList.do"
+							class="btn btn-outline-secondary btn-sm btn-block">뒤로</a>
 					</div>
-					<input type="text" class="form-control" id="MEMBER_ID" name="MEMBER_ID">
-				</div>
-			</div>
-
-			<div class="row justify-content-md-center">
-				<div class="col_c" style="margin-bottom: 30px">
-					<div class="input-group">
-						<textarea class="form-control" id="CONTENT" name="CONTENT"></textarea>
-<!-- 
-						<script type="text/javascript">
-							var editorConfig = {
-								filebrowserUploadUrl : "/admin/fileUpload.do", //이미지 업로드
-							};
-
-							CKEDITOR.replace('CONTENT', editorConfig, {
-								height : 500
-							});
-						</script>
-						 -->
+					<div class="col">
+						<button type="submit"
+							class="btn btn-outline-secondary btn-sm btn-block">작성</button>
 					</div>
 				</div>
-			</div>
 
-			<div class="row justify-content-md-center">
-				<div class="col">
-					<a href="/grasse/admin/noticeList.do"
-						class="btn btn-outline-secondary"
-						style="width: 20%; font-weight: bold">목록으로</a>
-				</div>
-				<div class="col">
-					<button type="submit" class="btn btn-outline-secondary"
-						style="width: 20%; font-weight: bold">등록</button>
-				</div>
-			</div>
-		</form>
-	</main>
+			</form>
+		</main>
+	</div>
 </body>
 
 </html>

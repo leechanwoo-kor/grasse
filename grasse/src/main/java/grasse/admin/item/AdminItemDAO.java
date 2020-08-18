@@ -11,12 +11,16 @@ import grasse.common.dao.AbstractDAO;
 public class AdminItemDAO extends AbstractDAO {
 
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectItemList(Map<String, Object> map) throws Exception{
-		return (List<Map<String, Object>>)selectList("item.selectAllItem", map);
+	public List<Map<String, Object>> selectItemList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("item.selectAllItem", map);
 	}
-	
+
 	// 상품 등록
-	public void insertItem(Map<String, Object> map) throws Exception{
+	public void insertItem(Map<String, Object> map) throws Exception {
 		insert("item.insertItem", map);
+	}
+
+	public int getTotalList(Map<String, Object> map) throws Exception {
+		return (Integer) selectOne("item.getTotalList", map);
 	}
 }

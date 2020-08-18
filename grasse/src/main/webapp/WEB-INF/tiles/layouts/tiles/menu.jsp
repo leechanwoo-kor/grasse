@@ -77,27 +77,27 @@
 	});
 	function fn_best() {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/item/best.do' />");
+		comSubmit.setUrl("<c:url value='/item/bestList.do' />");
 		comSubmit.submit();
 	}
 	function fn_new() {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/item/new.do' />");
+		comSubmit.setUrl("<c:url value='/item/newList.do' />");
 		comSubmit.submit();
 	}
 	function fn_man() {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/item/man.do' />");
+		comSubmit.setUrl("<c:url value='/item/categoryList.do?CATEGORY=M' />");
 		comSubmit.submit();
 	}
 	function fn_woman() {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/item/woman.do' />");
+		comSubmit.setUrl("<c:url value='/item/categoryList.do?CATEGORY=W' />");
 		comSubmit.submit();
 	}
 	function fn_container() {
 		var comSubmit = new ComSubmit();
-		comSubmit.setUrl("<c:url value='/item/container.do' />");
+		comSubmit.setUrl("<c:url value='/item/categoryList.do?CATEGORY=C' />");
 		comSubmit.submit();
 	}
 </script>

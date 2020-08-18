@@ -121,16 +121,23 @@
 	<div class="container justify-content-center py-5">
 		<div class="it-dt">
 			<div class="it-dt-thumb">
-				<img width="100%" height="100%"
-					src="http://perfumegraphy.com/web/product/big/20200617/dc5125dfccd0ef342895e912c6e799f6.jpg" />
+				<img width="100%" height="100%" src="${map.THUMBNAIL }" />
 			</div>
 
 			<div class="it_dt_info">
 				<form name="form" id="form" method="post">
 					<p class="it-name">${map.NAME }</p>
+					<input type="hidden" name="ITEM_NO" id="ITEM_NO"
+						value="${map.ITEM_NO }"> <input type="hidden" name="TOTAL"
+						class="TOTAL" value=""> <input type="hidden"
+						name="ATTRIBUTE" class="ATTRIBUTE" value=""> <input
+						type="hidden" name="MEMBER_ID" id="MEMBER_ID"
+						value="${sessionScope.member.MEMBER_ID}">
+
+
 
 					<!-- 상품가격  -->
-					<div style="height: 100px; position: static;">
+					<div style="height: 110px; position: static;">
 						<p style="height: 20px">
 							<br>판매가&emsp;&emsp;${map.PRICE }원
 						</p>
@@ -152,7 +159,8 @@
 											(품절)</option>
 									</c:if>
 									<c:if test="${at.COUNT!=0 }">
-										<option value="${at.ATTRIBUTE_NO},${at.ITEM_SIZE},${at.PRICE}"
+										<option
+											value="${at.ATTRIBUTE_NO},${at.ITEM_SIZE},${at.ITEM_PRICE}"
 											style="onfocus: #FFFFFF">${at.ITEM_SIZE }</option>
 									</c:if>
 								</c:forEach>
@@ -183,24 +191,20 @@
 						<a><input class="cart" onclick="BuyCheck(2);" type="image"
 							src="/grasse/resources/images/cart.PNG" /></a><br>
 						<!-- 찜 하기 -->
-						<input class="wishList" onclick="BuyCheck(3);" type="image"
+						<input class="wishList" onclick="WishCheck();" type="image"
 							src="/grasse/resources/images/wishlist.PNG" value="wishlist" />
 
 					</div>
 				</form>
 
-				<!-- 
-			<a id="MOVE_TOP_BTN" href="#"
-				style="position: fixed; right: 20px; bottom: 20px; z-index: 99;">
-				<img src="/grasse/resources/images/top_btn.png" />
-			</a>
- -->
+
+				<a id="MOVE_TOP_BTN" href="#"
+					style="position: fixed; right: 20px; bottom: 20px; z-index: 99;">
+					<img src="/grasse/resources/images/top_btn.png" />
+				</a>
 
 			</div>
 		</div>
-
-		<!-- 
-		이동 버튼 그룹
 		<div class="py-5">
 			<button class="it-dt-sl-btn-group" width="100%">
 				<input type="button" value="상품상세정보" class="Btn"
@@ -210,31 +214,29 @@
 					onclick="fnMove('it-dt-qa')">
 			</button>
 		</div>
- -->
 
 		<!-- 상품 상세 이미지 -->
-		<div class="it-dt-img">
-
-			<img
-				src="http://perfumegraphy.com/web/upload/NNEditor/20200611/copy-1591840425-EAB5ADEB82B4EBB0B0EC86A1.jpg" />
-			<img
-				src="http://perfumegraphy.com/web/upload/NNEditor/20200617/EBB3B4ED858CEAB080EBB2A0EB84A4ED8380_EDP.jpg" />
-
+		<div class="it-dt-img py-5">
+			<img src="${map.CONTENT }" />
 		</div>
+		<div class="it-dt-rv"></div>
+		<div class="it-dt-qa"></div>
 
 	</div>
 	<!-- end container -->
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+
 	<script>
 		var totprice = 0;
 		var r_attrno = [];
-		var r_optno = [];
 		var r_count = [];
+		var r_size = [];
+		var r_price = [];
 
 		function setOption(obj) {
 			//선택한 옵션가져오기.  optno[0]=ATTRIBUTE_NO, optno[1]=ITEM_SIZE, optno[2]=PRICE
 			var optno = $("#option option:selected").val().split(",");
-			var attrno = optno[0];
+			var attrno = parseInt(optno[0]);
 			var size = optno[1];
 			var price = parseInt(optno[2]);
 
@@ -249,17 +251,16 @@
 			var li = "<li class='MK_li'>"
 					+ "<br>"
 					+ size
-					//선택한 옵션과 COUNT 저장
-					+ "<input type='hidden' name='attrno' class='attrno' value='" + attrno + "'>"
 					+ "<div class='MK_qty-ctrl'>"
 					//선택한 갯수 
-					+ "<input type='text' id='count' value='1' class='input_ea' size='2' maxlength='3'>"
-					+ "<input type='hidden' name='total' value=''>"
+					+ "<input type='text' value='1' class='input_ea' size='2' maxlength='3' this_price='" + price + "'>"
+					+ "<input type='hidden' class='ATTRIBUTE_NO' name='ATTRIBUTE_NO' value='" + attrno + "'>"
+					+ "<input type='hidden' class='SIZE' name='SIZE' value='"+size+"'>"
 					//갯수 조절 버튼
 					+ "<span class='ea'>"
-					+ "<a class='MK_btn-up'>"
+					+ "<a this_price='" + price + "' class='MK_btn-up'>"
 					+ "<img src='/grasse/resources/images/btn_num_up.gif' alt='' /></a>"
-					+ "<a class='MK_btn-dw'>"
+					+ "<a this_price='" + price + "' class='MK_btn-dw'>"
 					+ "<img src='/grasse/resources/images/btn_num_down.gif' alt='' /></a></span>"
 					//가격 출력
 					+ "<span class='MK_price' "
@@ -271,9 +272,10 @@
 					+ "<img src='/grasse/resources/images/btn_close.gif' alt='' /></a></div></li>";
 
 			$("#total_price").append(li);
-			r_attrno.push(attrno);
-
-			r_optno.push(optno);
+			r_attrno.push(parseInt(attrno));
+			//alert(r_attrno);
+			r_price.push(parseInt(price));
+			r_size.push(size);
 
 			var thisIdx = $(".input_ea").index(this);
 			var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
@@ -291,31 +293,44 @@
 		}
 
 		//
-		$("#total_price").on("click", "li a.MK_btn-del", function() {
-			var thisIdx = $(".MK_btn-del").index(this);
-			var ritem = $(".attrno").val();
-			var ropt = $(".optno").val();
+		$("#total_price").on(
+				"click",
+				"li a.MK_btn-del",
+				function() {
+					var thisIdx = $(".MK_btn-del").index(this);
+					//alert(thisIdx);
+					var ritem = parseInt($("input[name=ATTRIBUTE_NO]").eq(
+							thisIdx).val());
 
-			var price = $(this).attr("this_price");
-			var thisIdx = $(".MK_btn-del").index(this);
-			var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
-			var totprice = parseInt($("#MK_txt-won").data("price"));
+					//alert(ritem);
+					//alert(r_attrno);
 
-			totprice = totprice - (price * inputEa);
-			$("#MK_txt-won").data("price", totprice);
-			$("#MK_txt-won").html((totprice) + "원");
+					var price = parseInt($(this).attr("this_price"));
+					//alert(price);
+					var size = $("input[name=SIZE]").eq(thisIdx).val();
+					//alert(size);
+					var inputEa = parseInt($(".input_ea").eq(thisIdx).val());
+					var totprice = parseInt($("#MK_txt-won").data("price"));
 
-			r_attrno = $.grep(r_attrno, function(v) {
-				return v != ritem;
-			});
-			r_optno = $.grep(r_optno, function(v) {
-				return v != ropt;
-			});
-			r_count = $.grep(r_count, function(v) {
-				return v != inputEa;
-			});
-			$(".MK_li").eq(thisIdx).remove();
-		});
+					totprice = totprice - (price * inputEa);
+					$("#MK_txt-won").data("price", totprice);
+					$("#MK_txt-won").html((totprice) + "원");
+
+					r_attrno = $.grep(r_attrno, function(v) {
+						return v != ritem;
+					});
+					r_count = $.grep(r_count, function(v) {
+						return v != inputEa;
+					});
+					r_price = $.grep(r_price, function(v) {
+						return v != price;
+					});
+					r_size = $.grep(r_size, function(v) {
+						return v != size;
+					});
+
+					$(".MK_li").eq(thisIdx).remove();
+				});
 
 		//
 		$("#total_price")
@@ -327,8 +342,7 @@
 							change_ea(this, 1);
 							var inputEa = parseInt($(".input_ea").eq(thisIdx)
 									.val());
-							var price = parseInt($("#option option:selected")
-									.val().split(",")[2]);
+							var price = parseInt($(this).attr("this_price"));
 							var mStock = parseInt($(".mstock").eq(thisIdx)
 									.val());
 
@@ -360,8 +374,7 @@
 				function(e) {
 					var thisIdx = $(".input_ea").index(this);
 					var mStock = parseInt($(".mstock").eq(thisIdx).val());
-					var price = parseInt($("#option option:selected").val()
-							.split(",")[2]);
+					var price = parseInt($(this).attr("this_price"));
 					var totprice = $("#MK_txt-won").data("price");
 
 					$(this).val($(this).val().replace(/[^0-9]/g, ""));
@@ -395,8 +408,7 @@
 							var thisIdx = $(".MK_btn-dw").index(this);
 							var inputEa = parseInt($(".input_ea").eq(thisIdx)
 									.val());
-							var price = parseInt($("#option option:selected")
-									.val().split(",")[2]);
+							var price = parseInt($(this).attr("this_price"));
 
 							if (inputEa == 1) {
 								alert("1개 이상 주문하셔야 합니다.");
@@ -442,65 +454,80 @@
 		}
 
 		//itemDetail
-		function BuyCheck(index, url) {
+		function BuyCheck(index) {
 			if (form.option.value == 'none') {
 				alert("옵션을 선택해주세요");
 				return false;
 			}
 
-			if (index == 1) {
-				to_ajax("/grasse/order/addOrder.do");
-				document.form.action = '/grasse/order/order.do';
-			}
-			if (index == 2) {
-				to_ajax("/grasse/cart/addCart.do");
-				document.form.action = '/grasse/cart/cartList.do';
-			}
-			if (index == 3) {
-				to_ajax("/grasse/wish/addWish.do");
-				alert('관심상품으로 등록되었습니다.');
-			}
-
-			document.form.submit();
-		}
-
-		function to_ajax(url) {
 			$(".input_ea").each(function() {
-				r_count.push($(this).val());
+				r_count.push(parseInt($(this).val()));
 			});
 
-			var jList = new Array();
-
-			var ITEM_NO = "<c:out value='${map.ITEM_NO}'/>";
-			alert(ITEM_NO);
+			var ATTRIBUTE = new Array();
+			var ITEM_NO = $("input[name=ITEM_NO]").val();
+			var THUMBNAIL = '<c:out value="${map.THUMBNAIL}"/>';
+			var NAME = '<c:out value="${map.NAME}"/>';
+			var totprice = parseInt($("#MK_txt-won").data("price"));
+			//alert(totprice);
 
 			for (var i = 0; i < r_attrno.length; i++) {
 				var aJson = {
-					COUNT : r_count[i],
-					ATTRIBUTE_NO : r_attrno[i]
+					ITEM_NO : ITEM_NO,
+					THUMBNAIL : THUMBNAIL,
+					NAME : NAME,
+					ATTRIBUTE_NO : r_attrno[i],
+					SIZE : r_size[i],
+					PRICE : r_price[i],
+					COUNT : r_count[i]
 				};
-				jList.push(aJson);
+				ATTRIBUTE.push(aJson);
 			}
 
-			var jsonList = {
-				"ITEM_NO" : ITEM_NO,
-				"ATTRIBUTE" : jList
-			};
+			$("input[type=hidden][name=ATTRIBUTE]").val(
+					JSON.stringify(ATTRIBUTE));
+			$("input[type=hidden][name=TOTAL]").val(totprice);
 
-			alert(JSON.stringify(jsonList));
-			$.ajax({
-				url : url,
-				type : "POST",
-				data : JSON.stringify(jsonList),
-				contentType : "application/json; charset=utf-8",
-				success : function(data) {
-					alert("성공");
-				},
-				error : function(request, status, error) {
-					alert("code:" + request.status + "\n" + "message:"
-							+ request.responseText + "\n" + "error:" + error);
-				}
-			});
+			if (index == 1) {
+				document.form.action = '/grasse/order/order.do';
+			}
+			if (index == 2) {
+				document.form.action = "/grasse/cart/addCart.do";
+			}
+			document.form.submit();
+		}
+
+		function WishCheck() {
+			var memberId = $("input[name=MEMBER_ID]").val();
+			var itemNo = $("input[name=ITEM_NO]").val();
+
+			if (memberId != "") {
+				aJson = {
+					MEMBER_ID : memberId,
+					ITEM_NO : itemNo
+				};
+
+				$.ajax({
+					url : "/grasse/myWish/addWish.do",
+					type : "POST",
+					data : JSON.stringify(aJson),
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+						alert("관심상품으로 등록되었습니다.");
+						document.form.action = "/grasse/login/loginForm.do?ITEM_NO="+itemNo;
+					},
+					error : function(request, status, error) {
+						alert("code:" + request.status + "\n" + "message:"
+								+ request.responseText + "\n" + "error:"
+								+ error);
+					}
+				});
+
+			} else {
+				document.form.action = "/grasse/login/loginForm.do";
+			}
+
+			document.form.submit();
 		}
 	</script>
 

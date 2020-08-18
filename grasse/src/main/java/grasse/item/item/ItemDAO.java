@@ -14,4 +14,20 @@ public class ItemDAO extends AbstractDAO {
 	public List<Map<String, Object>> selectItemList(Map<String, Object> map) throws Exception {
 		return (List<Map<String, Object>>) selectList("item.selectAllItem", map);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectCategoryList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("item.selectCategoryItem", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectBestList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("item.selectBestItem", map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectNewList(Map<String, Object> map) throws Exception {
+		return (List<Map<String, Object>>) selectList("item.selectNewItem", map);
+	}
+
 }

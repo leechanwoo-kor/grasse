@@ -73,7 +73,7 @@ public class LoginController {
 			if (commandMap.get("MEMBER_ID").equals("admin")) {
 				mv.setViewName(".tiles/admin/main/main");
 			} else {
-				mv.setViewName(".tiles/main/main");
+				mv.setViewName("redirect:/main.do");
 			}
 
 		} else {
@@ -88,7 +88,7 @@ public class LoginController {
 	@RequestMapping("/login/logout.do")
 	public ModelAndView logout(HttpServletResponse response, HttpServletRequest request, CommandMap commandMap)
 			throws Exception {
-		ModelAndView mv = new ModelAndView(".tiles/main/main");
+		ModelAndView mv = new ModelAndView("redirect:/main.do");
 		HttpSession session = request.getSession(false);
 
 		/* 세션삭제 */

@@ -14,9 +14,10 @@
 </head>
 <body>
 	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-		<h2 class="py-5 text-center">Q&A 관리</h2>
+		<h2 class="py-5 text-center">QNA 관리</h2>
 
-		<div class="table-responsive pt-3">
+		<div class="table-responsive pt-3 mx-auto"
+			style="width: 80%; margin: 0px auto;">
 			<table class="table table-hover table-sm">
 				<thead>
 					<tr class="text-center">
@@ -31,8 +32,10 @@
 						<c:when test="${fn:length(list) > 0 }">
 							<c:forEach items="${list }" var="row">
 								<tr class="text-center">
-									<td>${row.NOTICE_NO }</td>
-									<td>${row.TITLE }</td>
+									<td>${row.QNA_NO }</td>
+									<td><a
+										href="/grasse/admin/qnaDetail.do?QNA_NO=${row.QNA_NO }"
+										class="text-dark">${row.TITLE }</a></td>
 									<td>${row.MEMBER_ID }</td>
 									<td>${row.REGDATE }</td>
 								</tr>
@@ -46,24 +49,18 @@
 					</c:choose>
 				</tbody>
 			</table>
+
+			<div class="row pt-3" style="width: 100%;">
+				<div class="col col-lg-3"></div>
+				<div class="col col-lg-6">
+					<!-- Pagination -->
+					${AdminQnaListPaging.pagingHTML}
+					<!-- Pagination -->
+				</div>
+			</div>
 		</div>
 
-		<!-- Pagination -->
-		<div class="text-center py-5">
-			<ul class="pagination justify-content-center">
-				<li class="page-item disable"><a class="page-link text-dark"
-					href="#">이전 </a></li>
-				<li class="page-item active"><a class="page-link text-dark"
-					href="#">1</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">4</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">5</a></li>
-				<li class="page-item"><a class="page-link text-dark" href="#">다음
-				</a></li>
-			</ul>
-		</div>
-		<!-- Pagination -->
+
 
 	</main>
 </body>

@@ -72,86 +72,30 @@
 		<div>
 			<h4 class="text-center py-3">New Arrivals</h4>
 			<div class="row">
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
+				<c:forEach items="${newItem }" var="nrow">
+					<!-- Grid col -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<div class="card">
+							<div class="card">
+								<a href="/grasse/itemDetail/item.do?ITEM_NO=${nrow.ITEM_NO }">
+									<img class="card-img-top img-thumbnail"
+									src="${nrow.THUMBNAIL }" alt="">
+								</a>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title text-center" style="height: 30px;">
+									<a class="text-dark"
+										href="/grasse/itemDetail/item.do?ITEM_NO=${nrow.ITEM_NO }">${nrow.NAME }</a>
+								</h5>
+								<%-- <p class="card-text text-center">${row.CONTENT }</p> --%>
+							</div>
+							<div class="card-footer">
+								<h6 class="text-center">${nrow.PRICE }KRW</h6>
+							</div>
 						</div>
-						<div class="card-footer"></div>
 					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
+					<!-- Grid col -->
+				</c:forEach>
 			</div>
 		</div>
 
@@ -159,84 +103,29 @@
 		<div>
 			<h4 class="text-center py-3">Best Items</h4>
 			<div class="row">
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
+				<c:forEach items="${bestItem }" var="brow">
+					<!-- Grid col -->
+					<div class="col-lg-3 col-md-6 mb-4">
+						<div class="card">
+							<a href="/grasse/itemDetail/item.do?ITEM_NO=${brow.ITEM_NO }">
+								<img class="card-img-top img-thumbnail" src="${brow.THUMBNAIL }"
+								alt="">
+							</a>
 
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
+							<div class="card-body">
+								<h5 class="card-title text-center" style="height: 30px;">
+									<a class="text-dark"
+										href="/grasse/itemDetail/item.do?ITEM_NO=${brow.ITEM_NO }">${brow.NAME }</a>
+								</h5>
+								<%-- <p class="card-text text-center">${row.CONTENT }</p> --%>
+							</div>
+							<div class="card-footer">
+								<h6 class="text-center">${brow.PRICE }KRW</h6>
+							</div>
 						</div>
-						<div class="card-footer"></div>
 					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
-
-				<!-- Grid col -->
-				<div class="col-lg-3 col-md-6 mb-4">
-					<div class="card">
-						<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">
-							<img class="card-img-top" src="http://placehold.it/200x250"
-							alt="">
-						</a>
-						<div class="card-body">
-							<h4 class="card-title text-center">
-								<a href="/grasse/itemDetail/item.do?ITEM_NO=${row.ITEM_NO }">${row.NAME }</a>
-							</h4>
-							<h5 class="text-center">${row.PRICE }</h5>
-							<p class="card-text text-center">${row.CONTENT }</p>
-						</div>
-						<div class="card-footer"></div>
-					</div>
-				</div>
-				<!-- Grid col -->
+					<!-- Grid col -->
+				</c:forEach>
 			</div>
 		</div>
 	</div>
